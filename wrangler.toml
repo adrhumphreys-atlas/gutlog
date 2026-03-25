@@ -1,0 +1,17 @@
+name = "gutlog-api"
+main = "src/api/index.ts"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+[site]
+bucket = "./dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "gutlog-db"
+database_id = "local"  # Replace with actual D1 database ID after `wrangler d1 create gutlog-db`
+
+[vars]
+JWT_SECRET = "change-me-in-production"
+RESEND_API_KEY = ""
+APP_URL = "http://localhost:5173"
