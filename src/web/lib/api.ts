@@ -125,4 +125,8 @@ export const api = {
       method: 'PUT',
       body: JSON.stringify(data),
     }),
+
+  // Data Management
+  resetAllData: () =>
+    request<{ message: string }>('/entries/all', { method: 'DELETE' }),
 }

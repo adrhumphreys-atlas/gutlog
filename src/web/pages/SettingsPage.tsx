@@ -19,6 +19,8 @@ export function SettingsPage() {
     skipped: number
     errors: string[]
   } | null>(null)
+  const [showResetConfirm, setShowResetConfirm] = useState(false)
+  const [resetting, setResetting] = useState(false)
 
   const handleLogout = async () => {
     try {
@@ -157,6 +159,55 @@ export function SettingsPage() {
           <p className="text-xs text-stone-400 mt-1">
             All timestamps are stored in UTC and displayed in your local time.
           </p>
+        </div>
+
+        {/* Reset Data */}
+        <div className="bg-white rounded-2xl border border-red-200 p-4">
+          <h2 className="font-semibold text-stone-800 mb-2">Reset Data</h2>
+          <p className="text-sm text-stone-500 mb-3">
+            Permanently delete all your entries, insights, and experiments.
+            This cannot be undone.
+          </p>
+          {!showResetConfirm ? (
+            <button
+              onClick={() => setShowResetConfirm(true)}
+              className="text-sm text-red-600 hover:text-red-700 font-medium min-h-[44px] px-4 py-2.5 hover:bg-red-50 rounded-xl transition-colors"
+            >
+              🗑️ Reset all data
+            </button>
+          ) : (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-3">
+              <p className="text-sm text-red-700 font-medium mb-3">
+                ⚠️ Are you sure? This will delete all your data permanently.
+              </p>
+              <div className="flex gap-2">
+                <button
+                  onClick={async () => {
+                    setResetting(true)
+                    try {
+                      await api.resetAllData()
+                      showToast('All data has been reset ✓')
+                      setShowResetConfirm(false)
+                    } catch {
+                      showToast('Failed to reset data')
+                    }
+                    setResetting(false)
+                  }}
+                  disabled={resetting}
+                  className="px-4 py-2.5 bg-red-600 text-white text-sm font-medium rounded-xl hover:bg-red-700 transition-colors min-h-[44px] disabled:opacity-50"
+                >
+                  {resetting ? 'Deleting...' : 'Yes, delete everything'}
+                </button>
+                <button
+                  onClick={() => setShowResetConfirm(false)}
+                  disabled={resetting}
+                  className="px-4 py-2.5 bg-stone-200 text-stone-700 text-sm font-medium rounded-xl hover:bg-stone-300 transition-colors min-h-[44px]"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Account */}

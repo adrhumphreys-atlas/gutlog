@@ -94,10 +94,20 @@ async function refreshCorrelations(db: any, userId: string) {
     return // Not enough data
   }
 
+  // Safely parse foods — D1 may return JSON string or parsed array
+  const parseFoods = (raw: unknown): Array<{ name: string }> => {
+    if (!raw) return []
+    if (typeof raw === 'string') {
+      try { return JSON.parse(raw) } catch { return [] }
+    }
+    if (Array.isArray(raw)) return raw
+    return []
+  }
+
   // Extract unique food items
   const foodCounts = new Map<string, number>()
   for (const meal of mealEntries) {
-    const foods = (meal.foods as Array<{ name: string }>) || []
+    const foods = parseFoods(meal.foods)
     for (const food of foods) {
       const name = food.name.toLowerCase().trim()
       foodCounts.set(name, (foodCounts.get(name) || 0) + 1)
@@ -112,7 +122,7 @@ async function refreshCorrelations(db: any, userId: string) {
 
     // Meals where this food was eaten
     const mealsWithFood = mealEntries.filter((m: any) =>
-      ((m.foods as Array<{ name: string }>) || []).some(
+      parseFoods(m.foods).some(
         (f) => f.name.toLowerCase().trim() === foodName
       )
     )
@@ -120,7 +130,7 @@ async function refreshCorrelations(db: any, userId: string) {
     // Meals where this food was NOT eaten
     const mealsWithoutFood = mealEntries.filter(
       (m: any) =>
-        !((m.foods as Array<{ name: string }>) || []).some(
+        !parseFoods(m.foods).some(
           (f) => f.name.toLowerCase().trim() === foodName
         )
     )
@@ -195,7 +205,10 @@ async function refreshCorrelations(db: any, userId: string) {
   // Replace old correlations with new ones
   await db.delete(correlations).where(eq(correlations.userId, userId))
 
-  if (newCorrelations.length > 0) {
-    await db.insert(correlations).values(newCorrelations)
+  // Insert in batches to avoid D1's SQL variable limit
+  const BATCH_SIZE = 5
+  for (let i = 0; i < newCorrelations.length; i += BATCH_SIZE) {
+    const batch = newCorrelations.slice(i, i + BATCH_SIZE)
+    await db.insert(correlations).values(batch)
   }
 }

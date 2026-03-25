@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { drizzle } from 'drizzle-orm/d1'
 import { eq, and, gte, lt, desc } from 'drizzle-orm'
-import { entries } from '../db/schema'
+import { entries, correlations, experiments } from '../db/schema'
 import { entrySchema } from '../../shared/validation'
 import { authMiddleware } from '../middleware/auth'
 import type { Env } from '../index'
@@ -246,6 +246,22 @@ entryRoutes.put('/:id', async (c) => {
     .where(eq(entries.id, entryId))
 
   return c.json({ message: 'Entry updated' })
+})
+
+/**
+ * DELETE /api/entries/all
+ * Delete all entries, correlations, and experiments for the current user
+ * NOTE: Must be defined before /:id to avoid being matched as a param
+ */
+entryRoutes.delete('/all', async (c) => {
+  const userId = c.get('userId')
+  const db = drizzle(c.env.DB)
+
+  await db.delete(entries).where(eq(entries.userId, userId))
+  await db.delete(correlations).where(eq(correlations.userId, userId))
+  await db.delete(experiments).where(eq(experiments.userId, userId))
+
+  return c.json({ message: 'All data deleted' })
 })
 
 /**
