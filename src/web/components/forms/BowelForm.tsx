@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { EmojiScale, BRISTOL_SCALE } from '../EmojiScale'
+import { DateTimeField } from '../DateTimeField'
 
 interface BowelFormProps {
   onSave: (data: any) => void
@@ -16,6 +17,7 @@ const URGENCY_OPTIONS = [
 ]
 
 export function BowelForm({ onSave, onDelete, initialData, isEdit }: BowelFormProps) {
+  const [timestamp, setTimestamp] = useState(initialData?.timestamp || new Date().toISOString())
   const [bristolType, setBristolType] = useState<number | null>(
     initialData?.bristolType || null
   )
@@ -29,7 +31,7 @@ export function BowelForm({ onSave, onDelete, initialData, isEdit }: BowelFormPr
 
     onSave({
       type: 'bowel',
-      timestamp: new Date().toISOString(),
+      timestamp,
       bristolType,
       urgency: urgency || undefined,
       blood: blood || undefined,
@@ -40,6 +42,11 @@ export function BowelForm({ onSave, onDelete, initialData, isEdit }: BowelFormPr
 
   return (
     <div className="space-y-5">
+      {/* Date & Time */}
+      {isEdit && (
+        <DateTimeField value={timestamp} onChange={setTimestamp} />
+      )}
+
       {/* Bristol Scale */}
       <EmojiScale
         options={BRISTOL_SCALE}

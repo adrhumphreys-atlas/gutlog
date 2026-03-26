@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { EmojiScale, MOOD_SCALE, STRESS_SCALE, SLEEP_SCALE } from '../EmojiScale'
+import { DateTimeField } from '../DateTimeField'
 
 interface MoodFormProps {
   onSave: (data: any) => void
@@ -9,6 +10,7 @@ interface MoodFormProps {
 }
 
 export function MoodForm({ onSave, onDelete, initialData, isEdit }: MoodFormProps) {
+  const [timestamp, setTimestamp] = useState(initialData?.timestamp || new Date().toISOString())
   const [mood, setMood] = useState<number | null>(initialData?.mood || null)
   const [stressLevel, setStressLevel] = useState<number | null>(
     initialData?.stressLevel || null
@@ -26,7 +28,7 @@ export function MoodForm({ onSave, onDelete, initialData, isEdit }: MoodFormProp
 
     onSave({
       type: 'emotion',
-      timestamp: new Date().toISOString(),
+      timestamp,
       mood,
       stressLevel: stressLevel ?? undefined,
       sleepQuality: sleepQuality ?? undefined,
@@ -37,6 +39,11 @@ export function MoodForm({ onSave, onDelete, initialData, isEdit }: MoodFormProp
 
   return (
     <div className="space-y-5">
+      {/* Date & Time */}
+      {isEdit && (
+        <DateTimeField value={timestamp} onChange={setTimestamp} />
+      )}
+
       {/* Mood (required) */}
       <EmojiScale
         options={MOOD_SCALE}

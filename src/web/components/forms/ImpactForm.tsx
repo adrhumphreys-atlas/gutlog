@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { DateTimeField } from '../DateTimeField'
 
 interface ImpactFormProps {
   onSave: (data: any) => void
@@ -19,6 +20,7 @@ const ACTIVITY_OPTIONS = [
 ]
 
 export function ImpactForm({ onSave, onDelete, initialData, isEdit }: ImpactFormProps) {
+  const [timestamp, setTimestamp] = useState(initialData?.timestamp || new Date().toISOString())
   const [impactSeverity, setImpactSeverity] = useState(initialData?.impactSeverity || '')
   const [affectedActivities, setAffectedActivities] = useState<string[]>(
     initialData?.affectedActivities || []
@@ -37,7 +39,7 @@ export function ImpactForm({ onSave, onDelete, initialData, isEdit }: ImpactForm
     if (!impactSeverity) return
     onSave({
       type: 'impact',
-      timestamp: new Date().toISOString(),
+      timestamp,
       impactSeverity,
       affectedActivities: affectedActivities.length > 0 ? affectedActivities : undefined,
       description: description || undefined,
@@ -46,6 +48,11 @@ export function ImpactForm({ onSave, onDelete, initialData, isEdit }: ImpactForm
 
   return (
     <div className="space-y-5">
+      {/* Date & Time */}
+      {isEdit && (
+        <DateTimeField value={timestamp} onChange={setTimestamp} />
+      )}
+
       {/* Impact Severity */}
       <div>
         <span className="block text-xs font-semibold text-[#666] mb-2">

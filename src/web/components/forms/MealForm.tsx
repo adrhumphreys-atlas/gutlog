@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { DateTimeField } from '../DateTimeField'
 import { api } from '../../lib/api'
 
 interface MealFormProps {
@@ -33,6 +34,7 @@ function guessMealType(): string {
 }
 
 export function MealForm({ onSave, onDelete, initialData, isEdit }: MealFormProps) {
+  const [timestamp, setTimestamp] = useState(initialData?.timestamp || new Date().toISOString())
   const [mealType, setMealType] = useState(initialData?.mealType || guessMealType())
   const [foods, setFoods] = useState<string[]>(
     initialData?.foods?.map((f: any) => f.name) || ['']
@@ -84,7 +86,7 @@ export function MealForm({ onSave, onDelete, initialData, isEdit }: MealFormProp
 
     onSave({
       type: 'meal',
-      timestamp: new Date().toISOString(),
+      timestamp,
       mealType,
       foods: allFoods.map((name) => ({ name })),
       portionSize: portionSize || undefined,
@@ -94,6 +96,11 @@ export function MealForm({ onSave, onDelete, initialData, isEdit }: MealFormProp
 
   return (
     <div className="space-y-5">
+      {/* Date & Time */}
+      {isEdit && (
+        <DateTimeField value={timestamp} onChange={setTimestamp} />
+      )}
+
       {/* Meal Type */}
       <div>
         <span className="block text-xs font-semibold text-[#666] mb-2">

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { DateTimeField } from '../DateTimeField'
 
 interface SymptomFormProps {
   onSave: (data: any) => void
@@ -25,6 +26,7 @@ const SEVERITY_OPTIONS = [
 ]
 
 export function SymptomForm({ onSave, onDelete, initialData, isEdit }: SymptomFormProps) {
+  const [timestamp, setTimestamp] = useState(initialData?.timestamp || new Date().toISOString())
   const [symptomType, setSymptomType] = useState(initialData?.symptomType || '')
   const [severity, setSeverity] = useState<number | null>(initialData?.severity || null)
   const [notes, setNotes] = useState(initialData?.notes || '')
@@ -34,7 +36,7 @@ export function SymptomForm({ onSave, onDelete, initialData, isEdit }: SymptomFo
 
     onSave({
       type: 'symptom',
-      timestamp: new Date().toISOString(),
+      timestamp,
       symptomType,
       severity,
       notes: notes || undefined,
@@ -43,6 +45,11 @@ export function SymptomForm({ onSave, onDelete, initialData, isEdit }: SymptomFo
 
   return (
     <div className="space-y-5">
+      {/* Date & Time */}
+      {isEdit && (
+        <DateTimeField value={timestamp} onChange={setTimestamp} />
+      )}
+
       {/* Symptom Type — 2-column grid */}
       <div>
         <span className="block text-xs font-semibold text-[#666] mb-2">

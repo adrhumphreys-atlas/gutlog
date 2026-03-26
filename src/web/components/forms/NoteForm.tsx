@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { DateTimeField } from '../DateTimeField'
 
 interface NoteFormProps {
   onSave: (data: any) => void
@@ -8,19 +9,25 @@ interface NoteFormProps {
 }
 
 export function NoteForm({ onSave, onDelete, initialData, isEdit }: NoteFormProps) {
+  const [timestamp, setTimestamp] = useState(initialData?.timestamp || new Date().toISOString())
   const [notes, setNotes] = useState(initialData?.notes || '')
 
   const handleSubmit = () => {
     if (!notes.trim()) return
     onSave({
       type: 'note',
-      timestamp: new Date().toISOString(),
+      timestamp,
       notes: notes.trim(),
     })
   }
 
   return (
     <div className="space-y-5">
+      {/* Date & Time */}
+      {isEdit && (
+        <DateTimeField value={timestamp} onChange={setTimestamp} />
+      )}
+
       <div>
         <label className="block text-xs font-semibold text-[#666] mb-1">
           What's on your mind?

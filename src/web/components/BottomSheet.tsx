@@ -51,7 +51,7 @@ export function BottomSheet({
   }, [isDirty, onClose])
 
   return (
-    <Drawer.Root open={isOpen} onOpenChange={handleDismiss}>
+    <Drawer.Root open={isOpen} onOpenChange={handleDismiss} repositionInputs={false}>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/30 z-40" />
         <Drawer.Content
