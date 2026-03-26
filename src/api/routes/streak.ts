@@ -7,6 +7,29 @@ import type { Env } from '../index'
 
 type AuthVars = { userId: string }
 
+/** Validate an IANA timezone string. Falls back to 'UTC'. */
+function parseTz(tz: string | undefined): string {
+  if (!tz) return 'UTC'
+  try {
+    Intl.DateTimeFormat(undefined, { timeZone: tz })
+    return tz
+  } catch {
+    return 'UTC'
+  }
+}
+
+/** Get the local date string (YYYY-MM-DD) for a UTC ISO timestamp in a given timezone. */
+function utcToLocalDate(utcTimestamp: string, tz: string): string {
+  const d = new Date(utcTimestamp)
+  const formatter = new Intl.DateTimeFormat('en-CA', {
+    timeZone: tz,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+  return formatter.format(d)
+}
+
 export const streakRoutes = new Hono<{
   Bindings: Env
   Variables: AuthVars
@@ -15,13 +38,14 @@ export const streakRoutes = new Hono<{
 streakRoutes.use('*', authMiddleware)
 
 /**
- * GET /api/streak
+ * GET /api/streak?tz=Australia/Sydney
  * Current logging streak — consecutive days with at least one entry.
- * Derived at read time, no cache.
+ * Uses the user's timezone to determine day boundaries.
  */
 streakRoutes.get('/', async (c) => {
   const userId = c.get('userId')
   const db = drizzle(c.env.DB)
+  const tz = parseTz(c.req.query('tz'))
 
   const allEntries = await db
     .select({ timestamp: entries.timestamp })
@@ -33,13 +57,13 @@ streakRoutes.get('/', async (c) => {
     return c.json({ streak: 0 })
   }
 
-  // Get unique dates (in user's local context — using UTC date part for now)
+  // Get unique dates in the user's local timezone
   const uniqueDates = [
-    ...new Set(allEntries.map((e) => e.timestamp.split('T')[0])),
+    ...new Set(allEntries.map((e) => utcToLocalDate(e.timestamp, tz))),
   ].sort((a, b) => b.localeCompare(a)) // descending
 
   // Count consecutive days from today backwards
-  const today = new Date().toISOString().split('T')[0]
+  const today = utcToLocalDate(new Date().toISOString(), tz)
   let streak = 0
   let expectedDate = today
 
@@ -47,17 +71,17 @@ streakRoutes.get('/', async (c) => {
     if (date === expectedDate) {
       streak++
       // Move to previous day
-      const d = new Date(expectedDate)
+      const d = new Date(expectedDate + 'T12:00:00') // noon to avoid DST issues
       d.setDate(d.getDate() - 1)
-      expectedDate = d.toISOString().split('T')[0]
+      expectedDate = utcToLocalDate(d.toISOString(), tz)
     } else if (date < expectedDate) {
       // Gap found — if we haven't started counting yet (no entry today),
       // check if yesterday had an entry
-      if (streak === 0 && date === getPreviousDay(today)) {
+      if (streak === 0 && date === getPreviousDay(today, tz)) {
         streak++
-        const d = new Date(date)
+        const d = new Date(date + 'T12:00:00')
         d.setDate(d.getDate() - 1)
-        expectedDate = d.toISOString().split('T')[0]
+        expectedDate = utcToLocalDate(d.toISOString(), tz)
       } else {
         break
       }
@@ -67,8 +91,8 @@ streakRoutes.get('/', async (c) => {
   return c.json({ streak })
 })
 
-function getPreviousDay(dateStr: string): string {
-  const d = new Date(dateStr)
+function getPreviousDay(dateStr: string, tz: string): string {
+  const d = new Date(dateStr + 'T12:00:00') // noon to avoid DST edge cases
   d.setDate(d.getDate() - 1)
-  return d.toISOString().split('T')[0]
+  return utcToLocalDate(d.toISOString(), tz)
 }

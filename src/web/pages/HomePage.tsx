@@ -44,12 +44,18 @@ const SHEET_TITLES: Record<string, string> = {
  * │  🍽️  🤕  💩  😊  ⚡  📝  │  QuickLogGrid
  * └─────────────────────────┘
  */
+/** Return today's date as YYYY-MM-DD in the user's local timezone. */
+function localDateStr(d: Date = new Date()): string {
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${y}-${m}-${day}`
+}
+
 export function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const { showToast } = useToast()
-  const [selectedDate, setSelectedDate] = useState(
-    new Date().toISOString().split('T')[0]
-  )
+  const [selectedDate, setSelectedDate] = useState(localDateStr())
   const [entries, setEntries] = useState<any[]>([])
   const [streak, setStreak] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -71,7 +77,7 @@ export function HomePage() {
 
       // Check if user has ever logged anything (for first-visit state)
       if (data.length === 0) {
-        const today = new Date().toISOString().split('T')[0]
+        const today = localDateStr()
         if (selectedDate === today) {
           const allEntries = await api.getEntries()
           setHasEverLogged(allEntries.length > 0)
@@ -113,10 +119,10 @@ export function HomePage() {
   // ─── Actions ────────────────────────────────────────────────────
 
   const navigateDate = (direction: -1 | 1) => {
-    const d = new Date(selectedDate)
+    const d = new Date(selectedDate + 'T12:00:00') // noon to avoid DST edge cases
     d.setDate(d.getDate() + direction)
-    const today = new Date().toISOString().split('T')[0]
-    const newDate = d.toISOString().split('T')[0]
+    const today = localDateStr()
+    const newDate = localDateStr(d)
     if (newDate <= today) setSelectedDate(newDate)
   }
 
@@ -217,7 +223,7 @@ export function HomePage() {
     }
   }
 
-  const today = new Date().toISOString().split('T')[0]
+  const today = localDateStr()
 
   return (
     <div className="max-w-lg mx-auto px-4 py-6">
@@ -321,8 +327,10 @@ export function HomePage() {
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + 'T12:00:00')
-  const today = new Date().toISOString().split('T')[0]
-  const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
+  const today = localDateStr()
+  const yd = new Date()
+  yd.setDate(yd.getDate() - 1)
+  const yesterday = localDateStr(yd)
 
   if (dateStr === today) return 'Today'
   if (dateStr === yesterday) return 'Yesterday'

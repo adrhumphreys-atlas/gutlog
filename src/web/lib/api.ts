@@ -56,6 +56,17 @@ async function request<T>(
   return res.json() as Promise<T>
 }
 
+// ─── Timezone helper ─────────────────────────────────────────────────
+
+/** Return the user's IANA timezone, e.g. "Australia/Sydney". */
+function getUserTimezone(): string {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone
+  } catch {
+    return 'UTC'
+  }
+}
+
 // ─── Typed API methods ───────────────────────────────────────────────
 
 export const api = {
@@ -73,6 +84,7 @@ export const api = {
     const params = new URLSearchParams()
     if (date) params.set('date', date)
     if (type) params.set('type', type)
+    params.set('tz', getUserTimezone())
     const qs = params.toString()
     return request<any[]>(`/entries${qs ? `?${qs}` : ''}`)
   },
@@ -93,10 +105,10 @@ export const api = {
     request(`/entries/${id}`, { method: 'DELETE' }),
 
   getEntryDates: (month: string) =>
-    request<{ dates: string[] }>(`/entries/dates?month=${month}`),
+    request<{ dates: string[] }>(`/entries/dates?month=${month}&tz=${encodeURIComponent(getUserTimezone())}`),
 
   // Streak
-  getStreak: () => request<{ streak: number }>('/streak'),
+  getStreak: () => request<{ streak: number }>(`/streak?tz=${encodeURIComponent(getUserTimezone())}`),
 
   // Food
   getFoodAutocomplete: (q: string) =>
