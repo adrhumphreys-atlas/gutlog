@@ -21,6 +21,18 @@ export default {
         '2xl': '16px',
         '3xl': '24px',
       },
+      boxShadow: {
+        'just-added': '0 0 8px rgba(74, 124, 89, 0.15)',
+      },
+      keyframes: {
+        'entry-fade-in': {
+          '0%': { opacity: '0', transform: 'translateY(8px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        'entry-fade-in': 'entry-fade-in 0.4s ease-out',
+      },
     },
   },
   plugins: [],

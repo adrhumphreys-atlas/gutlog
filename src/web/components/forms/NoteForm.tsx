@@ -22,7 +22,7 @@ export function NoteForm({ onSave, onDelete, initialData, isEdit }: NoteFormProp
   return (
     <div className="space-y-5">
       <div>
-        <label className="block text-sm font-medium text-stone-700 mb-1">
+        <label className="block text-xs font-semibold text-[#666] mb-1">
           What's on your mind?
         </label>
         <textarea
@@ -32,9 +32,9 @@ export function NoteForm({ onSave, onDelete, initialData, isEdit }: NoteFormProp
           rows={5}
           autoFocus
           placeholder="Jot down anything — observations, how you're feeling, what you ate somewhere else..."
-          className="w-full px-4 py-3 rounded-xl border border-stone-300 focus:border-green-400 focus:ring-2 focus:ring-green-100 outline-none text-sm resize-none"
+          className="w-full px-2.5 py-2 rounded-md border border-[#ddd] focus:border-[#4a7c59] focus:ring-2 focus:ring-[#4a7c59]/15 outline-none text-sm resize-none"
         />
-        <p className="text-xs text-stone-400 mt-1 text-right">
+        <p className="text-xs text-[#999] mt-1 text-right">
           {notes.length}/1000
         </p>
       </div>
@@ -45,7 +45,7 @@ export function NoteForm({ onSave, onDelete, initialData, isEdit }: NoteFormProp
           type="button"
           onClick={handleSubmit}
           disabled={!notes.trim()}
-          className="flex-1 py-3 bg-green-800 text-white font-semibold rounded-xl hover:bg-green-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[44px]"
+          className="flex-1 py-2.5 bg-[#4a7c59] text-white text-sm font-semibold rounded-lg hover:bg-[#3d6a4a] disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[44px]"
         >
           {isEdit ? 'Update' : 'Save'}
         </button>
@@ -53,7 +53,7 @@ export function NoteForm({ onSave, onDelete, initialData, isEdit }: NoteFormProp
           <button
             type="button"
             onClick={onDelete}
-            className="py-3 px-4 text-red-600 font-medium rounded-xl hover:bg-red-50 transition-colors min-h-[44px]"
+            className="py-2.5 px-3 text-red-600 text-sm font-medium rounded-lg hover:bg-red-50 transition-colors min-h-[44px]"
           >
             🗑 Delete
           </button>

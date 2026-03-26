@@ -4,42 +4,62 @@
 
 :root {
   /* Backgrounds */
-  --bg-primary: #fafaf9;    /* stone-50 */
+  --bg-primary: #fafafa;
   --bg-card: #ffffff;
   --bg-sheet: #ffffff;
   --bg-nav: #ffffff;
+  --bg-timeline-item: #fefefe;
 
   /* Text */
-  --text-primary: #1c1917;   /* stone-900 */
-  --text-secondary: #57534e; /* stone-600 */
-  --text-muted: #a8a29e;     /* stone-400 */
+  --text-primary: #333333;
+  --text-secondary: #555555;
+  --text-label: #666666;
+  --text-muted: #767676;     /* WCAG AA compliant */
 
-  /* Brand */
-  --green-primary: #166534;  /* green-800 */
-  --green-light: #dcfce7;    /* green-100 */
-  --green-accent: #4ade80;   /* green-400 */
+  /* Brand / Primary */
+  --green-primary: #4a7c59;
+  --green-light: #f0f7f0;
 
-  /* Entry type dot colors */
-  --dot-meal: #f97316;       /* orange-500 */
-  --dot-symptom: #ef4444;    /* red-500 */
-  --dot-bowel: #a855f7;      /* purple-500 (BM) — distinct from insight purple */
-  --dot-emotion: #3b82f6;    /* blue-500 */
-  --dot-impact: #eab308;     /* yellow-500 */
-  --dot-note: #6b7280;       /* gray-500 */
+  /* Borders */
+  --border-default: #dddddd;
+  --border-card: #e8e8e8;
+  --border-timeline: #e0e0e0;
+
+  /* Entry type dot colors (fill / accent) */
+  --dot-meal: #a8d5a2;
+  --dot-meal-accent: #6db365;
+  --dot-symptom: #f5c6a0;
+  --dot-symptom-accent: #e89b5e;
+  --dot-bowel: #c4b8e0;
+  --dot-bowel-accent: #8b7bb8;
+  --dot-emotion: #a0c4f5;
+  --dot-emotion-accent: #5e8be8;
+  --dot-impact: #f5a0a0;
+  --dot-impact-accent: #e85e5e;
+  --dot-note: #e0e0e0;
+  --dot-note-accent: #999999;
 
   /* Insight purple family */
-  --insight-bg: #faf5ff;     /* purple-50 */
-  --insight-border: #c084fc; /* purple-400 */
-  --insight-text: #7e22ce;   /* purple-700 */
+  --insight-bg: #faf7ff;
+  --insight-border: #e0d4f5;
+  --insight-text: #8b7bb8;
 
   /* Experiment green family */
-  --experiment-border: #4ade80; /* green-400 */
+  --experiment-border: #4a7c59;
+  --experiment-bg: #f0f7f0;
 }
 
 /* Base body styles */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   min-height: 100dvh;
+}
+
+/* Prevent iOS Safari auto-zoom on input focus (triggers below 16px) */
+@media screen and (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
 }
 
 /* Smooth bottom sheet transitions */

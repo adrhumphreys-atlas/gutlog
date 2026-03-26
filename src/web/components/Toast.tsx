@@ -41,7 +41,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             key={toast.id}
             role="status"
             aria-live="polite"
-            className="bg-green-800 text-white px-4 py-2.5 rounded-xl shadow-lg text-sm font-medium animate-fade-in"
+            className="bg-[#4a7c59] text-white px-4 py-2.5 rounded-lg shadow-lg text-sm font-medium animate-fade-in"
           >
             {toast.text}
           </div>

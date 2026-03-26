@@ -1,4 +1,5 @@
-import { useEffect, useRef, useCallback, useState } from 'react'
+import { useCallback } from 'react'
+import { Drawer } from 'vaul'
 
 interface BottomSheetProps {
   isOpen: boolean
@@ -10,14 +11,14 @@ interface BottomSheetProps {
 }
 
 /**
- * BottomSheet — Modal sheet that slides up from bottom.
+ * BottomSheet — Modal drawer that slides up from bottom (powered by vaul).
  *
- * Features (from DESIGN.md spec):
+ * Features:
  * - Backdrop tap to dismiss
- * - Swipe down to dismiss (touch drag on handle)
+ * - Swipe down to dismiss (native vaul gesture)
  * - ✕ button to dismiss
  * - Escape key to dismiss
- * - Focus trap (tab cycles within sheet)
+ * - Focus trap (handled by vaul/Radix Dialog)
  * - "Discard changes?" confirmation if isDirty
  * - ARIA: role=dialog, aria-modal, aria-labelledby
  * - 44px minimum touch targets
@@ -29,12 +30,19 @@ export function BottomSheet({
   isDirty = false,
   children,
 }: BottomSheetProps) {
-  const sheetRef = useRef<HTMLDivElement>(null)
-  const [translateY, setTranslateY] = useState(0)
-  const [isDragging, setIsDragging] = useState(false)
-  const dragStartY = useRef(0)
+  const handleDismiss = useCallback(
+    (open: boolean) => {
+      if (open) return
+      if (isDirty) {
+        const confirmed = window.confirm('Discard changes?')
+        if (!confirmed) return
+      }
+      onClose()
+    },
+    [isDirty, onClose]
+  )
 
-  const handleDismiss = useCallback(() => {
+  const handleClose = useCallback(() => {
     if (isDirty) {
       const confirmed = window.confirm('Discard changes?')
       if (!confirmed) return
@@ -42,134 +50,41 @@ export function BottomSheet({
     onClose()
   }, [isDirty, onClose])
 
-  // Escape key
-  useEffect(() => {
-    if (!isOpen) return
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') handleDismiss()
-    }
-    document.addEventListener('keydown', handleKey)
-    return () => document.removeEventListener('keydown', handleKey)
-  }, [isOpen, handleDismiss])
-
-  // Focus trap
-  useEffect(() => {
-    if (!isOpen || !sheetRef.current) return
-
-    const sheet = sheetRef.current
-    const focusable = sheet.querySelectorAll<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    )
-    const first = focusable[0]
-    const last = focusable[focusable.length - 1]
-
-    first?.focus()
-
-    const handleTab = (e: KeyboardEvent) => {
-      if (e.key !== 'Tab') return
-      if (e.shiftKey) {
-        if (document.activeElement === first) {
-          e.preventDefault()
-          last?.focus()
-        }
-      } else {
-        if (document.activeElement === last) {
-          e.preventDefault()
-          first?.focus()
-        }
-      }
-    }
-
-    sheet.addEventListener('keydown', handleTab)
-    return () => sheet.removeEventListener('keydown', handleTab)
-  }, [isOpen])
-
-  // Prevent body scroll when open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [isOpen])
-
-  // Touch drag on handle
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setIsDragging(true)
-    dragStartY.current = e.touches[0].clientY
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging) return
-    const dy = e.touches[0].clientY - dragStartY.current
-    if (dy > 0) setTranslateY(dy) // only allow dragging down
-  }
-
-  const handleTouchEnd = () => {
-    setIsDragging(false)
-    if (translateY > 120) {
-      handleDismiss()
-    }
-    setTranslateY(0)
-  }
-
-  if (!isOpen) return null
-
   return (
-    <>
-      {/* Backdrop */}
-      <div
-        className="fixed inset-0 bg-black/30 z-40 transition-opacity"
-        onClick={handleDismiss}
-        aria-hidden="true"
-      />
-
-      {/* Sheet */}
-      <div
-        ref={sheetRef}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="sheet-title"
-        className="fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-3xl max-h-[85dvh] flex flex-col shadow-2xl"
-        style={{
-          transform: `translateY(${translateY}px)`,
-          transition: isDragging ? 'none' : 'transform 300ms ease-out',
-        }}
-      >
-        {/* Handle + Close */}
-        <div
-          className="flex items-center justify-between px-6 pt-3 pb-2 cursor-grab"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
+    <Drawer.Root open={isOpen} onOpenChange={handleDismiss}>
+      <Drawer.Portal>
+        <Drawer.Overlay className="fixed inset-0 bg-black/30 z-40" />
+        <Drawer.Content
+          aria-labelledby="sheet-title"
+          className="fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl max-h-[85dvh] flex flex-col shadow-2xl outline-none"
         >
-          <div className="flex-1" />
-          <div className="w-10 h-1 bg-stone-300 rounded-full" />
-          <div className="flex-1 flex justify-end">
-            <button
-              onClick={handleDismiss}
-              className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl hover:bg-stone-100 text-stone-400 hover:text-stone-600"
-              aria-label="Close"
-            >
-              ✕
-            </button>
+          {/* Handle + Close */}
+          <div className="flex items-center justify-between px-6 pt-3 pb-2">
+            <div className="flex-1" />
+            <Drawer.Handle className="!w-10 !h-1 !bg-[#ccc] !rounded-full" />
+            <div className="flex-1 flex justify-end">
+              <button
+                onClick={handleClose}
+                className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-[#f5f5f5] text-[#999] hover:text-[#666]"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
           </div>
-        </div>
 
-        {/* Title */}
-        <h2
-          id="sheet-title"
-          className="text-lg font-semibold text-stone-900 px-6 pb-3"
-        >
-          {title}
-        </h2>
+          {/* Title */}
+          <Drawer.Title
+            id="sheet-title"
+            className="text-[15px] font-semibold text-[#333] px-6 pb-3"
+          >
+            {title}
+          </Drawer.Title>
 
-        {/* Content (scrollable) */}
-        <div className="flex-1 overflow-y-auto px-6 pb-8">{children}</div>
-      </div>
-    </>
+          {/* Content (scrollable) */}
+          <div className="flex-1 overflow-y-auto px-6 pb-8">{children}</div>
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
   )
 }

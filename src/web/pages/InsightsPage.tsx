@@ -18,9 +18,9 @@ interface Correlation {
 /**
  * Insights Page (/insights)
  *
- * "Pattern Spotter" — statistical correlations between foods and symptoms.
- * Shows progress ring when <14 days of data.
- * Shows correlation cards ranked by confidence when enough data exists.
+ * Matches wireframe screens 9 (empty state) and 10 (with data).
+ * Shows progress ring when <14 days of data with blurred preview.
+ * Shows insight cards, trigger bar chart, and symptom trend when enough data exists.
  */
 export function InsightsPage() {
   const navigate = useNavigate()
@@ -28,6 +28,7 @@ export function InsightsPage() {
   const [loading, setLoading] = useState(true)
   const [refreshed, setRefreshed] = useState(false)
   const [daysLogged, setDaysLogged] = useState(0)
+  const [totalEntries, setTotalEntries] = useState(0)
 
   useEffect(() => {
     loadInsights()
@@ -49,7 +50,6 @@ export function InsightsPage() {
 
   const loadDaysLogged = async () => {
     try {
-      // Approximate days logged by checking current month + last month
       const now = new Date()
       const thisMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
       const lastMonth = now.getMonth() === 0
@@ -63,14 +63,16 @@ export function InsightsPage() {
 
       const allDates = new Set([...thisData.dates, ...lastData.dates])
       setDaysLogged(allDates.size)
+
+      // Get total entry count for subtitle
+      const allEntries = await api.getEntries()
+      setTotalEntries(allEntries.length)
     } catch {
       // Non-critical
     }
   }
 
   const startExperiment = (foodName: string) => {
-    // Navigate to home with experiment sheet open, pre-filling the food name
-    // The experiment creation will be handled on the experiments page
     navigate(`/experiments?suggest=${encodeURIComponent(foodName)}`)
   }
 
@@ -86,140 +88,193 @@ export function InsightsPage() {
     return 'text-yellow-700 bg-yellow-50 border-yellow-200'
   }
 
-  const riskBar = (confidence: number): number => {
-    return Math.round(confidence * 100)
-  }
+  // Sort correlations by confidence descending for the trigger bar chart
+  const topTriggers = [...correlations]
+    .sort((a, b) => b.confidence - a.confidence)
+    .slice(0, 6)
 
   if (loading) {
     return (
-      <div className="max-w-lg mx-auto px-4 py-6">
-        <h1 className="text-xl font-bold text-stone-900 mb-6">
-          🔍 Pattern Spotter
-        </h1>
+      <div className="max-w-lg mx-auto px-4 py-4">
+        <h2 className="text-[15px] font-semibold text-[#555] mb-3">
+          📊 Your Insights
+        </h2>
         <InsightsSkeleton />
       </div>
     )
   }
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-6">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-bold text-stone-900">
-          🔍 Pattern Spotter
-        </h1>
+    <div className="max-w-lg mx-auto px-4 py-4">
+      <div className="flex items-center justify-between mb-1">
+        <h2 className="text-[15px] font-semibold text-[#555]">
+          📊 Your Insights
+        </h2>
         {refreshed && (
-          <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full">
+          <span className="text-xs text-[#4a7c59] bg-[#f0f7f0] px-2 py-1 rounded-full">
             ✓ Updated
           </span>
         )}
       </div>
 
-      {/* Not enough data — progress ring */}
+      {/* Not enough data — progress ring + blurred preview (Screen 9) */}
       {daysLogged < 14 && correlations.length === 0 ? (
-        <div className="text-center py-16">
-          <div className="inline-flex items-center justify-center w-28 h-28 rounded-full relative mb-4">
-            {/* Background ring */}
-            <svg className="w-28 h-28 transform -rotate-90" viewBox="0 0 100 100">
-              <circle
-                cx="50" cy="50" r="42"
-                fill="none" stroke="#e7e5e4" strokeWidth="8"
-              />
-              <circle
-                cx="50" cy="50" r="42"
-                fill="none" stroke="#4ade80" strokeWidth="8"
-                strokeLinecap="round"
-                strokeDasharray={`${(daysLogged / 14) * 264} 264`}
-              />
-            </svg>
-            <span className="absolute text-stone-600 text-sm font-semibold">
-              {daysLogged}/14
-            </span>
+        <>
+          <div className="text-center py-8">
+            {/* Progress ring */}
+            <div className="inline-flex items-center justify-center w-[120px] h-[120px] rounded-full relative mb-3">
+              <svg className="w-[120px] h-[120px] transform -rotate-90" viewBox="0 0 100 100">
+                <circle
+                  cx="50" cy="50" r="42"
+                  fill="none" stroke="#e0e0e0" strokeWidth="8"
+                />
+                <circle
+                  cx="50" cy="50" r="42"
+                  fill="none" stroke="#4a7c59" strokeWidth="8"
+                  strokeLinecap="round"
+                  strokeDasharray={`${(daysLogged / 14) * 264} 264`}
+                />
+              </svg>
+              <span className="absolute text-[#4a7c59] text-sm font-semibold">
+                Day {daysLogged}
+              </span>
+            </div>
+            <p className="text-sm text-[#666]">
+              Keep logging — your first insights are brewing. ☕
+            </p>
+            <p className="text-xs text-[#767676] mt-1">
+              We need about 2 weeks of data to spot meaningful patterns. You're on your way!
+            </p>
           </div>
-          <p className="font-medium text-stone-700">Not enough data yet</p>
-          <p className="text-sm text-stone-500 mt-1">
-            Log entries for at least 14 days to see patterns.
-          </p>
-          <p className="text-sm text-stone-500 mt-1">
-            You've logged on <strong>{daysLogged}</strong> day{daysLogged !== 1 ? 's' : ''} so far — keep going!
-          </p>
-        </div>
+
+          {/* Blurred preview */}
+          <div className="blur-[4px] opacity-40 pointer-events-none select-none">
+            <div className="border border-[#e0d4f5] rounded-[10px] p-3 bg-[#faf7ff] mb-2.5">
+              <div className="text-[10px] uppercase tracking-[0.5px] text-[#8b7bb8] font-semibold">
+                🔍 Pattern Spotter
+              </div>
+              <div className="text-[13px] mt-1 leading-snug">
+                Sample insight will appear here when you have enough data...
+              </div>
+            </div>
+            <h3 className="text-[13px] font-semibold text-[#666] mb-1.5">
+              Top Suspected Triggers
+            </h3>
+            <div className="space-y-1.5">
+              <div className="flex items-center text-xs">
+                <span className="w-20 text-right pr-2 text-[#666]">Food A</span>
+                <div className="h-4 rounded bg-[#e89b5e]" style={{ width: '140px' }} />
+                <span className="pl-1.5 text-[11px] text-[#767676]">70%</span>
+              </div>
+              <div className="flex items-center text-xs">
+                <span className="w-20 text-right pr-2 text-[#666]">Food B</span>
+                <div className="h-4 rounded bg-[#e89b5e]" style={{ width: '100px' }} />
+                <span className="pl-1.5 text-[11px] text-[#767676]">50%</span>
+              </div>
+            </div>
+          </div>
+        </>
       ) : correlations.length === 0 ? (
         <div className="text-center py-16">
           <p className="text-4xl mb-3">🎉</p>
-          <p className="font-medium text-stone-700">No strong patterns found</p>
-          <p className="text-sm text-stone-500 mt-1">
+          <p className="font-medium text-[#333]">No strong patterns found</p>
+          <p className="text-sm text-[#767676] mt-1">
             Your data doesn't show any clear food-symptom correlations yet.
             Keep logging — patterns may emerge with more data.
           </p>
         </div>
       ) : (
-        /* Correlation cards */
-        <div className="space-y-3">
-          <p className="text-sm text-stone-500 mb-4">
-            Based on your logs, these foods may be linked to symptoms:
+        <>
+          {/* Subtitle — entry count */}
+          <p className="text-xs text-[#767676] mb-3">
+            Last 30 days · {totalEntries} entries logged
           </p>
 
-          {correlations.map((corr) => (
-            <div
-              key={corr.id}
-              className="bg-purple-50/50 border border-purple-200 rounded-2xl p-4"
-            >
-              <div className="flex items-start justify-between mb-2">
-                <div>
-                  <h3 className="font-semibold text-purple-900 capitalize">
-                    {corr.triggerValue}
-                  </h3>
-                  <p className="text-xs text-purple-600 mt-0.5">
-                    {corr.occurrences} of {corr.totalOpportunities} times →
-                    symptoms within 6h
-                  </p>
-                </div>
-                <span
-                  className={`text-xs font-medium px-2 py-1 rounded-full border ${confidenceColor(corr.confidence)}`}
-                >
-                  {confidenceLabel(corr.confidence)}
-                </span>
-              </div>
-
-              {/* Confidence bar */}
-              <div className="flex items-center gap-2 mb-3">
-                <div className="flex-1 h-2 bg-purple-100 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-purple-500 rounded-full transition-all"
-                    style={{ width: `${riskBar(corr.confidence)}%` }}
-                  />
-                </div>
-                <span className="text-xs text-purple-600 font-medium w-10 text-right">
-                  {riskBar(corr.confidence)}%
-                </span>
-              </div>
-
-              {/* Risk stats */}
-              <div className="flex gap-4 text-xs text-purple-700 mb-3">
-                <span>
-                  Risk: <strong>{corr.relativeRisk.toFixed(1)}x</strong>
-                </span>
-                <span>
-                  Consistency:{' '}
-                  <strong>{Math.round(corr.consistencyRatio * 100)}%</strong>
-                </span>
-              </div>
-
-              {/* Action */}
-              <button
-                onClick={() => startExperiment(corr.triggerValue)}
-                className="w-full py-2.5 text-sm font-medium text-purple-700 bg-purple-100 hover:bg-purple-200 rounded-xl transition-colors min-h-[44px]"
+          {/* Insight cards (Screen 10) */}
+          <div className="space-y-2.5">
+            {correlations.slice(0, 3).map((corr, i) => (
+              <div
+                key={corr.id}
+                className="border border-[#e0d4f5] rounded-[10px] p-3 bg-[#faf7ff]"
               >
-                🧪 Start Elimination Experiment
-              </button>
-            </div>
-          ))}
+                <div className="text-[10px] uppercase tracking-[0.5px] text-[#8b7bb8] font-semibold">
+                  {i === 0 ? '🔍 Pattern Spotter' : '📈 Pattern'}
+                </div>
+                <div className="text-[13px] mt-1 leading-snug">
+                  You report <strong>{corr.symptomType}</strong>{' '}
+                  <strong>{corr.occurrences} out of {corr.totalOpportunities} times</strong>{' '}
+                  within hours of eating <strong className="capitalize">{corr.triggerValue}</strong>.
+                  {corr.confidence >= 0.7
+                    ? ` ${corr.triggerValue.charAt(0).toUpperCase() + corr.triggerValue.slice(1)} might be a trigger.`
+                    : ''}
+                </div>
+                <div className="text-[11px] text-[#767676] mt-1">
+                  Confidence: {Math.round(corr.confidence * 100)}% ·
+                  Risk: {corr.relativeRisk.toFixed(1)}x ·{' '}
+                  <span className={`font-medium ${confidenceColor(corr.confidence)} px-1.5 py-0.5 rounded-full border text-[10px]`}>
+                    {confidenceLabel(corr.confidence)}
+                  </span>
+                </div>
+                {corr.confidence >= 0.5 && (
+                  <button
+                    onClick={() => startExperiment(corr.triggerValue)}
+                    className="mt-2 px-3 py-1.5 text-[11px] font-medium text-[#4a7c59] bg-white border border-[#4a7c59] rounded-lg hover:bg-[#f0f7f0] transition-colors min-h-[44px]"
+                  >
+                    🔬 Start Elimination Experiment
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
 
-          <p className="text-xs text-stone-400 text-center pt-4">
+          {/* Top Suspected Triggers — bar chart */}
+          {topTriggers.length > 0 && (
+            <div className="mt-4">
+              <h3 className="text-[13px] font-semibold text-[#666] mb-2">
+                Top Suspected Triggers
+              </h3>
+              <div className="space-y-1.5">
+                {topTriggers.map((corr) => {
+                  const pct = Math.round(corr.confidence * 100)
+                  return (
+                    <div key={corr.id} className="flex items-center text-xs">
+                      <span className="w-20 text-right pr-2 text-[#666] capitalize truncate">
+                        {corr.triggerValue}
+                      </span>
+                      <div className="flex-1 h-4 bg-[#eee] rounded overflow-hidden">
+                        <div
+                          className="h-full bg-[#e89b5e] rounded transition-all"
+                          style={{ width: `${pct}%` }}
+                        />
+                      </div>
+                      <span className="pl-1.5 text-[11px] text-[#767676] w-10 text-right">
+                        {pct}%
+                      </span>
+                    </div>
+                  )
+                })}
+              </div>
+              <p className="text-[11px] text-[#767676] mt-1">
+                % of times a symptom followed within 6 hours
+              </p>
+            </div>
+          )}
+
+          {/* Symptom Trend placeholder */}
+          <div className="mt-4">
+            <h3 className="text-[13px] font-semibold text-[#666] mb-2">
+              Symptom Trend (4 weeks)
+            </h3>
+            <div className="border border-dashed border-[#ccc] rounded-lg p-4 text-center text-xs text-[#767676] bg-[#fcfcfc]">
+              📉 Symptom frequency trend coming soon
+            </div>
+          </div>
+
+          <p className="text-xs text-[#767676] text-center pt-4">
             These are statistical patterns, not medical advice.
             Consult a healthcare provider for diagnosis.
           </p>
-        </div>
+        </>
       )}
     </div>
   )

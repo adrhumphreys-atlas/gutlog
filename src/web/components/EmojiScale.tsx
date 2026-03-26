@@ -23,7 +23,7 @@ interface EmojiScaleProps {
 export function EmojiScale({ options, value, onChange, label }: EmojiScaleProps) {
   return (
     <div>
-      <span className="block text-sm font-medium text-stone-700 mb-2">
+      <span className="block text-xs font-semibold text-[#666] mb-2">
         {label}
       </span>
       <div
@@ -39,14 +39,14 @@ export function EmojiScale({ options, value, onChange, label }: EmojiScaleProps)
             aria-checked={value === opt.value}
             aria-label={`${opt.label} (${opt.value})`}
             onClick={() => onChange(opt.value)}
-            className={`flex flex-col items-center gap-0.5 p-2 min-w-[44px] min-h-[44px] rounded-xl border-2 transition-colors ${
+            className={`flex flex-col items-center gap-0.5 p-2 min-w-[44px] min-h-[44px] rounded-lg border-2 transition-colors ${
               value === opt.value
-                ? 'border-green-400 bg-green-50'
-                : 'border-transparent hover:bg-stone-50'
+                ? 'border-[#4a7c59] bg-[#f0f7f0]'
+                : 'border-transparent hover:bg-[#fafaf9]'
             }`}
           >
             <span className="text-xl">{opt.emoji}</span>
-            <span className="text-[10px] text-stone-500 leading-tight">
+            <span className="text-[10px] text-[#767676] leading-tight">
               {opt.label}
             </span>
           </button>

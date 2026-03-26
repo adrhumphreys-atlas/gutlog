@@ -178,267 +178,267 @@ export function ExperimentsPage() {
   const completed = experiments.filter((e) => e.status === 'completed')
   const abandoned = experiments.filter((e) => e.status === 'abandoned')
 
+  const DURATION_OPTIONS = [
+    { value: '7', label: '7 days' },
+    { value: '14', label: '14 days' },
+    { value: '21', label: '21 days' },
+    { value: '30', label: '30 days' },
+  ]
+
+  const timeSince = (dateStr: string): string => {
+    const diff = Date.now() - new Date(dateStr).getTime()
+    const days = Math.floor(diff / (24 * 60 * 60 * 1000))
+    if (days < 7) return `${days} day${days !== 1 ? 's' : ''} ago`
+    const weeks = Math.floor(days / 7)
+    if (weeks < 5) return `${weeks} week${weeks !== 1 ? 's' : ''} ago`
+    const months = Math.floor(days / 30)
+    return `${months} month${months !== 1 ? 's' : ''} ago`
+  }
+
   return (
-    <div className="max-w-lg mx-auto px-4 py-6">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-bold text-stone-900">🧪 Experiments</h1>
+    <div className="max-w-lg mx-auto px-4 py-4">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-[15px] font-semibold text-[#555]">
+          🔬 Experiments
+        </h2>
         <button
           onClick={() => setShowCreate(true)}
-          className="px-4 py-2 text-sm font-medium bg-green-800 text-white rounded-xl hover:bg-green-700 transition-colors min-h-[44px]"
+          className="px-3 py-1.5 text-[11px] font-medium text-[#4a7c59] bg-white border border-[#4a7c59] rounded-lg hover:bg-[#f0f7f0] transition-colors min-h-[44px]"
         >
           + New
         </button>
       </div>
 
       {loading ? (
-        <div className="text-center py-16 text-stone-400">Loading...</div>
+        <div className="text-center py-16 text-[#767676]">Loading...</div>
       ) : experiments.length === 0 ? (
+        /* Screen 12 — Empty State */
         <div>
-          <div className="text-center py-8">
-            <p className="text-4xl mb-3">🧪</p>
-            <p className="font-medium text-stone-700">No experiments yet</p>
-            <p className="text-sm text-stone-500 mt-1">
-              Try an elimination experiment to find your triggers
+          <div className="text-center py-8 px-4">
+            <span className="text-5xl block mb-3">🧪</span>
+            <p className="text-sm text-[#666]">No experiments yet.</p>
+            <p className="text-[13px] text-[#767676] mt-1 leading-snug">
+              When you have enough data, we'll suggest your first elimination experiment to help identify your triggers.
             </p>
           </div>
 
           {/* Suggested experiments */}
-          <div className="mt-4">
-            <h2 className="text-sm font-semibold text-stone-500 uppercase tracking-wide mb-3">
-              Popular experiments to try
-            </h2>
-            <div className="space-y-2">
-              {SUGGESTED_EXPERIMENTS.map((preset) => (
-                <button
-                  key={preset.name}
-                  onClick={() => prefillExperiment(preset)}
-                  className="w-full text-left p-4 bg-white border border-stone-200 rounded-2xl hover:border-green-300 hover:bg-green-50/30 transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">{preset.emoji}</span>
-                    <div className="flex-1">
-                      <p className="font-semibold text-stone-900 text-sm">
-                        {preset.name}
-                      </p>
-                      <p className="text-xs text-stone-500 mt-0.5">
-                        {preset.days} days · {preset.foods.length} items tracked
-                      </p>
-                    </div>
-                    <span className="text-stone-400 text-sm">→</span>
-                  </div>
-                </button>
-              ))}
-            </div>
+          <div className="mt-4 space-y-2.5">
+            {SUGGESTED_EXPERIMENTS.map((preset) => (
+              <button
+                key={preset.name}
+                onClick={() => prefillExperiment(preset)}
+                className="w-full text-left border border-[#ddd] rounded-[10px] p-3 bg-white hover:bg-[#fafaf9] transition-colors"
+              >
+                <div className="text-[10px] uppercase tracking-[0.5px] text-[#767676] font-semibold">
+                  Suggested
+                </div>
+                <div className="text-[13px] mt-1">
+                  <strong>{preset.emoji} {preset.name}</strong>
+                </div>
+                <div className="text-xs text-[#666] mt-0.5">
+                  {preset.description}
+                </div>
+                <span className="inline-block mt-1.5 px-3 py-1 text-[11px] font-medium text-[#4a7c59] bg-white border border-[#4a7c59] rounded-lg">
+                  Start This Experiment
+                </span>
+              </button>
+            ))}
           </div>
         </div>
       ) : (
-        <div className="space-y-6">
-          {/* Active */}
-          {active.length > 0 && (
-            <section>
-              <h2 className="text-sm font-semibold text-stone-500 uppercase tracking-wide mb-3">
-                Active
-              </h2>
-              <div className="space-y-3">
-                {active.map((exp) => {
-                  const progress = daysProgress(exp)
-                  return (
-                    <button
-                      key={exp.id}
-                      onClick={() => navigate(`/experiments/${exp.id}`)}
-                      className="w-full text-left p-4 bg-white border-2 border-green-300 rounded-2xl hover:border-green-400 transition-colors"
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <span>{statusEmoji(exp.status)}</span>
-                        <span className="font-semibold text-stone-900">
-                          {exp.name}
-                        </span>
-                      </div>
-                      <p className="text-xs text-stone-500 mb-2">
-                        Eliminating: {(exp.eliminatedFoods as string[]).join(', ')}
-                      </p>
-                      {/* Progress bar */}
-                      <div className="flex items-center gap-2">
-                        <div className="flex-1 h-2 bg-stone-100 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-green-400 rounded-full transition-all"
-                            style={{
-                              width: `${(progress.current / progress.total) * 100}%`,
-                            }}
-                          />
-                        </div>
-                        <span className="text-xs text-stone-500">
-                          Day {progress.current}/{progress.total}
-                        </span>
-                      </div>
-                    </button>
-                  )
-                })}
-              </div>
-            </section>
-          )}
+        /* Screen 11 — With Data */
+        <div className="space-y-2.5">
+          {/* Active experiments */}
+          {active.map((exp) => {
+            const progress = daysProgress(exp)
+            return (
+              <button
+                key={exp.id}
+                onClick={() => navigate(`/experiments/${exp.id}`)}
+                className="w-full text-left border-2 border-[#4a7c59] rounded-[10px] p-3 bg-[#f0f7f0] hover:bg-[#e8f2ea] transition-colors"
+              >
+                <div className="text-[10px] uppercase tracking-[0.5px] text-[#4a7c59] font-semibold">
+                  Active — Day {progress.current} of {progress.total}
+                </div>
+                <div className="text-[13px] mt-1">
+                  <strong>{exp.name}</strong>
+                </div>
+                {exp.description && (
+                  <div className="text-xs text-[#555] mt-1">{exp.description}</div>
+                )}
+                {/* Progress bar */}
+                <div className="h-1.5 bg-[#ddd] rounded-full mt-1.5 overflow-hidden">
+                  <div
+                    className="h-full bg-[#4a7c59] rounded-full transition-all"
+                    style={{ width: `${(progress.current / progress.total) * 100}%` }}
+                  />
+                </div>
+                {/* Symptom comparison */}
+                {exp.baselineSymptomRate != null && exp.currentSymptomRate != null && (
+                  <div className="text-[11px] text-[#767676] mt-1.5">
+                    So far: Avg symptoms <strong>{exp.currentSymptomRate.toFixed(1)}/day</strong> vs{' '}
+                    <strong>{exp.baselineSymptomRate.toFixed(1)}/day</strong> before trial
+                  </div>
+                )}
+              </button>
+            )
+          })}
 
-          {/* Completed */}
-          {completed.length > 0 && (
-            <section>
-              <h2 className="text-sm font-semibold text-stone-500 uppercase tracking-wide mb-3">
-                Completed
-              </h2>
-              <div className="space-y-3">
-                {completed.map((exp) => (
-                  <button
-                    key={exp.id}
-                    onClick={() => navigate(`/experiments/${exp.id}`)}
-                    className="w-full text-left p-4 bg-white border border-stone-200 rounded-2xl hover:border-stone-300 transition-colors"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span>{statusEmoji(exp.status)}</span>
-                        <span className="font-semibold text-stone-900">
-                          {exp.name}
-                        </span>
-                      </div>
-                    </div>
-                    {exp.result && (
-                      <p className="text-sm mt-1 text-stone-600">
-                        {resultLabel(exp.result)}
-                      </p>
-                    )}
-                  </button>
-                ))}
+          {/* Completed experiments */}
+          {completed.map((exp) => (
+            <button
+              key={exp.id}
+              onClick={() => navigate(`/experiments/${exp.id}`)}
+              className="w-full text-left border border-[#ddd] rounded-[10px] p-3 bg-white hover:bg-[#fafaf9] transition-colors"
+            >
+              <div className="text-[10px] uppercase tracking-[0.5px] text-[#767676] font-semibold">
+                Completed — {exp.endDate ? timeSince(exp.endDate) : ''}
               </div>
-            </section>
-          )}
+              <div className="text-[13px] mt-1">
+                <strong>{exp.name}</strong>
+              </div>
+              {exp.result && (
+                <div className="text-xs text-[#4a7c59] mt-0.5">
+                  {resultLabel(exp.result)}
+                </div>
+              )}
+            </button>
+          ))}
 
-          {/* Abandoned */}
-          {abandoned.length > 0 && (
-            <section>
-              <h2 className="text-sm font-semibold text-stone-500 uppercase tracking-wide mb-3">
+          {/* Abandoned experiments */}
+          {abandoned.map((exp) => (
+            <button
+              key={exp.id}
+              onClick={() => navigate(`/experiments/${exp.id}`)}
+              className="w-full text-left border border-[#ddd] rounded-[10px] p-3 bg-white hover:bg-[#fafaf9] transition-colors opacity-60"
+            >
+              <div className="text-[10px] uppercase tracking-[0.5px] text-[#767676] font-semibold">
                 Abandoned
-              </h2>
-              <div className="space-y-3">
-                {abandoned.map((exp) => (
-                  <button
-                    key={exp.id}
-                    onClick={() => navigate(`/experiments/${exp.id}`)}
-                    className="w-full text-left p-4 bg-stone-50 border border-stone-200 rounded-2xl hover:border-stone-300 transition-colors opacity-60"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span>{statusEmoji(exp.status)}</span>
-                      <span className="font-medium text-stone-700">
-                        {exp.name}
-                      </span>
-                    </div>
-                  </button>
-                ))}
               </div>
-            </section>
-          )}
+              <div className="text-[13px] mt-1">
+                <strong>{exp.name}</strong>
+              </div>
+            </button>
+          ))}
 
-          {/* Suggested experiments (also shown when user has experiments) */}
-          {active.length === 0 && (
-            <section>
-              <h2 className="text-sm font-semibold text-stone-500 uppercase tracking-wide mb-3">
-                Try next
-              </h2>
-              <div className="space-y-2">
-                {SUGGESTED_EXPERIMENTS
-                  .filter((preset) => !experiments.some((e) => e.name === preset.name))
-                  .slice(0, 3)
-                  .map((preset) => (
-                    <button
-                      key={preset.name}
-                      onClick={() => prefillExperiment(preset)}
-                      className="w-full text-left p-3 bg-white border border-stone-200 rounded-2xl hover:border-green-300 hover:bg-green-50/30 transition-colors"
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="text-xl">{preset.emoji}</span>
-                        <div className="flex-1">
-                          <p className="font-medium text-stone-900 text-sm">{preset.name}</p>
-                          <p className="text-xs text-stone-500">{preset.days} days</p>
-                        </div>
-                        <span className="text-stone-400 text-sm">→</span>
-                      </div>
-                    </button>
-                  ))}
-              </div>
-            </section>
-          )}
+          {/* Suggested — shown when no active experiment */}
+          {active.length === 0 && SUGGESTED_EXPERIMENTS
+            .filter((preset) => !experiments.some((e) => e.name === preset.name))
+            .slice(0, 2)
+            .map((preset) => (
+              <button
+                key={preset.name}
+                onClick={() => prefillExperiment(preset)}
+                className="w-full text-left border border-[#ddd] rounded-[10px] p-3 bg-white hover:bg-[#fafaf9] transition-colors"
+              >
+                <div className="text-[10px] uppercase tracking-[0.5px] text-[#767676] font-semibold">
+                  Suggested by Pattern Spotter
+                </div>
+                <div className="text-[13px] mt-1">
+                  <strong>{preset.emoji} {preset.name}</strong>
+                </div>
+                <div className="text-xs text-[#666] mt-0.5">{preset.description}</div>
+                <span className="inline-block mt-1.5 px-3 py-1 text-[11px] font-medium text-[#4a7c59] bg-white border border-[#4a7c59] rounded-lg">
+                  Start This Experiment
+                </span>
+              </button>
+            ))}
         </div>
       )}
 
-      {/* Create Experiment Sheet */}
+      {/* Screen 13 — Create Experiment Bottom Sheet */}
       <BottomSheet
         isOpen={showCreate}
         onClose={closeSheet}
-        title="🧪 New Experiment"
+        title="🔬 Start Experiment"
         isDirty={name.length > 0 || eliminatedFoodsInput.length > 0}
       >
-        <div className="space-y-5">
+        <div className="space-y-3">
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-1">
-              Experiment name
+            <label className="text-xs font-semibold text-[#666] block mb-1">
+              Experiment Name
             </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder='e.g. "Eliminate dairy"'
-              className="w-full px-4 py-3 rounded-xl border border-stone-300 focus:border-green-400 focus:ring-2 focus:ring-green-100 outline-none text-sm"
+              placeholder='e.g. "Dairy-free trial"'
+              className="w-full px-2.5 py-2 rounded-md border border-[#ddd] focus:border-[#4a7c59] focus:ring-2 focus:ring-[#4a7c59/15] outline-none text-[13px]"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-1">
-              Foods to eliminate (comma-separated)
+            <label className="text-xs font-semibold text-[#666] block mb-1">
+              What to eliminate
             </label>
             <input
               type="text"
               value={eliminatedFoodsInput}
               onChange={(e) => setEliminatedFoodsInput(e.target.value)}
-              placeholder="dairy, milk, cheese, yogurt, butter"
-              className="w-full px-4 py-3 rounded-xl border border-stone-300 focus:border-green-400 focus:ring-2 focus:ring-green-100 outline-none text-sm"
-            />
-            <p className="text-xs text-stone-400 mt-1">
-              Include variations — "dairy, milk, cheese, yogurt, cream"
-            </p>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-stone-700 mb-1">
-              Duration (days)
-            </label>
-            <input
-              type="number"
-              value={durationDays}
-              onChange={(e) => setDurationDays(e.target.value)}
-              min="1"
-              max="90"
-              className="w-32 px-4 py-3 rounded-xl border border-stone-300 focus:border-green-400 focus:ring-2 focus:ring-green-100 outline-none text-sm"
+              placeholder="All dairy products (milk, cheese, yogurt, butter)"
+              className="w-full px-2.5 py-2 rounded-md border border-[#ddd] focus:border-[#4a7c59] focus:ring-2 focus:ring-[#4a7c59/15] outline-none text-[13px]"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-1">
-              Description (optional)
+            <label className="text-xs font-semibold text-[#666] block mb-1">
+              Duration
             </label>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              maxLength={1000}
-              rows={2}
-              placeholder="Why are you trying this..."
-              className="w-full px-4 py-3 rounded-xl border border-stone-300 focus:border-green-400 focus:ring-2 focus:ring-green-100 outline-none text-sm resize-none"
-            />
+            <div className="flex flex-wrap gap-1">
+              {DURATION_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => setDurationDays(opt.value)}
+                  className={`px-3.5 py-2 text-xs rounded-lg border-2 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors ${
+                    durationDays === opt.value
+                      ? 'border-[#4a7c59] bg-[#f0f7f0]'
+                      : 'border-transparent hover:bg-[#fafaf9]'
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
           </div>
+
+          {/* Auto-filled reason (shown when pre-filled from insights) */}
+          {suggestedFood && description && (
+            <div>
+              <label className="text-xs font-semibold text-[#666] block mb-1">
+                Why? (auto-filled from pattern)
+              </label>
+              <div className="text-xs text-[#666] p-2 bg-[#faf7ff] rounded-md">
+                {description}
+              </div>
+            </div>
+          )}
+
+          {/* Manual description (shown when NOT pre-filled) */}
+          {!suggestedFood && (
+            <div>
+              <label className="text-xs font-semibold text-[#666] block mb-1">
+                Description (optional)
+              </label>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                maxLength={1000}
+                rows={2}
+                placeholder="Why are you trying this..."
+                className="w-full px-2.5 py-2 rounded-md border border-[#ddd] focus:border-[#4a7c59] focus:ring-2 focus:ring-[#4a7c59/15] outline-none text-[13px] resize-none"
+              />
+            </div>
+          )}
 
           <button
             type="button"
             onClick={handleCreate}
             disabled={!name.trim() || !eliminatedFoodsInput.trim()}
-            className="w-full py-3 bg-green-800 text-white font-semibold rounded-xl hover:bg-green-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[44px]"
+            className="w-full py-2.5 bg-[#4a7c59] text-white font-semibold rounded-lg hover:bg-[#3d6a4a] disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[44px] text-sm mt-2"
           >
-            Start Experiment
+            🔬 Start Experiment
           </button>
         </div>
       </BottomSheet>

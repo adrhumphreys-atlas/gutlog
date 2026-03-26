@@ -96,7 +96,7 @@ export function MealForm({ onSave, onDelete, initialData, isEdit }: MealFormProp
     <div className="space-y-5">
       {/* Meal Type */}
       <div>
-        <span className="block text-sm font-medium text-stone-700 mb-2">
+        <span className="block text-xs font-semibold text-[#666] mb-2">
           Meal type
         </span>
         <div className="flex gap-1.5 flex-wrap">
@@ -105,14 +105,14 @@ export function MealForm({ onSave, onDelete, initialData, isEdit }: MealFormProp
               key={mt.value}
               type="button"
               onClick={() => setMealType(mt.value)}
-              className={`flex flex-col items-center gap-0.5 p-2 min-w-[44px] min-h-[44px] rounded-xl border-2 transition-colors ${
+              className={`flex flex-col items-center gap-0.5 p-2 min-w-[44px] min-h-[44px] rounded-lg border-2 transition-colors ${
                 mealType === mt.value
-                  ? 'border-green-400 bg-green-50'
-                  : 'border-transparent hover:bg-stone-50'
+                  ? 'border-[#4a7c59] bg-[#f0f7f0]'
+                  : 'border-transparent hover:bg-[#fafaf9]'
               }`}
             >
               <span className="text-xl">{mt.emoji}</span>
-              <span className="text-[10px] text-stone-500">{mt.label}</span>
+              <span className="text-[10px] text-[#767676]">{mt.label}</span>
             </button>
           ))}
         </div>
@@ -120,7 +120,7 @@ export function MealForm({ onSave, onDelete, initialData, isEdit }: MealFormProp
 
       {/* Foods */}
       <div>
-        <span className="block text-sm font-medium text-stone-700 mb-2">
+        <span className="block text-xs font-semibold text-[#666] mb-2">
           What did you eat?
         </span>
 
@@ -132,7 +132,7 @@ export function MealForm({ onSave, onDelete, initialData, isEdit }: MealFormProp
                 key={food}
                 type="button"
                 onClick={() => addFood(food)}
-                className="px-3 py-1.5 text-sm bg-green-50 text-green-800 rounded-full border border-green-200 hover:bg-green-100 transition-colors"
+                className="px-3 py-1.5 text-sm bg-[#f0f7f0] text-[#4a7c59] rounded-full border border-[#4a7c59/30] hover:bg-[#e0efe3] transition-colors"
               >
                 + {food}
               </button>
@@ -145,13 +145,13 @@ export function MealForm({ onSave, onDelete, initialData, isEdit }: MealFormProp
           {foods.filter(Boolean).map((food, i) => (
             <div
               key={i}
-              className="flex items-center gap-2 px-3 py-2 bg-stone-50 rounded-xl"
+              className="flex items-center gap-2 px-3 py-2 bg-[#fafaf9] rounded-lg"
             >
               <span className="flex-1 text-sm">{food}</span>
               <button
                 type="button"
                 onClick={() => removeFood(i)}
-                className="text-stone-400 hover:text-red-500 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                className="text-[#999] hover:text-red-500 min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label={`Remove ${food}`}
               >
                 ✕
@@ -178,31 +178,31 @@ export function MealForm({ onSave, onDelete, initialData, isEdit }: MealFormProp
                   ? 'Type a food and tap + to add'
                   : 'Add another food...'
               }
-              className="flex-1 px-4 py-3 rounded-xl border border-stone-300 focus:border-green-400 focus:ring-2 focus:ring-green-100 outline-none text-sm"
+              className="flex-1 px-2.5 py-2 rounded-md border border-[#ddd] focus:border-[#4a7c59] focus:ring-2 focus:ring-[#4a7c59]/15 outline-none text-sm"
             />
             <button
               type="button"
               onClick={() => addFood(foodInput)}
               disabled={!foodInput.trim()}
-              className="px-4 py-3 bg-green-100 text-green-800 font-bold rounded-xl hover:bg-green-200 disabled:opacity-30 disabled:cursor-not-allowed transition-colors min-w-[44px] min-h-[44px] text-lg"
+              className="px-4 py-3 bg-[#f0f7f0] text-[#4a7c59] font-bold rounded-lg hover:bg-[#e0efe3] disabled:opacity-30 disabled:cursor-not-allowed transition-colors min-w-[44px] min-h-[44px] text-lg"
               aria-label="Add food item"
             >
               +
             </button>
           </div>
           {foodInput.trim() && foods.filter(Boolean).length === 0 && (
-            <p className="text-xs text-stone-400 mt-1">
+            <p className="text-xs text-[#999] mt-1">
               Tap <strong>+</strong> or press Enter to add to your list
             </p>
           )}
           {suggestions.length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-stone-200 rounded-xl shadow-lg z-10 overflow-hidden">
+            <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-[#ddd] rounded-lg shadow-lg z-10 overflow-hidden">
               {suggestions.map((s) => (
                 <button
                   key={s}
                   type="button"
                   onClick={() => addFood(s)}
-                  className="w-full text-left px-4 py-2.5 text-sm hover:bg-green-50 transition-colors"
+                  className="w-full text-left px-4 py-2.5 text-sm hover:bg-[#f0f7f0] transition-colors"
                 >
                   {s}
                 </button>
@@ -214,7 +214,7 @@ export function MealForm({ onSave, onDelete, initialData, isEdit }: MealFormProp
 
       {/* Portion Size */}
       <div>
-        <span className="block text-sm font-medium text-stone-700 mb-2">
+        <span className="block text-xs font-semibold text-[#666] mb-2">
           Portion size (optional)
         </span>
         <div className="flex gap-1.5">
@@ -225,14 +225,14 @@ export function MealForm({ onSave, onDelete, initialData, isEdit }: MealFormProp
               onClick={() =>
                 setPortionSize(portionSize === p.value ? '' : p.value)
               }
-              className={`flex flex-col items-center gap-0.5 p-2 min-w-[44px] min-h-[44px] rounded-xl border-2 transition-colors ${
+              className={`flex flex-col items-center gap-0.5 p-2 min-w-[44px] min-h-[44px] rounded-lg border-2 transition-colors ${
                 portionSize === p.value
-                  ? 'border-green-400 bg-green-50'
-                  : 'border-transparent hover:bg-stone-50'
+                  ? 'border-[#4a7c59] bg-[#f0f7f0]'
+                  : 'border-transparent hover:bg-[#fafaf9]'
               }`}
             >
               <span className="text-xl">{p.emoji}</span>
-              <span className="text-[10px] text-stone-500">{p.label}</span>
+              <span className="text-[10px] text-[#767676]">{p.label}</span>
             </button>
           ))}
         </div>
@@ -240,7 +240,7 @@ export function MealForm({ onSave, onDelete, initialData, isEdit }: MealFormProp
 
       {/* Notes */}
       <div>
-        <label className="block text-sm font-medium text-stone-700 mb-1">
+        <label className="block text-xs font-semibold text-[#666] mb-1">
           Notes (optional)
         </label>
         <textarea
@@ -249,7 +249,7 @@ export function MealForm({ onSave, onDelete, initialData, isEdit }: MealFormProp
           maxLength={1000}
           rows={2}
           placeholder="Any additional details..."
-          className="w-full px-4 py-3 rounded-xl border border-stone-300 focus:border-green-400 focus:ring-2 focus:ring-green-100 outline-none text-sm resize-none"
+          className="w-full px-2.5 py-2 rounded-md border border-[#ddd] focus:border-[#4a7c59] focus:ring-2 focus:ring-[#4a7c59]/15 outline-none text-sm resize-none"
         />
       </div>
 
@@ -259,7 +259,7 @@ export function MealForm({ onSave, onDelete, initialData, isEdit }: MealFormProp
           type="button"
           onClick={handleSubmit}
           disabled={!mealType || (foods.filter(Boolean).length === 0 && !foodInput.trim())}
-          className="flex-1 py-3 bg-green-800 text-white font-semibold rounded-xl hover:bg-green-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[44px]"
+          className="flex-1 py-2.5 bg-[#4a7c59] text-white text-sm font-semibold rounded-lg hover:bg-[#3d6a4a] disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[44px]"
         >
           {isEdit ? 'Update' : 'Save'}
         </button>
@@ -267,7 +267,7 @@ export function MealForm({ onSave, onDelete, initialData, isEdit }: MealFormProp
           <button
             type="button"
             onClick={onDelete}
-            className="py-3 px-4 text-red-600 font-medium rounded-xl hover:bg-red-50 transition-colors min-h-[44px]"
+            className="py-2.5 px-3 text-red-600 text-sm font-medium rounded-lg hover:bg-red-50 transition-colors min-h-[44px]"
           >
             🗑 Delete
           </button>

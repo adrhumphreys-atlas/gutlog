@@ -50,7 +50,7 @@ export function BowelForm({ onSave, onDelete, initialData, isEdit }: BowelFormPr
 
       {/* Urgency */}
       <div>
-        <span className="block text-sm font-medium text-stone-700 mb-2">
+        <span className="block text-xs font-semibold text-[#666] mb-2">
           Urgency (optional)
         </span>
         <div className="flex gap-2 flex-wrap">
@@ -61,10 +61,10 @@ export function BowelForm({ onSave, onDelete, initialData, isEdit }: BowelFormPr
               onClick={() =>
                 setUrgency(urgency === opt.value ? '' : opt.value)
               }
-              className={`px-3 py-2 text-sm rounded-xl border transition-colors min-h-[44px] ${
+              className={`px-3 py-2 text-xs rounded-lg border transition-colors min-h-[44px] ${
                 urgency === opt.value
-                  ? 'border-green-400 bg-green-50 text-green-800'
-                  : 'border-stone-200 text-stone-600 hover:bg-stone-50'
+                  ? 'border-[#4a7c59] bg-[#f0f7f0] text-[#4a7c59]'
+                  : 'border-[#ddd] text-[#666] hover:bg-[#fafaf9]'
               }`}
             >
               {opt.label}
@@ -80,24 +80,24 @@ export function BowelForm({ onSave, onDelete, initialData, isEdit }: BowelFormPr
             type="checkbox"
             checked={blood}
             onChange={(e) => setBlood(e.target.checked)}
-            className="w-5 h-5 rounded border-stone-300 text-red-600 focus:ring-red-200"
+            className="w-5 h-5 rounded border-[#ddd] text-red-600 focus:ring-red-200"
           />
-          <span className="text-sm text-stone-700">🩸 Blood</span>
+          <span className="text-sm text-[#555]">🩸 Blood</span>
         </label>
         <label className="flex items-center gap-2 cursor-pointer min-h-[44px]">
           <input
             type="checkbox"
             checked={mucus}
             onChange={(e) => setMucus(e.target.checked)}
-            className="w-5 h-5 rounded border-stone-300 text-yellow-600 focus:ring-yellow-200"
+            className="w-5 h-5 rounded border-[#ddd] text-yellow-600 focus:ring-yellow-200"
           />
-          <span className="text-sm text-stone-700">💧 Mucus</span>
+          <span className="text-sm text-[#555]">💧 Mucus</span>
         </label>
       </div>
 
       {/* Notes */}
       <div>
-        <label className="block text-sm font-medium text-stone-700 mb-1">
+        <label className="block text-xs font-semibold text-[#666] mb-1">
           Notes (optional)
         </label>
         <textarea
@@ -106,7 +106,7 @@ export function BowelForm({ onSave, onDelete, initialData, isEdit }: BowelFormPr
           maxLength={1000}
           rows={2}
           placeholder="Any additional details..."
-          className="w-full px-4 py-3 rounded-xl border border-stone-300 focus:border-green-400 focus:ring-2 focus:ring-green-100 outline-none text-sm resize-none"
+          className="w-full px-2.5 py-2 rounded-md border border-[#ddd] focus:border-[#4a7c59] focus:ring-2 focus:ring-[#4a7c59]/15 outline-none text-sm resize-none"
         />
       </div>
 
@@ -116,7 +116,7 @@ export function BowelForm({ onSave, onDelete, initialData, isEdit }: BowelFormPr
           type="button"
           onClick={handleSubmit}
           disabled={bristolType === null}
-          className="flex-1 py-3 bg-green-800 text-white font-semibold rounded-xl hover:bg-green-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[44px]"
+          className="flex-1 py-2.5 bg-[#4a7c59] text-white text-sm font-semibold rounded-lg hover:bg-[#3d6a4a] disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[44px]"
         >
           {isEdit ? 'Update' : 'Save'}
         </button>
@@ -124,7 +124,7 @@ export function BowelForm({ onSave, onDelete, initialData, isEdit }: BowelFormPr
           <button
             type="button"
             onClick={onDelete}
-            className="py-3 px-4 text-red-600 font-medium rounded-xl hover:bg-red-50 transition-colors min-h-[44px]"
+            className="py-2.5 px-3 text-red-600 text-sm font-medium rounded-lg hover:bg-red-50 transition-colors min-h-[44px]"
           >
             🗑 Delete
           </button>

@@ -10,24 +10,25 @@ import { ImpactForm } from '../components/forms/ImpactForm'
 import { NoteForm } from '../components/forms/NoteForm'
 import { api, ApiRequestError } from '../lib/api'
 import { TimelineSkeleton } from '../components/Skeleton'
+import { CalendarPicker } from '../components/CalendarPicker'
 
 // ─── Entry type config ───────────────────────────────────────────────
 
 const ENTRY_TYPES = [
-  { type: 'meal', emoji: '🍽️', label: 'Meal', dot: 'bg-orange-500' },
-  { type: 'symptom', emoji: '🤕', label: 'Symptom', dot: 'bg-red-500' },
-  { type: 'bowel', emoji: '💩', label: 'BM', dot: 'bg-purple-500' },
-  { type: 'emotion', emoji: '😊', label: 'Mood', dot: 'bg-blue-500' },
-  { type: 'impact', emoji: '⚡', label: 'Impact', dot: 'bg-yellow-500' },
-  { type: 'note', emoji: '📝', label: 'Note', dot: 'bg-gray-500' },
+  { type: 'meal', emoji: '🍽', label: 'Meal', shortLabel: 'Meal', dotFill: '#a8d5a2', dotBorder: '#6db365', labelColor: '#6db365' },
+  { type: 'symptom', emoji: '⚡', label: 'Symptom', shortLabel: 'Symptom', dotFill: '#f5c6a0', dotBorder: '#e89b5e', labelColor: '#e89b5e' },
+  { type: 'bowel', emoji: '💩', label: 'Bowel Movement', shortLabel: 'BM', dotFill: '#c4b8e0', dotBorder: '#8b7bb8', labelColor: '#8b7bb8' },
+  { type: 'emotion', emoji: '💭', label: 'Mood Check', shortLabel: 'Mood', dotFill: '#a0c4f5', dotBorder: '#5e8be8', labelColor: '#5e8be8' },
+  { type: 'impact', emoji: '📋', label: 'Daily Impact', shortLabel: 'Impact', dotFill: '#f5a0a0', dotBorder: '#e85e5e', labelColor: '#e85e5e' },
+  { type: 'note', emoji: '📝', label: 'Note', shortLabel: 'Note', dotFill: '#e0e0e0', dotBorder: '#999999', labelColor: '#999999' },
 ] as const
 
 const SHEET_TITLES: Record<string, string> = {
-  meal: '🍽️ Log Meal',
-  symptom: '🤕 Log Symptom',
+  meal: '🍽 Log Meal',
+  symptom: '⚡ Log Symptom',
   bowel: '💩 Log BM',
-  emotion: '😊 Log Mood',
-  impact: '⚡ Log Impact',
+  emotion: '💭 Log Mood',
+  impact: '📋 Log Impact',
   note: '📝 Add Note',
 }
 
@@ -41,7 +42,7 @@ const SHEET_TITLES: Record<string, string> = {
  * │  🔴 14:00  Bloating 3/5 │
  * │  🔵 15:30  Mood 😊      │
  * ├─────────────────────────┤
- * │  🍽️  🤕  💩  😊  ⚡  📝  │  QuickLogGrid
+ * │  🍽  ⚡  💩  💭  📋  📝  │  QuickLogGrid
  * └─────────────────────────┘
  */
 /** Return today's date as YYYY-MM-DD in the user's local timezone. */
@@ -58,10 +59,13 @@ export function HomePage() {
   const [selectedDate, setSelectedDate] = useState(localDateStr())
   const [entries, setEntries] = useState<any[]>([])
   const [streak, setStreak] = useState(0)
-  const [loading, setLoading] = useState(true)
+  const [initialLoad, setInitialLoad] = useState(true)
+  const [transitioning, setTransitioning] = useState(false)
   const [saving, setSaving] = useState(false)
   const [editEntry, setEditEntry] = useState<any>(null)
   const [hasEverLogged, setHasEverLogged] = useState(true)
+  const [calendarOpen, setCalendarOpen] = useState(false)
+  const [justAddedId, setJustAddedId] = useState<string | null>(null)
 
   const activeSheet = searchParams.get('sheet')
   const editId = searchParams.get('edit')
@@ -70,7 +74,7 @@ export function HomePage() {
   // ─── Data fetching ──────────────────────────────────────────────
 
   const loadEntries = useCallback(async () => {
-    setLoading(true)
+    setTransitioning(true)
     try {
       const data = await api.getEntries(selectedDate)
       setEntries(data)
@@ -89,7 +93,8 @@ export function HomePage() {
       if (err instanceof ApiRequestError && err.status === 401) return
       console.error('Failed to load entries:', err)
     }
-    setLoading(false)
+    setInitialLoad(false)
+    setTransitioning(false)
   }, [selectedDate])
 
   const loadStreak = useCallback(async () => {
@@ -123,7 +128,10 @@ export function HomePage() {
     d.setDate(d.getDate() + direction)
     const today = localDateStr()
     const newDate = localDateStr(d)
-    if (newDate <= today) setSelectedDate(newDate)
+    if (newDate <= today) {
+      setSelectedDate(newDate)
+      setJustAddedId(null)
+    }
   }
 
   const openSheet = (type: string) => setSearchParams({ sheet: type })
@@ -136,13 +144,18 @@ export function HomePage() {
       if (editId && editEntry) {
         await api.updateEntry(editId, data)
         showToast('Updated ✓')
+        setJustAddedId(editId)
       } else {
-        await api.createEntry(data)
+        const result = await api.createEntry(data)
         showToast('Saved ✓')
+        if (result?.id) setJustAddedId(result.id)
       }
       closeSheet()
       loadEntries()
       loadStreak()
+
+      // Clear the "just added" highlight after 3 seconds
+      setTimeout(() => setJustAddedId(null), 3000)
     } catch (err) {
       console.error('Save failed:', err)
       alert(err instanceof Error ? err.message : 'Failed to save. Please try again.')
@@ -202,20 +215,56 @@ export function HomePage() {
     return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
   }
 
-  const getEntrySummary = (entry: any): string => {
+  const BRISTOL_LABELS: Record<number, string> = {
+    1: 'Hard lumps',
+    2: 'Lumpy sausage',
+    3: 'Cracked sausage',
+    4: 'Smooth & soft',
+    5: 'Soft blobs',
+    6: 'Mushy',
+    7: 'Watery',
+  }
+
+  const MOOD_EMOJIS: Record<number, string> = {
+    1: '😄', 2: '🙂', 3: '😐', 4: '😞', 5: '😩',
+  }
+
+  const getEntryLabel = (entry: any, config: typeof ENTRY_TYPES[number]): string => {
+    // Meals show the meal type (Breakfast, Lunch, etc.) instead of generic "Meal"
+    if (entry.type === 'meal' && entry.mealType) {
+      return entry.mealType
+    }
+    return config.label
+  }
+
+  const getEntrySummary = (entry: any): React.ReactNode => {
+    const tag = (text: string) => (
+      <span className="inline-block text-[11px] px-1.5 py-0 rounded-[10px] bg-[#f0f0f0] text-[#555] ml-1">{text}</span>
+    )
+
     switch (entry.type) {
       case 'meal': {
         const foods = (entry.foods as Array<{ name: string }>) || []
-        return `${entry.mealType} — ${foods.map((f) => f.name).join(', ')}`
+        return foods.map((f) => f.name).join(', ')
       }
       case 'symptom':
-        return `${entry.symptomType} ${entry.severity}/5`
-      case 'bowel':
-        return `Type ${entry.bristolType}`
-      case 'emotion':
-        return `Mood ${entry.mood}/5`
-      case 'impact':
-        return entry.impactSeverity
+        return <>{entry.symptomType} {tag(`${entry.severity}/5`)}</>
+      case 'bowel': {
+        const label = BRISTOL_LABELS[entry.bristolType] || ''
+        const urgencyLabel = entry.urgency || 'No urgency'
+        return <>Type {entry.bristolType}{label ? ` (${label})` : ''} {tag(urgencyLabel)}</>
+      }
+      case 'emotion': {
+        const emoji = MOOD_EMOJIS[entry.mood] || ''
+        const notesText = entry.notes ? entry.notes.slice(0, 50) : ''
+        return notesText ? `${notesText} ${emoji}` : `Mood ${entry.mood}/5 ${emoji}`
+      }
+      case 'impact': {
+        const desc = entry.description ? entry.description.slice(0, 50) : ''
+        return desc
+          ? <>{desc} {tag(entry.impactSeverity)}</>
+          : <>{entry.impactSeverity}</>
+      }
       case 'note':
         return entry.notes?.slice(0, 60) + (entry.notes?.length > 60 ? '…' : '')
       default:
@@ -226,42 +275,63 @@ export function HomePage() {
   const today = localDateStr()
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-6">
+    <div className="max-w-lg mx-auto px-4 py-4">
       {/* Date Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-3">
         <button
           onClick={() => navigateDate(-1)}
-          className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl hover:bg-stone-100 text-lg"
+          className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-[#f5f5f5] text-lg text-[#767676]"
           aria-label="Previous day"
         >
           ‹
         </button>
-        <div className="text-center">
-          <h1 className="text-lg font-semibold text-stone-900">
-            {formatDate(selectedDate)}
+        <button
+          onClick={() => setCalendarOpen((o) => !o)}
+          className="text-center cursor-pointer hover:bg-[#fafaf9] rounded-lg px-3 py-1.5 transition-colors"
+          aria-label="Open calendar picker"
+          aria-expanded={calendarOpen}
+        >
+          <h1 className="text-lg font-semibold text-[#333]">
+            {formatDayLabel(selectedDate)}{' '}
+            <span className="text-xs font-semibold text-[#4a7c59]" title="Streak">🌿 {streak}</span>
           </h1>
-          <p className="text-sm text-stone-500">🌿 Streak: {streak}</p>
-        </div>
+          <div className="text-xs text-[#767676]">
+            {formatFullDate(selectedDate)}
+            <span className="ml-1 text-[#767676]">{calendarOpen ? '▲' : '▼'}</span>
+          </div>
+        </button>
         <button
           onClick={() => navigateDate(1)}
           disabled={selectedDate === today}
-          className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl hover:bg-stone-100 disabled:opacity-30 text-lg"
+          className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-[#f5f5f5] disabled:opacity-30 text-lg text-[#767676]"
           aria-label="Next day"
         >
           ›
         </button>
       </div>
 
+      {/* Calendar Date Picker Dropdown */}
+      {calendarOpen && (
+        <CalendarPicker
+          selectedDate={selectedDate}
+          onSelectDate={(date) => {
+            setSelectedDate(date)
+            setCalendarOpen(false)
+          }}
+          onClose={() => setCalendarOpen(false)}
+        />
+      )}
+
       {/* Timeline */}
-      <div className="mb-8 min-h-[200px]">
-        {loading ? (
+      <div className={`mb-3 min-h-[200px] transition-opacity duration-150 ${transitioning && !initialLoad ? 'opacity-60' : 'opacity-100'}`}>
+        {initialLoad ? (
           <TimelineSkeleton />
-        ) : entries.length === 0 ? (
-          <div className="text-center py-12 text-stone-400">
+        ) : entries.length === 0 && !transitioning ? (
+          <div className="text-center py-12 text-[#999]">
             <p className="text-4xl mb-3">🌿</p>
             {!hasEverLogged ? (
               <>
-                <p className="font-medium text-stone-700">Welcome to GutLog!</p>
+                <p className="font-medium text-[#555]">Welcome to GutLog!</p>
                 <p className="text-sm mt-1">Log your first meal to start tracking</p>
               </>
             ) : (
@@ -272,23 +342,49 @@ export function HomePage() {
             )}
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="relative pl-7">
+            {/* Vertical timeline line */}
+            <div className="absolute left-[9px] top-0 bottom-0 w-0.5 bg-[#e0e0e0]" />
+
             {entries.map((entry) => {
               const config = getEntryConfig(entry.type)
+              const isJustAdded = entry.id === justAddedId
               return (
                 <button
                   key={entry.id}
                   onClick={() => openEdit(entry.id)}
-                  className="w-full flex items-center gap-3 p-3 bg-white rounded-2xl border border-stone-200 hover:border-green-300 transition-colors text-left"
+                  className={`relative w-full mb-3.5 px-2.5 py-2.5 bg-[#fefefe] rounded-lg border transition-colors text-left ${
+                    isJustAdded
+                      ? 'border-[#4a7c59] shadow-just-added animate-entry-fade-in'
+                      : 'border-[#e8e8e8] hover:border-[#a3c4a9]'
+                  }`}
                 >
-                  <div className={`w-2.5 h-2.5 rounded-full ${config.dot} flex-shrink-0`} />
-                  <span className="text-xs text-stone-400 w-14 flex-shrink-0">
+                  {/* Timeline dot */}
+                  <div
+                    className="absolute -left-[22px] top-3.5 w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: config.dotFill, border: `2px solid ${config.dotBorder}` }}
+                  />
+
+                  {/* Time */}
+                  <div className="text-[11px] text-[#767676] mb-0.5">
                     {formatTime(entry.timestamp)}
-                  </span>
-                  <span className="text-sm text-stone-700 flex-1 truncate">
+                  </div>
+
+                  {/* Entry type label */}
+                  <div
+                    className="text-[10px] uppercase tracking-wide font-semibold mb-0.5"
+                    style={{ color: config.labelColor }}
+                  >
+                    {config.emoji} {getEntryLabel(entry, config)}
+                    {isJustAdded && (
+                      <span className="ml-1.5 text-[#4a7c59] normal-case tracking-normal">· ✨ just added</span>
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="text-[13px] text-[#333] truncate">
                     {getEntrySummary(entry)}
-                  </span>
-                  <span className="text-lg flex-shrink-0">{config.emoji}</span>
+                  </div>
                 </button>
               )
             })}
@@ -297,16 +393,17 @@ export function HomePage() {
       </div>
 
       {/* Quick Log Grid */}
-      <div className="grid grid-cols-3 gap-3">
+      <h3 className="text-[13px] font-semibold text-[#666] mt-4 mb-1.5">Quick Log</h3>
+      <div className="grid grid-cols-3 gap-2">
         {ENTRY_TYPES.map((entry) => (
           <button
             key={entry.type}
             onClick={() => openSheet(entry.type)}
-            className="flex flex-col items-center gap-1.5 p-4 bg-white rounded-2xl border border-stone-200 hover:border-green-400 hover:bg-green-50 transition-colors min-h-[44px]"
+            className="flex flex-col items-center gap-1 px-2 py-3 bg-white rounded-[10px] border border-[#ddd] hover:border-[#4a7c59] hover:bg-[#f0f7f0] transition-colors min-h-[56px] min-w-[56px]"
           >
             <span className="text-2xl">{entry.emoji}</span>
-            <span className="text-xs font-medium text-stone-600">
-              {entry.label}
+            <span className="text-xs font-medium text-[#666]">
+              {entry.shortLabel}
             </span>
           </button>
         ))}
@@ -325,7 +422,7 @@ export function HomePage() {
   )
 }
 
-function formatDate(dateStr: string): string {
+function formatDayLabel(dateStr: string): string {
   const d = new Date(dateStr + 'T12:00:00')
   const today = localDateStr()
   const yd = new Date()
@@ -335,9 +432,15 @@ function formatDate(dateStr: string): string {
   if (dateStr === today) return 'Today'
   if (dateStr === yesterday) return 'Yesterday'
 
+  return d.toLocaleDateString('en-US', { weekday: 'long' })
+}
+
+function formatFullDate(dateStr: string): string {
+  const d = new Date(dateStr + 'T12:00:00')
   return d.toLocaleDateString('en-US', {
-    weekday: 'short',
-    month: 'short',
+    weekday: 'long',
     day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   })
 }
