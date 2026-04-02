@@ -78,7 +78,7 @@ export function MoodForm({ onSave, onDelete, initialData, isEdit }: MoodFormProp
 
       {/* Notes */}
       <div>
-        <label className="block text-xs font-semibold text-[#666] mb-1">
+        <label className="block text-xs font-semibold text-[var(--text-label)] mb-1">
           Notes (optional)
         </label>
         <textarea
@@ -87,7 +87,7 @@ export function MoodForm({ onSave, onDelete, initialData, isEdit }: MoodFormProp
           maxLength={1000}
           rows={2}
           placeholder="What's on your mind..."
-          className="w-full px-2.5 py-2 rounded-md border border-[#ddd] focus:border-[#4a7c59] focus:ring-2 focus:ring-[#4a7c59]/15 outline-none text-sm resize-none"
+          className="w-full px-2.5 py-2 rounded-md border border-[var(--border-default)] focus:border-[var(--green-primary)] focus:ring-2 focus:ring-[var(--green-primary)]/15 outline-none text-sm resize-none bg-[var(--bg-input)] text-[var(--text-primary)]"
         />
       </div>
 
@@ -97,7 +97,7 @@ export function MoodForm({ onSave, onDelete, initialData, isEdit }: MoodFormProp
           type="button"
           onClick={handleSubmit}
           disabled={mood === null}
-          className="flex-1 py-2.5 bg-[#4a7c59] text-white text-sm font-semibold rounded-lg hover:bg-[#3d6a4a] disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[44px]"
+          className="flex-1 py-2.5 bg-[var(--green-primary)] text-white text-sm font-semibold rounded-lg hover:bg-[var(--green-hover)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[44px]"
         >
           {isEdit ? 'Update' : 'Save'}
         </button>
@@ -105,7 +105,7 @@ export function MoodForm({ onSave, onDelete, initialData, isEdit }: MoodFormProp
           <button
             type="button"
             onClick={onDelete}
-            className="py-2.5 px-3 text-red-600 text-sm font-medium rounded-lg hover:bg-red-50 transition-colors min-h-[44px]"
+            className="py-2.5 px-3 text-[var(--danger-text)] text-sm font-medium rounded-lg hover:bg-[var(--danger-bg-hover)] transition-colors min-h-[44px]"
           >
             🗑 Delete
           </button>

@@ -30,13 +30,13 @@ export class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-dvh flex items-center justify-center bg-[#fafaf9] px-4">
+        <div className="min-h-dvh flex items-center justify-center bg-[var(--bg-primary)] px-4">
           <div className="max-w-sm text-center">
             <p className="text-4xl mb-4">😵</p>
-            <h1 className="text-[15px] font-bold text-[#333] mb-2">
+            <h1 className="text-[15px] font-bold text-[var(--text-primary)] mb-2">
               Something went wrong
             </h1>
-            <p className="text-xs text-[#666] mb-6">
+            <p className="text-xs text-[var(--text-label)] mb-6">
               {this.state.error?.message || 'An unexpected error occurred.'}
             </p>
             <button
@@ -44,7 +44,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 this.setState({ hasError: false, error: null })
                 window.location.href = '/'
               }}
-              className="px-6 py-3 bg-[#4a7c59] text-white font-semibold rounded-lg hover:bg-[#3d6a4a] transition-colors min-h-[44px]"
+              className="px-6 py-3 bg-[var(--green-primary)] text-white font-semibold rounded-lg hover:bg-[var(--green-hover)] transition-colors min-h-[44px]"
             >
               Go back home
             </button>

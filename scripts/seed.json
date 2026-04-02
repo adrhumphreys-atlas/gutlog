@@ -1,8 +1,663 @@
 {
   "entries": [
     {
+      "type": "emotion",
+      "timestamp": "2026-03-03T07:00:00Z",
+      "mood": 4,
+      "stressLevel": 1,
+      "sleepQuality": 1,
+      "anxietyLevel": 5
+    },
+    {
       "type": "meal",
-      "timestamp": "2026-02-23T07:36:00Z",
+      "timestamp": "2026-03-03T08:38:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Granola",
+          "portion": "1/2 cup"
+        },
+        {
+          "name": "Orange juice",
+          "portion": "1 glass"
+        },
+        {
+          "name": "Toast",
+          "portion": "2 slices"
+        }
+      ],
+      "notes": "Ate out at a restaurant"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-03T11:44:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Chicken salad",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Rice bowl",
+          "portion": "1 bowl"
+        }
+      ],
+      "notes": "Ate out at a restaurant"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-03T15:09:00Z",
+      "mealType": "snack",
+      "foods": [
+        {
+          "name": "Peanut butter toast",
+          "portion": "1 slice"
+        }
+      ],
+      "portionSize": "large"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-03T19:06:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Mashed potatoes",
+          "portion": "1 cup"
+        },
+        {
+          "name": "Pasta with marinara",
+          "portion": "1 plate"
+        }
+      ],
+      "portionSize": "large",
+      "notes": "Ate too fast"
+    },
+    {
+      "type": "note",
+      "timestamp": "2026-03-03T21:03:00Z",
+      "notes": "Long walk after dinner helped"
+    },
+    {
+      "type": "impact",
+      "timestamp": "2026-03-03T22:43:00Z",
+      "impactSeverity": "mild",
+      "affectedActivities": [
+        "sleep",
+        "exercise",
+        "work"
+      ],
+      "description": "Slight discomfort but manageable"
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-04T07:00:00Z",
+      "mood": 2,
+      "stressLevel": 4,
+      "sleepQuality": 4
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-04T09:18:00Z",
+      "bristolType": 2,
+      "urgency": "mild"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-04T11:24:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Rice bowl",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Burrito bowl",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Sushi",
+          "portion": "8 pieces"
+        },
+        {
+          "name": "Bean burrito",
+          "portion": "1 burrito"
+        }
+      ],
+      "portionSize": "small",
+      "notes": "Ate too fast"
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-04T12:17:00Z",
+      "symptomType": "gas",
+      "severity": 4,
+      "location": "upper_left",
+      "notes": "Started after lunch"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-04T20:18:00Z",
+      "bristolType": 7
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-04T20:22:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Baked chicken thighs",
+          "portion": "2 thighs"
+        },
+        {
+          "name": "Grilled salmon",
+          "portion": "1 fillet"
+        },
+        {
+          "name": "Spicy wings",
+          "portion": "6 wings"
+        }
+      ],
+      "notes": "Enjoyed this one"
+    },
+    {
+      "type": "impact",
+      "timestamp": "2026-03-04T22:43:00Z",
+      "impactSeverity": "severe",
+      "affectedActivities": [
+        "commute"
+      ]
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-04T23:26:00Z",
+      "symptomType": "pain",
+      "severity": 5,
+      "notes": "Gets worse when sitting"
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-05T08:00:00Z",
+      "mood": 1,
+      "stressLevel": 5
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-05T08:18:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Banana",
+          "portion": "1 medium"
+        },
+        {
+          "name": "Greek yogurt",
+          "portion": "1 cup"
+        }
+      ]
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-05T08:21:00Z",
+      "bristolType": 6,
+      "urgency": "mild"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-05T11:05:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "BLT sandwich",
+          "portion": "1 sandwich"
+        },
+        {
+          "name": "Lentil soup",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Garlic bread",
+          "portion": "3 pieces"
+        }
+      ],
+      "portionSize": "huge",
+      "notes": "Ate out at a restaurant"
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-05T13:43:00Z",
+      "symptomType": "bloating",
+      "severity": 3,
+      "notes": "Gets worse when sitting"
+    },
+    {
+      "type": "note",
+      "timestamp": "2026-03-05T17:31:00Z",
+      "notes": "Need to cut back on coffee"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-05T18:20:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Tacos",
+          "portion": "3 tacos"
+        },
+        {
+          "name": "Roasted vegetables",
+          "portion": "1 cup"
+        },
+        {
+          "name": "Lamb chops",
+          "portion": "3 chops"
+        },
+        {
+          "name": "Fried onion rings",
+          "portion": "1 serving"
+        }
+      ],
+      "notes": "Tried a new recipe"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-05T20:23:00Z",
+      "bristolType": 6
+    },
+    {
+      "type": "impact",
+      "timestamp": "2026-03-05T21:11:00Z",
+      "impactSeverity": "severe",
+      "affectedActivities": [
+        "commute",
+        "cooking",
+        "sleep"
+      ]
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-06T08:01:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Banana",
+          "portion": "1 medium"
+        }
+      ],
+      "notes": "Meal prep from Sunday"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-06T08:06:00Z",
+      "bristolType": 1,
+      "urgency": "moderate"
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-06T09:00:00Z",
+      "mood": 2,
+      "stressLevel": 5,
+      "sleepQuality": 1
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-06T12:43:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Soup",
+          "portion": "1 bowl"
+        }
+      ],
+      "portionSize": "large"
+    },
+    {
+      "type": "note",
+      "timestamp": "2026-03-06T14:53:00Z",
+      "notes": "Long walk after dinner helped"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-06T19:43:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Steak",
+          "portion": "6 oz"
+        }
+      ]
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-07T08:00:00Z",
+      "mood": 1,
+      "stressLevel": 5,
+      "sleepQuality": 4,
+      "anxietyLevel": 3,
+      "notes": "Stress from work deadlines"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-07T08:05:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Avocado toast",
+          "portion": "1 slice"
+        },
+        {
+          "name": "Scrambled eggs",
+          "portion": "2 eggs"
+        },
+        {
+          "name": "Smoothie",
+          "portion": "1 glass"
+        }
+      ],
+      "portionSize": "normal",
+      "notes": "Ate out at a restaurant"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-07T11:02:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Sushi",
+          "portion": "8 pieces"
+        },
+        {
+          "name": "Caesar salad",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Falafel wrap",
+          "portion": "1 wrap"
+        }
+      ]
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-07T16:04:00Z",
+      "mealType": "snack",
+      "foods": [
+        {
+          "name": "Protein bar",
+          "portion": "1 bar"
+        }
+      ],
+      "notes": "Meal prep from Sunday"
+    },
+    {
+      "type": "note",
+      "timestamp": "2026-03-07T16:40:00Z",
+      "notes": "Need to cut back on coffee"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-07T19:34:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Tacos",
+          "portion": "3 tacos"
+        },
+        {
+          "name": "Bean burrito",
+          "portion": "1 burrito"
+        }
+      ]
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-07T22:23:00Z",
+      "symptomType": "bloating",
+      "severity": 4
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-08T07:00:00Z",
+      "mood": 5,
+      "stressLevel": 1,
+      "notes": "Great energy today"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-08T08:18:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Blueberries",
+          "portion": "1/2 cup"
+        }
+      ],
+      "notes": "Leftovers from yesterday"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-08T08:26:00Z",
+      "bristolType": 6
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-08T12:11:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Caesar salad",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Grilled chicken",
+          "portion": "1 breast"
+        },
+        {
+          "name": "Ice cream",
+          "portion": "2 scoops"
+        }
+      ],
+      "portionSize": "normal"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-08T16:34:00Z",
+      "mealType": "snack",
+      "foods": [
+        {
+          "name": "Protein bar",
+          "portion": "1 bar"
+        },
+        {
+          "name": "Popcorn",
+          "portion": "1 bag"
+        }
+      ],
+      "notes": "Ate out at a restaurant"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-08T18:15:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Fish and chips",
+          "portion": "1 plate"
+        }
+      ],
+      "notes": "Ate out at a restaurant"
+    },
+    {
+      "type": "note",
+      "timestamp": "2026-03-08T21:33:00Z",
+      "notes": "Need to cut back on coffee"
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-09T08:00:00Z",
+      "mood": 3,
+      "stressLevel": 3,
+      "sleepQuality": 3
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-09T09:12:00Z",
+      "bristolType": 1,
+      "urgency": "severe"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-09T09:42:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Coffee",
+          "portion": "1 cup"
+        }
+      ],
+      "notes": "Felt heavy after"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-09T13:40:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Lentil soup",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Pasta",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Burrito bowl",
+          "portion": "1 bowl"
+        }
+      ],
+      "notes": "Leftovers from yesterday"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-09T20:05:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Mashed potatoes",
+          "portion": "1 cup"
+        }
+      ],
+      "notes": "Felt heavy after"
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-10T07:00:00Z",
+      "mood": 1,
+      "sleepQuality": 3,
+      "anxietyLevel": 4
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-10T07:29:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Cereal",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Toast",
+          "portion": "2 slices"
+        },
+        {
+          "name": "Granola",
+          "portion": "1/2 cup"
+        }
+      ]
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-10T08:12:00Z",
+      "bristolType": 3
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-10T13:38:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Chicken salad",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Turkey sandwich",
+          "portion": "1 sandwich"
+        },
+        {
+          "name": "Garlic bread",
+          "portion": "3 pieces"
+        }
+      ],
+      "portionSize": "large",
+      "notes": "Ate too fast"
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-10T16:28:00Z",
+      "symptomType": "gas",
+      "severity": 4,
+      "duration": 66
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-10T18:08:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Pasta with marinara",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Spicy wings",
+          "portion": "6 wings"
+        }
+      ],
+      "notes": "Ate too fast"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-10T20:02:00Z",
+      "bristolType": 7,
+      "urgency": "mild"
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-10T21:35:00Z",
+      "symptomType": "pain",
+      "severity": 5,
+      "location": "upper_right",
+      "duration": 72,
+      "notes": "Drinking water helped a bit"
+    },
+    {
+      "type": "impact",
+      "timestamp": "2026-03-10T21:46:00Z",
+      "impactSeverity": "severe",
+      "affectedActivities": [
+        "work",
+        "commute"
+      ]
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-11T07:00:00Z",
+      "mood": 3,
+      "sleepQuality": 5,
+      "anxietyLevel": 1,
+      "notes": "Slept poorly last night"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-11T07:30:00Z",
       "mealType": "breakfast",
       "foods": [
         {
@@ -10,25 +665,537 @@
           "portion": "1 bowl"
         },
         {
-          "name": "Scrambled eggs",
-          "portion": "2 eggs"
+          "name": "Coffee",
+          "portion": "1 cup"
         },
         {
-          "name": "Granola",
-          "portion": "1/2 cup"
+          "name": "Pancakes",
+          "portion": "3 pancakes"
         }
       ],
-      "portionSize": "small"
+      "notes": "Ate too fast"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-11T13:35:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Pasta",
+          "portion": "1 plate"
+        }
+      ],
+      "notes": "Ate out at a restaurant"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-11T20:05:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Fish and chips",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Pasta with marinara",
+          "portion": "1 plate"
+        }
+      ],
+      "notes": "Ate out at a restaurant"
     },
     {
       "type": "emotion",
-      "timestamp": "2026-02-23T09:00:00Z",
+      "timestamp": "2026-03-12T07:00:00Z",
       "mood": 3,
+      "stressLevel": 5,
       "notes": "Feeling anxious about tomorrow"
     },
     {
       "type": "meal",
-      "timestamp": "2026-02-23T12:03:00Z",
+      "timestamp": "2026-03-12T07:00:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Cereal",
+          "portion": "1 bowl"
+        }
+      ],
+      "portionSize": "small",
+      "notes": "Meal prep from Sunday"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-12T08:25:00Z",
+      "bristolType": 5,
+      "urgency": "severe",
+      "mucus": false
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-12T12:24:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Burrito bowl",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Pasta",
+          "portion": "1 plate"
+        }
+      ],
+      "portionSize": "large",
+      "notes": "Leftovers from yesterday"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-12T15:22:00Z",
+      "mealType": "snack",
+      "foods": [
+        {
+          "name": "Peanut butter toast",
+          "portion": "1 slice"
+        }
+      ]
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-12T19:08:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Roasted vegetables",
+          "portion": "1 cup"
+        },
+        {
+          "name": "Curry with rice",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Fried onion rings",
+          "portion": "1 serving"
+        }
+      ],
+      "portionSize": "large",
+      "notes": "Ate out at a restaurant"
+    },
+    {
+      "type": "impact",
+      "timestamp": "2026-03-12T20:23:00Z",
+      "impactSeverity": "mild",
+      "affectedActivities": [
+        "errands"
+      ]
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-12T21:13:00Z",
+      "bristolType": 6,
+      "urgency": "severe",
+      "mucus": false
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-12T23:35:00Z",
+      "symptomType": "pain",
+      "severity": 2,
+      "notes": "Same as yesterday"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-13T07:09:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Orange juice",
+          "portion": "1 glass"
+        },
+        {
+          "name": "Pancakes",
+          "portion": "3 pancakes"
+        }
+      ]
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-13T08:00:00Z",
+      "mood": 3,
+      "anxietyLevel": 4,
+      "notes": "Rough morning but got better"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-13T09:29:00Z",
+      "bristolType": 7,
+      "blood": false
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-13T11:28:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Grilled chicken",
+          "portion": "1 breast"
+        }
+      ],
+      "portionSize": "small",
+      "notes": "Felt heavy after"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-13T15:02:00Z",
+      "mealType": "snack",
+      "foods": [
+        {
+          "name": "Apple",
+          "portion": "1 medium"
+        },
+        {
+          "name": "Protein bar",
+          "portion": "1 bar"
+        }
+      ],
+      "portionSize": "large",
+      "notes": "Tried a new recipe"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-13T19:25:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Fish and chips",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Pad thai",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Grilled salmon",
+          "portion": "1 fillet"
+        },
+        {
+          "name": "Milk",
+          "portion": "1 glass"
+        }
+      ],
+      "portionSize": "small",
+      "notes": "Ate too fast"
+    },
+    {
+      "type": "impact",
+      "timestamp": "2026-03-13T20:14:00Z",
+      "impactSeverity": "severe",
+      "affectedActivities": [
+        "sleep"
+      ]
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-13T22:12:00Z",
+      "symptomType": "cramps",
+      "severity": 5,
+      "duration": 108,
+      "notes": "Took antacid"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-14T07:01:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Oatmeal",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Cereal",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Scrambled eggs",
+          "portion": "2 eggs"
+        }
+      ],
+      "portionSize": "large",
+      "notes": "Leftovers from yesterday"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-14T08:08:00Z",
+      "bristolType": 3
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-14T09:00:00Z",
+      "mood": 4,
+      "stressLevel": 3,
+      "sleepQuality": 3,
+      "anxietyLevel": 4,
+      "notes": "Slept poorly last night"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-14T12:21:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Burrito bowl",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Turkey sandwich",
+          "portion": "1 sandwich"
+        },
+        {
+          "name": "Pasta",
+          "portion": "1 plate"
+        }
+      ],
+      "notes": "Leftovers from yesterday"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-14T15:22:00Z",
+      "mealType": "snack",
+      "foods": [
+        {
+          "name": "Popcorn",
+          "portion": "1 bag"
+        },
+        {
+          "name": "Protein bar",
+          "portion": "1 bar"
+        }
+      ],
+      "notes": "Leftovers from yesterday"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-14T20:25:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Tacos",
+          "portion": "3 tacos"
+        }
+      ],
+      "notes": "Enjoyed this one"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-14T22:29:00Z",
+      "bristolType": 1
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-15T07:04:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Blueberries",
+          "portion": "1/2 cup"
+        },
+        {
+          "name": "Greek yogurt",
+          "portion": "1 cup"
+        },
+        {
+          "name": "Toast",
+          "portion": "2 slices"
+        }
+      ],
+      "notes": "Felt heavy after"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-15T10:23:00Z",
+      "bristolType": 2,
+      "mucus": false
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-15T13:25:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Pasta",
+          "portion": "1 plate"
+        }
+      ],
+      "portionSize": "normal",
+      "notes": "Felt heavy after"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-15T18:04:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Baked chicken thighs",
+          "portion": "2 thighs"
+        },
+        {
+          "name": "Steak",
+          "portion": "6 oz"
+        }
+      ],
+      "portionSize": "normal",
+      "notes": "Felt heavy after"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-16T08:38:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Cereal",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Coffee",
+          "portion": "1 cup"
+        }
+      ],
+      "portionSize": "large",
+      "notes": "Ate too fast"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-16T10:05:00Z",
+      "bristolType": 4,
+      "urgency": "mild",
+      "blood": false,
+      "mucus": false
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-16T11:06:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Grilled chicken",
+          "portion": "1 breast"
+        },
+        {
+          "name": "Lentil soup",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Spicy wings",
+          "portion": "6 wings"
+        }
+      ],
+      "portionSize": "normal",
+      "notes": "Meal prep from Sunday"
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-16T12:03:00Z",
+      "symptomType": "pain",
+      "severity": 3,
+      "location": "central",
+      "duration": 60,
+      "notes": "Drinking water helped a bit"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-16T20:26:00Z",
+      "bristolType": 6
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-16T20:37:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Fish and chips",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Ice cream",
+          "portion": "2 scoops"
+        }
+      ],
+      "notes": "Tried a new recipe"
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-16T23:31:00Z",
+      "symptomType": "pain",
+      "severity": 5,
+      "notes": "Same as yesterday"
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-17T08:00:00Z",
+      "mood": 5,
+      "anxietyLevel": 5
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-17T09:00:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Avocado toast",
+          "portion": "1 slice"
+        },
+        {
+          "name": "Coffee",
+          "portion": "1 cup"
+        }
+      ],
+      "portionSize": "normal",
+      "notes": "Leftovers from yesterday"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-17T11:19:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Pasta",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Grilled chicken",
+          "portion": "1 breast"
+        }
+      ]
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-17T22:23:00Z",
+      "bristolType": 5,
+      "mucus": false
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-18T07:41:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Scrambled eggs",
+          "portion": "2 eggs"
+        }
+      ],
+      "portionSize": "huge",
+      "notes": "Ate out at a restaurant"
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-18T09:00:00Z",
+      "mood": 2,
+      "stressLevel": 3,
+      "sleepQuality": 3,
+      "anxietyLevel": 1,
+      "notes": "Great energy today"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-18T13:16:00Z",
       "mealType": "lunch",
       "foods": [
         {
@@ -36,43 +1203,86 @@
           "portion": "1 plate"
         }
       ],
-      "notes": "Meal prep from Sunday"
+      "notes": "Enjoyed this one"
     },
     {
       "type": "note",
-      "timestamp": "2026-02-23T12:18:00Z",
-      "notes": "Skipped breakfast — felt better?"
+      "timestamp": "2026-03-18T13:32:00Z",
+      "notes": "Feeling much better this week overall"
     },
     {
       "type": "meal",
-      "timestamp": "2026-02-23T20:13:00Z",
+      "timestamp": "2026-03-18T18:44:00Z",
       "mealType": "dinner",
       "foods": [
         {
-          "name": "Lamb chops",
-          "portion": "3 chops"
+          "name": "Fish and chips",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Roasted vegetables",
+          "portion": "1 cup"
+        },
+        {
+          "name": "Grilled salmon",
+          "portion": "1 fillet"
+        },
+        {
+          "name": "Ice cream",
+          "portion": "2 scoops"
         }
       ],
-      "notes": "Felt heavy after"
+      "notes": "Ate too fast"
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-18T19:21:00Z",
+      "symptomType": "cramps",
+      "severity": 4,
+      "location": "upper_left",
+      "notes": "Woke up with this"
+    },
+    {
+      "type": "impact",
+      "timestamp": "2026-03-18T22:43:00Z",
+      "impactSeverity": "severe",
+      "affectedActivities": [
+        "cooking",
+        "work",
+        "exercise"
+      ]
     },
     {
       "type": "emotion",
-      "timestamp": "2026-02-24T07:00:00Z",
-      "mood": 2,
-      "stressLevel": 3,
-      "sleepQuality": 3,
-      "anxietyLevel": 2,
-      "notes": "Rough morning but got better"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-02-24T09:11:00Z",
-      "bristolType": 3,
-      "blood": false
+      "timestamp": "2026-03-19T09:00:00Z",
+      "mood": 3,
+      "stressLevel": 5,
+      "anxietyLevel": 3,
+      "notes": "Stress from work deadlines"
     },
     {
       "type": "meal",
-      "timestamp": "2026-02-24T13:35:00Z",
+      "timestamp": "2026-03-19T09:19:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Pancakes",
+          "portion": "3 pancakes"
+        },
+        {
+          "name": "Blueberries",
+          "portion": "1/2 cup"
+        },
+        {
+          "name": "Oatmeal",
+          "portion": "1 bowl"
+        }
+      ],
+      "notes": "Ate out at a restaurant"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-19T12:00:00Z",
       "mealType": "lunch",
       "foods": [
         {
@@ -84,72 +1294,594 @@
           "portion": "1 plate"
         },
         {
-          "name": "Turkey sandwich",
-          "portion": "1 sandwich"
-        },
-        {
-          "name": "Fried onion rings",
-          "portion": "1 serving"
+          "name": "Ice cream",
+          "portion": "2 scoops"
         }
       ],
-      "portionSize": "large",
-      "notes": "Felt heavy after"
+      "notes": "Ate out at a restaurant"
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-19T13:34:00Z",
+      "symptomType": "pain",
+      "severity": 4,
+      "location": "all",
+      "duration": 65,
+      "notes": "Drinking water helped a bit"
     },
     {
       "type": "meal",
-      "timestamp": "2026-02-24T18:26:00Z",
+      "timestamp": "2026-03-19T20:15:00Z",
       "mealType": "dinner",
       "foods": [
         {
-          "name": "Roasted vegetables",
+          "name": "Mashed potatoes",
           "portion": "1 cup"
         },
         {
-          "name": "Baked chicken thighs",
-          "portion": "2 thighs"
+          "name": "Milk",
+          "portion": "1 glass"
+        }
+      ]
+    },
+    {
+      "type": "impact",
+      "timestamp": "2026-03-19T20:21:00Z",
+      "impactSeverity": "severe",
+      "affectedActivities": [
+        "errands"
+      ]
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-19T23:29:00Z",
+      "symptomType": "pain",
+      "severity": 4,
+      "location": "all"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-20T08:09:00Z",
+      "bristolType": 1
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-20T09:13:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Oatmeal",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Scrambled eggs",
+          "portion": "2 eggs"
+        }
+      ]
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-20T12:41:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Rice bowl",
+          "portion": "1 bowl"
         },
         {
           "name": "Spicy wings",
           "portion": "6 wings"
         }
       ],
-      "portionSize": "large",
       "notes": "Ate too fast"
     },
     {
+      "type": "meal",
+      "timestamp": "2026-03-20T16:13:00Z",
+      "mealType": "snack",
+      "foods": [
+        {
+          "name": "Apple",
+          "portion": "1 medium"
+        },
+        {
+          "name": "Popcorn",
+          "portion": "1 bag"
+        },
+        {
+          "name": "Hummus and carrots",
+          "portion": "1 serving"
+        }
+      ],
+      "portionSize": "small",
+      "notes": "Leftovers from yesterday"
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-20T16:14:00Z",
+      "symptomType": "pain",
+      "severity": 4,
+      "location": "upper_right",
+      "notes": "Woke up with this"
+    },
+    {
+      "type": "note",
+      "timestamp": "2026-03-20T17:32:00Z",
+      "notes": "Trying to eat more slowly"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-20T19:13:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Pasta with marinara",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Mashed potatoes",
+          "portion": "1 cup"
+        },
+        {
+          "name": "Fish and chips",
+          "portion": "1 plate"
+        }
+      ],
+      "portionSize": "small"
+    },
+    {
       "type": "bowel",
-      "timestamp": "2026-02-24T20:11:00Z",
-      "bristolType": 6,
+      "timestamp": "2026-03-20T19:15:00Z",
+      "bristolType": 1,
+      "urgency": "severe"
+    },
+    {
+      "type": "impact",
+      "timestamp": "2026-03-20T20:33:00Z",
+      "impactSeverity": "mild",
+      "affectedActivities": [
+        "sleep",
+        "socializing",
+        "exercise"
+      ],
+      "description": "Slight discomfort but manageable"
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-21T08:00:00Z",
+      "mood": 1,
+      "stressLevel": 4,
+      "sleepQuality": 3
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-21T09:40:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Scrambled eggs",
+          "portion": "2 eggs"
+        },
+        {
+          "name": "Smoothie",
+          "portion": "1 glass"
+        }
+      ],
+      "notes": "Leftovers from yesterday"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-21T12:38:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Soup",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Caesar salad",
+          "portion": "1 plate"
+        }
+      ],
+      "portionSize": "huge"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-21T19:06:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Pasta with marinara",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Risotto",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Creamy pasta",
+          "portion": "1 plate"
+        }
+      ],
+      "notes": "Felt heavy after"
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-21T22:25:00Z",
+      "symptomType": "bloating",
+      "severity": 3,
+      "location": "upper_left",
+      "duration": 134,
+      "notes": "Woke up with this"
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-22T08:00:00Z",
+      "mood": 3,
+      "stressLevel": 5,
+      "notes": "Feeling anxious about tomorrow"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-22T09:42:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Coffee",
+          "portion": "1 cup"
+        }
+      ]
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-22T10:23:00Z",
+      "bristolType": 4
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-22T11:16:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "BLT sandwich",
+          "portion": "1 sandwich"
+        },
+        {
+          "name": "Rice bowl",
+          "portion": "1 bowl"
+        }
+      ],
+      "notes": "Meal prep from Sunday"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-22T19:32:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Fish and chips",
+          "portion": "1 plate"
+        }
+      ],
+      "portionSize": "huge"
+    },
+    {
+      "type": "impact",
+      "timestamp": "2026-03-22T20:03:00Z",
+      "impactSeverity": "none"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-23T07:19:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Greek yogurt",
+          "portion": "1 cup"
+        },
+        {
+          "name": "Orange juice",
+          "portion": "1 glass"
+        },
+        {
+          "name": "Toast",
+          "portion": "2 slices"
+        }
+      ],
+      "notes": "Leftovers from yesterday"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-23T08:21:00Z",
+      "bristolType": 5
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-23T09:00:00Z",
+      "mood": 4,
+      "stressLevel": 2,
+      "anxietyLevel": 4,
+      "notes": "Stress from work deadlines"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-23T16:43:00Z",
+      "mealType": "snack",
+      "foods": [
+        {
+          "name": "Cheese and crackers",
+          "portion": "4 crackers"
+        }
+      ]
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-23T20:22:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Mashed potatoes",
+          "portion": "1 cup"
+        },
+        {
+          "name": "Steak",
+          "portion": "6 oz"
+        }
+      ],
+      "portionSize": "small"
+    },
+    {
+      "type": "impact",
+      "timestamp": "2026-03-23T20:41:00Z",
+      "impactSeverity": "none"
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-24T07:00:00Z",
+      "mood": 1,
+      "stressLevel": 3,
+      "anxietyLevel": 2,
+      "notes": "Good day overall"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-24T09:27:00Z",
+      "bristolType": 2,
       "urgency": "none",
       "mucus": false
     },
     {
-      "type": "symptom",
-      "timestamp": "2026-02-24T22:42:00Z",
-      "symptomType": "gas",
-      "severity": 2,
-      "location": "lower_right",
-      "notes": "Started after lunch"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-02-25T09:00:00Z",
-      "mood": 4,
-      "stressLevel": 2,
-      "sleepQuality": 5
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-02-25T09:18:00Z",
-      "bristolType": 5,
-      "urgency": "moderate",
-      "blood": false
+      "type": "meal",
+      "timestamp": "2026-03-24T09:31:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Cereal",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Oatmeal",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Scrambled eggs",
+          "portion": "2 eggs"
+        }
+      ]
     },
     {
       "type": "meal",
-      "timestamp": "2026-02-25T13:45:00Z",
+      "timestamp": "2026-03-24T12:40:00Z",
       "mealType": "lunch",
       "foods": [
+        {
+          "name": "Falafel wrap",
+          "portion": "1 wrap"
+        },
+        {
+          "name": "Ice cream",
+          "portion": "2 scoops"
+        }
+      ]
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-24T15:20:00Z",
+      "symptomType": "pain",
+      "severity": 3,
+      "location": "upper_right",
+      "notes": "Woke up with this"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-24T20:13:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Fish and chips",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Milk",
+          "portion": "1 glass"
+        }
+      ],
+      "notes": "Leftovers from yesterday"
+    },
+    {
+      "type": "impact",
+      "timestamp": "2026-03-24T22:15:00Z",
+      "impactSeverity": "severe",
+      "affectedActivities": [
+        "errands",
+        "exercise"
+      ],
+      "description": "Stayed home from work"
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-25T07:00:00Z",
+      "mood": 2,
+      "sleepQuality": 1,
+      "anxietyLevel": 5,
+      "notes": "Good day overall"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-25T07:33:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Coffee",
+          "portion": "1 cup"
+        },
+        {
+          "name": "Greek yogurt",
+          "portion": "1 cup"
+        }
+      ],
+      "portionSize": "huge",
+      "notes": "Ate too fast"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-25T09:28:00Z",
+      "bristolType": 2,
+      "urgency": "severe"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-25T12:43:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Chicken salad",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Turkey sandwich",
+          "portion": "1 sandwich"
+        },
+        {
+          "name": "Sushi",
+          "portion": "8 pieces"
+        },
+        {
+          "name": "Spicy wings",
+          "portion": "6 wings"
+        }
+      ],
+      "notes": "Leftovers from yesterday"
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-25T16:50:00Z",
+      "symptomType": "cramps",
+      "severity": 2
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-25T19:23:00Z",
+      "mealType": "dinner",
+      "foods": [
+        {
+          "name": "Pasta with marinara",
+          "portion": "1 plate"
+        }
+      ]
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-25T20:16:00Z",
+      "bristolType": 1,
+      "mucus": false
+    },
+    {
+      "type": "impact",
+      "timestamp": "2026-03-25T20:50:00Z",
+      "impactSeverity": "mild",
+      "affectedActivities": [
+        "exercise"
+      ],
+      "description": "Slight discomfort but manageable"
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-26T07:00:00Z",
+      "mood": 4,
+      "sleepQuality": 1,
+      "anxietyLevel": 3,
+      "notes": "Great energy today"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-26T09:04:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Scrambled eggs",
+          "portion": "2 eggs"
+        }
+      ],
+      "portionSize": "normal"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-26T09:16:00Z",
+      "bristolType": 5,
+      "urgency": "none"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-26T13:10:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Lentil soup",
+          "portion": "1 bowl"
+        }
+      ],
+      "portionSize": "normal",
+      "notes": "Leftovers from yesterday"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-27T07:12:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Cereal",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Scrambled eggs",
+          "portion": "2 eggs"
+        }
+      ],
+      "notes": "Leftovers from yesterday"
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-27T08:00:00Z",
+      "mood": 2,
+      "stressLevel": 5,
+      "sleepQuality": 4
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-27T08:16:00Z",
+      "bristolType": 2,
+      "mucus": false
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-27T11:05:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Chicken salad",
+          "portion": "1 plate"
+        },
         {
           "name": "Burrito bowl",
           "portion": "1 bowl"
@@ -159,1046 +1891,132 @@
           "portion": "1 sandwich"
         }
       ],
-      "notes": "Ate too fast"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-02-25T18:16:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Curry with rice",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Grilled salmon",
-          "portion": "1 fillet"
-        }
-      ],
-      "portionSize": "small"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-02-26T07:00:00Z",
-      "mood": 1,
-      "stressLevel": 3,
-      "sleepQuality": 3,
-      "anxietyLevel": 4,
-      "notes": "Great energy today"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-02-26T09:13:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Cereal",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Toast",
-          "portion": "2 slices"
-        },
-        {
-          "name": "Scrambled eggs",
-          "portion": "2 eggs"
-        }
-      ],
-      "notes": "Felt heavy after"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-02-26T11:06:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Chicken salad",
-          "portion": "1 plate"
-        }
-      ]
+      "portionSize": "small",
+      "notes": "Ate out at a restaurant"
     },
     {
       "type": "note",
-      "timestamp": "2026-02-26T11:50:00Z",
-      "notes": "Forgot to take probiotics"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-02-26T18:05:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Curry with rice",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Garlic bread",
-          "portion": "3 pieces"
-        }
-      ],
-      "notes": "Meal prep from Sunday"
+      "timestamp": "2026-03-27T11:41:00Z",
+      "notes": "Stressful meeting, stomach reacted"
     },
     {
       "type": "bowel",
-      "timestamp": "2026-02-26T19:27:00Z",
+      "timestamp": "2026-03-27T19:09:00Z",
       "bristolType": 1,
-      "blood": false
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-02-26T20:25:00Z",
-      "symptomType": "cramps",
-      "severity": 4,
-      "location": "upper_right",
-      "duration": 146,
-      "notes": "Started after lunch"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-02-27T07:00:00Z",
-      "mood": 2,
-      "stressLevel": 5,
-      "sleepQuality": 5,
-      "anxietyLevel": 1,
-      "notes": "Good day overall"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-02-27T08:45:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Toast",
-          "portion": "2 slices"
-        },
-        {
-          "name": "Scrambled eggs",
-          "portion": "2 eggs"
-        }
-      ],
-      "notes": "Felt heavy after"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-02-27T10:10:00Z",
-      "bristolType": 5,
-      "blood": false,
-      "mucus": false
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-02-27T11:12:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Caesar salad",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Chicken salad",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Pasta",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Spicy wings",
-          "portion": "6 wings"
-        }
-      ],
-      "portionSize": "normal"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-02-27T15:59:00Z",
-      "symptomType": "cramps",
-      "severity": 2,
-      "duration": 39,
-      "notes": "Drinking water helped a bit"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-02-27T16:05:00Z",
-      "mealType": "snack",
-      "foods": [
-        {
-          "name": "Cheese and crackers",
-          "portion": "4 crackers"
-        },
-        {
-          "name": "Hummus and carrots",
-          "portion": "1 serving"
-        }
-      ],
-      "notes": "Meal prep from Sunday"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-02-27T19:04:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Fish and chips",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Mashed potatoes",
-          "portion": "1 cup"
-        },
-        {
-          "name": "Curry with rice",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Milk",
-          "portion": "1 glass"
-        }
-      ],
-      "portionSize": "small"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-02-27T20:10:00Z",
-      "symptomType": "gas",
-      "severity": 3,
-      "notes": "Drinking water helped a bit"
-    },
-    {
-      "type": "impact",
-      "timestamp": "2026-02-27T22:11:00Z",
-      "impactSeverity": "mild",
-      "affectedActivities": [
-        "socializing"
-      ],
-      "description": "Slight discomfort but manageable"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-02-28T08:00:00Z",
-      "mood": 5,
-      "stressLevel": 2,
-      "anxietyLevel": 4,
-      "notes": "Good day overall"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-02-28T09:19:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Orange juice",
-          "portion": "1 glass"
-        },
-        {
-          "name": "Greek yogurt",
-          "portion": "1 cup"
-        }
-      ]
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-02-28T10:06:00Z",
-      "bristolType": 3,
       "urgency": "none"
     },
     {
       "type": "meal",
-      "timestamp": "2026-02-28T13:17:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Soup",
-          "portion": "1 bowl"
-        }
-      ],
-      "portionSize": "large",
-      "notes": "Meal prep from Sunday"
-    },
-    {
-      "type": "note",
-      "timestamp": "2026-02-28T15:14:00Z",
-      "notes": "Drank lots of water today"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-02-28T16:42:00Z",
-      "mealType": "snack",
-      "foods": [
-        {
-          "name": "Almonds",
-          "portion": "handful"
-        },
-        {
-          "name": "Cheese and crackers",
-          "portion": "4 crackers"
-        },
-        {
-          "name": "Dark chocolate",
-          "portion": "2 squares"
-        }
-      ]
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-02-28T19:36:00Z",
+      "timestamp": "2026-03-27T20:07:00Z",
       "mealType": "dinner",
       "foods": [
         {
-          "name": "Mashed potatoes",
-          "portion": "1 cup"
-        },
-        {
-          "name": "Pad thai",
+          "name": "Pasta with marinara",
           "portion": "1 plate"
         },
         {
           "name": "Baked chicken thighs",
           "portion": "2 thighs"
-        }
-      ]
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-02-28T21:01:00Z",
-      "bristolType": 2
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-01T08:44:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Avocado toast",
-          "portion": "1 slice"
-        },
-        {
-          "name": "Orange juice",
-          "portion": "1 glass"
-        }
-      ],
-      "notes": "Enjoyed this one"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-03-01T09:00:00Z",
-      "mood": 1,
-      "stressLevel": 4,
-      "anxietyLevel": 3,
-      "notes": "Feeling anxious about tomorrow"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-01T13:40:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Chicken salad",
-          "portion": "1 plate"
-        }
-      ],
-      "portionSize": "huge"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-01T15:45:00Z",
-      "mealType": "snack",
-      "foods": [
-        {
-          "name": "Apple",
-          "portion": "1 medium"
-        }
-      ],
-      "portionSize": "small",
-      "notes": "Ate out at a restaurant"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-01T18:42:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Tacos",
-          "portion": "3 tacos"
-        },
-        {
-          "name": "Garlic bread",
-          "portion": "3 pieces"
-        }
-      ],
-      "notes": "Ate out at a restaurant"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-01T20:07:00Z",
-      "symptomType": "cramps",
-      "severity": 5,
-      "location": "lower_right",
-      "duration": 48,
-      "notes": "Started after lunch"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-01T20:28:00Z",
-      "bristolType": 6,
-      "urgency": "moderate"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-02T08:00:00Z",
-      "bristolType": 2
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-03-02T09:00:00Z",
-      "mood": 2,
-      "sleepQuality": 1
-    },
-    {
-      "type": "note",
-      "timestamp": "2026-03-02T11:45:00Z",
-      "notes": "Drank lots of water today"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-02T12:07:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Chicken salad",
-          "portion": "1 plate"
-        }
-      ],
-      "portionSize": "huge",
-      "notes": "Leftovers from yesterday"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-02T16:36:00Z",
-      "mealType": "snack",
-      "foods": [
-        {
-          "name": "Trail mix",
-          "portion": "handful"
-        }
-      ],
-      "notes": "Ate out at a restaurant"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-02T19:17:00Z",
-      "bristolType": 6,
-      "urgency": "none",
-      "blood": false
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-02T20:30:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Pizza",
-          "portion": "3 slices"
-        },
-        {
-          "name": "Spicy wings",
-          "portion": "6 wings"
-        }
-      ]
-    },
-    {
-      "type": "impact",
-      "timestamp": "2026-03-02T21:30:00Z",
-      "impactSeverity": "moderate",
-      "affectedActivities": [
-        "sleep",
-        "errands",
-        "socializing"
-      ],
-      "description": "Couldn't focus at work"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-03-03T09:00:00Z",
-      "mood": 4,
-      "stressLevel": 1,
-      "sleepQuality": 2,
-      "anxietyLevel": 1
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-03T09:10:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Toast",
-          "portion": "2 slices"
-        },
-        {
-          "name": "Blueberries",
-          "portion": "1/2 cup"
-        }
-      ],
-      "notes": "Ate out at a restaurant"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-03T09:18:00Z",
-      "bristolType": 4,
-      "urgency": "severe",
-      "mucus": false
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-03T13:45:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Turkey sandwich",
-          "portion": "1 sandwich"
-        },
-        {
-          "name": "Chicken salad",
-          "portion": "1 plate"
-        }
-      ],
-      "notes": "Tried a new recipe"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-03T15:06:00Z",
-      "symptomType": "nausea",
-      "severity": 2,
-      "location": "upper_left",
-      "notes": "Gets worse when sitting"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-03T16:16:00Z",
-      "mealType": "snack",
-      "foods": [
-        {
-          "name": "Peanut butter toast",
-          "portion": "1 slice"
-        },
-        {
-          "name": "Hummus and carrots",
-          "portion": "1 serving"
-        },
-        {
-          "name": "Cheese and crackers",
-          "portion": "4 crackers"
-        }
-      ],
-      "notes": "Meal prep from Sunday"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-03T18:28:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Stir-fry",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Grilled salmon",
-          "portion": "1 fillet"
-        }
-      ]
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-03T19:19:00Z",
-      "bristolType": 1
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-04T09:13:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Banana",
-          "portion": "1 medium"
-        },
-        {
-          "name": "Cereal",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Pancakes",
-          "portion": "3 pancakes"
-        }
-      ]
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-04T09:23:00Z",
-      "bristolType": 4
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-04T13:09:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Sushi",
-          "portion": "8 pieces"
-        },
-        {
-          "name": "Lentil soup",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Pasta",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Spicy wings",
-          "portion": "6 wings"
-        }
-      ]
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-04T16:01:00Z",
-      "mealType": "snack",
-      "foods": [
-        {
-          "name": "Hummus and carrots",
-          "portion": "1 serving"
-        },
-        {
-          "name": "Popcorn",
-          "portion": "1 bag"
-        },
-        {
-          "name": "Cheese and crackers",
-          "portion": "4 crackers"
-        }
-      ],
-      "portionSize": "small"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-04T17:01:00Z",
-      "symptomType": "pain",
-      "severity": 4,
-      "location": "central",
-      "duration": 24,
-      "notes": "Started after lunch"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-04T18:05:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Lamb chops",
-          "portion": "3 chops"
-        },
-        {
-          "name": "Mashed potatoes",
-          "portion": "1 cup"
         },
         {
           "name": "Ice cream",
           "portion": "2 scoops"
         }
-      ],
-      "portionSize": "small",
-      "notes": "Enjoyed this one"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-04T20:53:00Z",
-      "symptomType": "bloating",
-      "severity": 4,
-      "duration": 163
-    },
-    {
-      "type": "note",
-      "timestamp": "2026-03-04T21:50:00Z",
-      "notes": "Feeling much better this week overall"
-    },
-    {
-      "type": "impact",
-      "timestamp": "2026-03-04T22:13:00Z",
-      "impactSeverity": "moderate",
-      "affectedActivities": [
-        "commute"
       ]
     },
     {
-      "type": "emotion",
-      "timestamp": "2026-03-05T08:00:00Z",
-      "mood": 2,
-      "stressLevel": 4,
-      "anxietyLevel": 4,
-      "notes": "Stress from work deadlines"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-05T09:40:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Granola",
-          "portion": "1/2 cup"
-        }
-      ],
-      "notes": "Leftovers from yesterday"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-05T10:12:00Z",
-      "bristolType": 7
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-05T12:38:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Soup",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Garlic bread",
-          "portion": "3 pieces"
-        }
-      ],
-      "portionSize": "huge"
-    },
-    {
       "type": "symptom",
-      "timestamp": "2026-03-05T13:47:00Z",
+      "timestamp": "2026-03-27T21:31:00Z",
       "symptomType": "gas",
-      "severity": 3,
-      "location": "lower_left",
-      "notes": "Took antacid"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-05T19:40:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Curry with rice",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Lamb chops",
-          "portion": "3 chops"
-        },
-        {
-          "name": "Grilled salmon",
-          "portion": "1 fillet"
-        }
-      ],
-      "portionSize": "normal"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-03-06T08:00:00Z",
-      "mood": 1,
-      "stressLevel": 3,
-      "anxietyLevel": 5,
-      "notes": "Stress from work deadlines"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-06T08:07:00Z",
-      "bristolType": 4,
-      "urgency": "moderate"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-06T09:02:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Orange juice",
-          "portion": "1 glass"
-        }
-      ],
-      "portionSize": "small",
-      "notes": "Tried a new recipe"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-06T13:03:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Lentil soup",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Chicken salad",
-          "portion": "1 plate"
-        }
-      ],
-      "notes": "Enjoyed this one"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-06T18:35:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Grilled salmon",
-          "portion": "1 fillet"
-        },
-        {
-          "name": "Baked chicken thighs",
-          "portion": "2 thighs"
-        },
-        {
-          "name": "Garlic bread",
-          "portion": "3 pieces"
-        }
-      ],
-      "notes": "Felt heavy after"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-06T19:10:00Z",
-      "symptomType": "pain",
-      "severity": 4,
-      "location": "all",
-      "duration": 159,
-      "notes": "Drinking water helped a bit"
-    },
-    {
-      "type": "impact",
-      "timestamp": "2026-03-06T22:01:00Z",
-      "impactSeverity": "severe",
-      "affectedActivities": [
-        "cooking"
-      ],
-      "description": "Spent most of the day resting"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-03-07T09:00:00Z",
-      "mood": 4,
-      "stressLevel": 2,
-      "anxietyLevel": 2,
-      "notes": "Stress from work deadlines"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-07T09:22:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Orange juice",
-          "portion": "1 glass"
-        }
-      ],
-      "notes": "Tried a new recipe"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-07T13:05:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Falafel wrap",
-          "portion": "1 wrap"
-        },
-        {
-          "name": "Lentil soup",
-          "portion": "1 bowl"
-        }
-      ],
-      "portionSize": "small"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-07T15:06:00Z",
-      "mealType": "snack",
-      "foods": [
-        {
-          "name": "Dark chocolate",
-          "portion": "2 squares"
-        }
-      ],
-      "notes": "Ate too fast"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-07T20:04:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Mashed potatoes",
-          "portion": "1 cup"
-        },
-        {
-          "name": "Pizza",
-          "portion": "3 slices"
-        },
-        {
-          "name": "Roasted vegetables",
-          "portion": "1 cup"
-        }
-      ],
-      "portionSize": "normal"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-08T09:32:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Avocado toast",
-          "portion": "1 slice"
-        }
-      ],
-      "notes": "Meal prep from Sunday"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-08T10:05:00Z",
-      "bristolType": 2,
-      "urgency": "moderate"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-08T13:45:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Sushi",
-          "portion": "8 pieces"
-        },
-        {
-          "name": "Rice bowl",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Soup",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Ice cream",
-          "portion": "2 scoops"
-        }
-      ],
-      "portionSize": "small",
-      "notes": "Tried a new recipe"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-08T14:36:00Z",
-      "symptomType": "bloating",
       "severity": 2,
-      "duration": 149,
+      "duration": 82,
       "notes": "Woke up with this"
     },
     {
-      "type": "bowel",
-      "timestamp": "2026-03-08T19:28:00Z",
-      "bristolType": 1,
-      "urgency": "none",
-      "mucus": false
+      "type": "impact",
+      "timestamp": "2026-03-27T22:55:00Z",
+      "impactSeverity": "mild",
+      "affectedActivities": [
+        "sleep",
+        "work"
+      ],
+      "description": "Minor bloating slowed me down a little"
     },
     {
       "type": "meal",
-      "timestamp": "2026-03-08T20:05:00Z",
+      "timestamp": "2026-03-28T07:06:00Z",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "name": "Greek yogurt",
+          "portion": "1 cup"
+        },
+        {
+          "name": "Granola",
+          "portion": "1/2 cup"
+        },
+        {
+          "name": "Smoothie",
+          "portion": "1 glass"
+        }
+      ],
+      "notes": "Leftovers from yesterday"
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-28T08:00:00Z",
+      "mood": 4,
+      "notes": "Good day overall"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-28T09:00:00Z",
+      "bristolType": 5,
+      "mucus": false
+    },
+    {
+      "type": "note",
+      "timestamp": "2026-03-28T09:01:00Z",
+      "notes": "Noticed a pattern with dairy"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-28T13:41:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Grilled chicken",
+          "portion": "1 breast"
+        }
+      ]
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-28T18:30:00Z",
       "mealType": "dinner",
       "foods": [
+        {
+          "name": "Baked chicken thighs",
+          "portion": "2 thighs"
+        },
         {
           "name": "Roasted vegetables",
           "portion": "1 cup"
         }
       ],
-      "notes": "Ate too fast"
+      "notes": "Ate out at a restaurant"
     },
     {
       "type": "emotion",
-      "timestamp": "2026-03-09T07:00:00Z",
-      "mood": 1,
-      "stressLevel": 5,
-      "sleepQuality": 4
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-09T10:19:00Z",
-      "bristolType": 5,
-      "urgency": "none"
+      "timestamp": "2026-03-29T08:00:00Z",
+      "mood": 4,
+      "stressLevel": 2,
+      "sleepQuality": 5,
+      "notes": "Slept poorly last night"
     },
     {
       "type": "meal",
-      "timestamp": "2026-03-09T12:28:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Caesar salad",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Lentil soup",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Rice bowl",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Spicy wings",
-          "portion": "6 wings"
-        }
-      ],
-      "notes": "Enjoyed this one"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-09T14:49:00Z",
-      "symptomType": "bloating",
-      "severity": 3,
-      "location": "central",
-      "notes": "Drinking water helped a bit"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-09T18:16:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Stir-fry",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Lamb chops",
-          "portion": "3 chops"
-        },
-        {
-          "name": "Steak",
-          "portion": "6 oz"
-        }
-      ],
-      "notes": "Ate too fast"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-09T19:09:00Z",
-      "bristolType": 7,
-      "urgency": "moderate",
-      "mucus": false
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-03-10T07:00:00Z",
-      "mood": 3,
-      "stressLevel": 4,
-      "notes": "Feeling anxious about tomorrow"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-10T07:04:00Z",
+      "timestamp": "2026-03-29T08:18:00Z",
       "mealType": "breakfast",
       "foods": [
         {
@@ -1206,140 +2024,188 @@
           "portion": "1 cup"
         },
         {
-          "name": "Toast",
-          "portion": "2 slices"
+          "name": "Pancakes",
+          "portion": "3 pancakes"
         }
       ],
-      "portionSize": "small",
-      "notes": "Ate out at a restaurant"
+      "portionSize": "normal",
+      "notes": "Leftovers from yesterday"
     },
     {
       "type": "bowel",
-      "timestamp": "2026-03-10T09:05:00Z",
-      "bristolType": 4
+      "timestamp": "2026-03-29T10:15:00Z",
+      "bristolType": 4,
+      "urgency": "moderate"
+    },
+    {
+      "type": "note",
+      "timestamp": "2026-03-29T10:50:00Z",
+      "notes": "Noticed a pattern with dairy"
     },
     {
       "type": "meal",
-      "timestamp": "2026-03-10T11:14:00Z",
+      "timestamp": "2026-03-29T11:35:00Z",
       "mealType": "lunch",
       "foods": [
         {
-          "name": "Falafel wrap",
-          "portion": "1 wrap"
+          "name": "Pasta",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Burrito bowl",
+          "portion": "1 bowl"
         },
         {
           "name": "Chicken salad",
           "portion": "1 plate"
-        },
-        {
-          "name": "Soup",
-          "portion": "1 bowl"
-        }
-      ],
-      "portionSize": "normal",
-      "notes": "Enjoyed this one"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-10T15:16:00Z",
-      "mealType": "snack",
-      "foods": [
-        {
-          "name": "Hummus and carrots",
-          "portion": "1 serving"
         }
       ]
     },
     {
       "type": "meal",
-      "timestamp": "2026-03-10T19:44:00Z",
+      "timestamp": "2026-03-29T16:33:00Z",
+      "mealType": "snack",
+      "foods": [
+        {
+          "name": "Apple",
+          "portion": "1 medium"
+        },
+        {
+          "name": "Trail mix",
+          "portion": "handful"
+        },
+        {
+          "name": "Almonds",
+          "portion": "handful"
+        }
+      ],
+      "portionSize": "large"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-29T20:23:00Z",
       "mealType": "dinner",
       "foods": [
         {
-          "name": "Tacos",
-          "portion": "3 tacos"
+          "name": "Grilled salmon",
+          "portion": "1 fillet"
         },
         {
-          "name": "Pasta with marinara",
-          "portion": "1 plate"
-        },
+          "name": "Steak",
+          "portion": "6 oz"
+        }
+      ],
+      "portionSize": "normal",
+      "notes": "Meal prep from Sunday"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-29T20:27:00Z",
+      "bristolType": 7,
+      "urgency": "moderate",
+      "blood": false,
+      "mucus": false
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-30T08:16:00Z",
+      "bristolType": 4,
+      "urgency": "moderate"
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-03-30T09:00:00Z",
+      "mood": 2,
+      "stressLevel": 4,
+      "anxietyLevel": 2,
+      "notes": "Feeling anxious about tomorrow"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-30T09:20:00Z",
+      "mealType": "breakfast",
+      "foods": [
         {
-          "name": "Roasted vegetables",
-          "portion": "1 cup"
+          "name": "Avocado toast",
+          "portion": "1 slice"
         }
       ],
       "notes": "Tried a new recipe"
     },
     {
       "type": "meal",
-      "timestamp": "2026-03-11T08:37:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Greek yogurt",
-          "portion": "1 cup"
-        }
-      ],
-      "notes": "Enjoyed this one"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-03-11T09:00:00Z",
-      "mood": 1,
-      "stressLevel": 5,
-      "sleepQuality": 4
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-11T09:28:00Z",
-      "bristolType": 2,
-      "urgency": "moderate"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-11T11:16:00Z",
+      "timestamp": "2026-03-30T12:37:00Z",
       "mealType": "lunch",
       "foods": [
         {
-          "name": "Burrito bowl",
-          "portion": "1 bowl"
+          "name": "BLT sandwich",
+          "portion": "1 sandwich"
         },
         {
-          "name": "Sushi",
-          "portion": "8 pieces"
-        },
-        {
-          "name": "Soup",
+          "name": "Rice bowl",
           "portion": "1 bowl"
         }
-      ],
-      "notes": "Ate too fast"
+      ]
     },
     {
       "type": "meal",
-      "timestamp": "2026-03-11T20:20:00Z",
+      "timestamp": "2026-03-30T16:17:00Z",
+      "mealType": "snack",
+      "foods": [
+        {
+          "name": "Dark chocolate",
+          "portion": "2 squares"
+        },
+        {
+          "name": "Hummus and carrots",
+          "portion": "1 serving"
+        }
+      ],
+      "portionSize": "normal",
+      "notes": "Felt heavy after"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-03-30T19:15:00Z",
       "mealType": "dinner",
       "foods": [
         {
-          "name": "Mashed potatoes",
-          "portion": "1 cup"
-        },
-        {
           "name": "Pizza",
           "portion": "3 slices"
+        },
+        {
+          "name": "Pad thai",
+          "portion": "1 plate"
+        },
+        {
+          "name": "Ice cream",
+          "portion": "2 scoops"
         }
       ],
-      "portionSize": "large"
+      "portionSize": "huge",
+      "notes": "Ate out at a restaurant"
     },
     {
-      "type": "emotion",
-      "timestamp": "2026-03-12T07:00:00Z",
-      "mood": 3,
-      "stressLevel": 3
+      "type": "impact",
+      "timestamp": "2026-03-30T22:10:00Z",
+      "impactSeverity": "severe",
+      "affectedActivities": [
+        "socializing",
+        "cooking",
+        "work"
+      ],
+      "description": "Stayed home from work"
+    },
+    {
+      "type": "symptom",
+      "timestamp": "2026-03-30T23:33:00Z",
+      "symptomType": "gas",
+      "severity": 4,
+      "location": "lower_left"
     },
     {
       "type": "meal",
-      "timestamp": "2026-03-12T08:24:00Z",
+      "timestamp": "2026-03-31T08:20:00Z",
       "mealType": "breakfast",
       "foods": [
         {
@@ -1347,1032 +2213,116 @@
           "portion": "1/2 cup"
         },
         {
-          "name": "Smoothie",
-          "portion": "1 glass"
-        },
-        {
-          "name": "Toast",
-          "portion": "2 slices"
-        }
-      ],
-      "portionSize": "huge",
-      "notes": "Meal prep from Sunday"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-12T10:21:00Z",
-      "bristolType": 4,
-      "urgency": "mild"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-12T13:12:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Chicken salad",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Bean burrito",
-          "portion": "1 burrito"
-        }
-      ],
-      "notes": "Ate out at a restaurant"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-12T14:51:00Z",
-      "symptomType": "cramps",
-      "severity": 4,
-      "location": "central",
-      "notes": "Gets worse when sitting"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-12T20:01:00Z",
-      "bristolType": 1,
-      "urgency": "moderate"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-12T20:38:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Steak",
-          "portion": "6 oz"
-        },
-        {
-          "name": "Mashed potatoes",
-          "portion": "1 cup"
-        }
-      ]
-    },
-    {
-      "type": "impact",
-      "timestamp": "2026-03-12T21:47:00Z",
-      "impactSeverity": "mild",
-      "affectedActivities": [
-        "errands",
-        "work"
-      ],
-      "description": "Slight discomfort but manageable"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-03-13T07:00:00Z",
-      "mood": 3,
-      "stressLevel": 5,
-      "sleepQuality": 2,
-      "notes": "Feeling anxious about tomorrow"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-13T08:07:00Z",
-      "bristolType": 4,
-      "urgency": "severe",
-      "mucus": false
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-13T09:43:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Oatmeal",
-          "portion": "1 bowl"
-        }
-      ],
-      "notes": "Felt heavy after"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-13T13:24:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Burrito bowl",
-          "portion": "1 bowl"
-        }
-      ],
-      "portionSize": "small",
-      "notes": "Meal prep from Sunday"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-13T20:33:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Curry with rice",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Spicy wings",
-          "portion": "6 wings"
-        }
-      ]
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-13T22:01:00Z",
-      "bristolType": 6
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-13T23:01:00Z",
-      "symptomType": "gas",
-      "severity": 2,
-      "location": "lower_left",
-      "duration": 35,
-      "notes": "Same as yesterday"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-03-14T07:00:00Z",
-      "mood": 3,
-      "notes": "Great energy today"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-14T07:30:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Pancakes",
-          "portion": "3 pancakes"
-        }
-      ],
-      "notes": "Felt heavy after"
-    },
-    {
-      "type": "note",
-      "timestamp": "2026-03-14T09:08:00Z",
-      "notes": "Forgot to take probiotics"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-14T11:22:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Chicken salad",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Burrito bowl",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Lentil soup",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Ice cream",
-          "portion": "2 scoops"
-        }
-      ]
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-14T14:57:00Z",
-      "symptomType": "cramps",
-      "severity": 5,
-      "location": "upper_left",
-      "notes": "Woke up with this"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-14T15:00:00Z",
-      "mealType": "snack",
-      "foods": [
-        {
-          "name": "Trail mix",
-          "portion": "handful"
-        }
-      ],
-      "notes": "Meal prep from Sunday"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-14T18:35:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Baked chicken thighs",
-          "portion": "2 thighs"
-        },
-        {
-          "name": "Grilled salmon",
-          "portion": "1 fillet"
-        },
-        {
-          "name": "Garlic bread",
-          "portion": "3 pieces"
-        }
-      ],
-      "notes": "Enjoyed this one"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-14T19:49:00Z",
-      "symptomType": "cramps",
-      "severity": 4,
-      "location": "upper_right",
-      "duration": 34,
-      "notes": "Gets worse when sitting"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-03-15T09:00:00Z",
-      "mood": 5,
-      "stressLevel": 5,
-      "notes": "Rough morning but got better"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-15T11:05:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Pasta",
-          "portion": "1 plate"
-        }
-      ],
-      "notes": "Felt heavy after"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-15T20:00:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Pasta with marinara",
-          "portion": "1 plate"
-        }
-      ],
-      "portionSize": "large",
-      "notes": "Ate out at a restaurant"
-    },
-    {
-      "type": "impact",
-      "timestamp": "2026-03-15T20:27:00Z",
-      "impactSeverity": "mild",
-      "affectedActivities": [
-        "socializing",
-        "exercise",
-        "work"
-      ]
-    },
-    {
-      "type": "note",
-      "timestamp": "2026-03-15T20:59:00Z",
-      "notes": "Long walk after dinner helped"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-15T21:22:00Z",
-      "bristolType": 6,
-      "urgency": "none"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-03-16T08:00:00Z",
-      "mood": 3,
-      "stressLevel": 4,
-      "sleepQuality": 4,
-      "notes": "Good day overall"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-16T08:12:00Z",
-      "bristolType": 7
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-16T09:21:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Oatmeal",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Pancakes",
-          "portion": "3 pancakes"
-        },
-        {
-          "name": "Scrambled eggs",
-          "portion": "2 eggs"
-        }
-      ],
-      "notes": "Felt heavy after"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-16T13:26:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Rice bowl",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Chicken salad",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Falafel wrap",
-          "portion": "1 wrap"
-        },
-        {
-          "name": "Ice cream",
-          "portion": "2 scoops"
-        }
-      ],
-      "portionSize": "normal",
-      "notes": "Meal prep from Sunday"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-16T16:25:00Z",
-      "symptomType": "pain",
-      "severity": 5,
-      "location": "all",
-      "duration": 31
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-16T20:07:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Risotto",
-          "portion": "1 bowl"
-        }
-      ],
-      "notes": "Ate too fast"
-    },
-    {
-      "type": "impact",
-      "timestamp": "2026-03-16T20:08:00Z",
-      "impactSeverity": "severe",
-      "affectedActivities": [
-        "errands",
-        "commute"
-      ],
-      "description": "Cancelled plans due to symptoms"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-03-17T07:00:00Z",
-      "mood": 5,
-      "sleepQuality": 4,
-      "anxietyLevel": 4,
-      "notes": "Rough morning but got better"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-17T09:05:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
           "name": "Oatmeal",
           "portion": "1 bowl"
         },
         {
           "name": "Avocado toast",
           "portion": "1 slice"
-        }
-      ],
-      "portionSize": "huge",
-      "notes": "Ate too fast"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-17T09:07:00Z",
-      "bristolType": 3,
-      "mucus": false
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-17T13:20:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Lentil soup",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Chicken salad",
-          "portion": "1 plate"
-        }
-      ]
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-17T18:08:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Pizza",
-          "portion": "3 slices"
-        }
-      ],
-      "notes": "Ate out at a restaurant"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-17T22:07:00Z",
-      "bristolType": 1,
-      "urgency": "none"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-03-18T08:00:00Z",
-      "mood": 4,
-      "stressLevel": 1,
-      "sleepQuality": 3,
-      "notes": "Rough morning but got better"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-18T08:10:00Z",
-      "bristolType": 7,
-      "urgency": "moderate"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-18T11:31:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Rice bowl",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Burrito bowl",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Milk",
-          "portion": "1 glass"
-        }
-      ],
-      "portionSize": "small",
-      "notes": "Ate out at a restaurant"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-18T15:03:00Z",
-      "mealType": "snack",
-      "foods": [
-        {
-          "name": "Apple",
-          "portion": "1 medium"
-        },
-        {
-          "name": "Almonds",
-          "portion": "handful"
-        },
-        {
-          "name": "Peanut butter toast",
-          "portion": "1 slice"
-        }
-      ],
-      "notes": "Tried a new recipe"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-18T18:09:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Risotto",
-          "portion": "1 bowl"
-        }
-      ],
-      "portionSize": "normal",
-      "notes": "Meal prep from Sunday"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-19T07:35:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Toast",
-          "portion": "2 slices"
-        },
-        {
-          "name": "Greek yogurt",
-          "portion": "1 cup"
-        }
-      ],
-      "portionSize": "small",
-      "notes": "Meal prep from Sunday"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-19T10:26:00Z",
-      "bristolType": 6
-    },
-    {
-      "type": "note",
-      "timestamp": "2026-03-19T10:49:00Z",
-      "notes": "Need to cut back on coffee"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-19T12:34:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Pasta",
-          "portion": "1 plate"
-        }
-      ],
-      "portionSize": "normal"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-19T16:00:00Z",
-      "mealType": "snack",
-      "foods": [
-        {
-          "name": "Protein bar",
-          "portion": "1 bar"
-        },
-        {
-          "name": "Peanut butter toast",
-          "portion": "1 slice"
-        }
-      ],
-      "portionSize": "large",
-      "notes": "Tried a new recipe"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-19T19:13:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Tacos",
-          "portion": "3 tacos"
-        },
-        {
-          "name": "Bean burrito",
-          "portion": "1 burrito"
-        }
-      ]
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-20T09:18:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Greek yogurt",
-          "portion": "1 cup"
-        }
-      ],
-      "portionSize": "small",
-      "notes": "Meal prep from Sunday"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-20T12:28:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Pasta",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Soup",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Falafel wrap",
-          "portion": "1 wrap"
-        },
-        {
-          "name": "Ice cream",
-          "portion": "2 scoops"
-        }
-      ],
-      "notes": "Leftovers from yesterday"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-20T16:11:00Z",
-      "symptomType": "cramps",
-      "severity": 2,
-      "location": "all"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-20T18:32:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Grilled salmon",
-          "portion": "1 fillet"
-        },
-        {
-          "name": "Pasta with marinara",
-          "portion": "1 plate"
-        }
-      ],
-      "notes": "Ate too fast"
-    },
-    {
-      "type": "note",
-      "timestamp": "2026-03-20T19:27:00Z",
-      "notes": "Trying to eat more slowly"
-    },
-    {
-      "type": "impact",
-      "timestamp": "2026-03-20T20:56:00Z",
-      "impactSeverity": "severe",
-      "affectedActivities": [
-        "exercise",
-        "cooking",
-        "sleep"
-      ],
-      "description": "Spent most of the day resting"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-21T07:43:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Banana",
-          "portion": "1 medium"
         }
       ],
       "portionSize": "large"
     },
     {
-      "type": "bowel",
-      "timestamp": "2026-03-21T10:13:00Z",
-      "bristolType": 2,
-      "urgency": "none"
+      "type": "emotion",
+      "timestamp": "2026-03-31T09:00:00Z",
+      "mood": 4,
+      "stressLevel": 3,
+      "notes": "Stress from work deadlines"
     },
     {
       "type": "meal",
-      "timestamp": "2026-03-21T11:19:00Z",
+      "timestamp": "2026-03-31T13:17:00Z",
       "mealType": "lunch",
       "foods": [
         {
-          "name": "Rice bowl",
-          "portion": "1 bowl"
-        },
-        {
-          "name": "Spicy wings",
-          "portion": "6 wings"
+          "name": "Grilled chicken",
+          "portion": "1 breast"
         }
-      ],
-      "portionSize": "normal",
-      "notes": "Tried a new recipe"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-21T13:21:00Z",
-      "symptomType": "cramps",
-      "severity": 2,
-      "duration": 61,
-      "notes": "Woke up with this"
+      ]
     },
     {
       "type": "meal",
-      "timestamp": "2026-03-21T15:00:00Z",
+      "timestamp": "2026-03-31T16:26:00Z",
       "mealType": "snack",
       "foods": [
         {
-          "name": "Apple",
-          "portion": "1 medium"
+          "name": "Trail mix",
+          "portion": "handful"
         },
         {
           "name": "Cheese and crackers",
           "portion": "4 crackers"
+        },
+        {
+          "name": "Almonds",
+          "portion": "handful"
         }
       ],
-      "portionSize": "small"
+      "notes": "Felt heavy after"
     },
     {
       "type": "meal",
-      "timestamp": "2026-03-21T19:01:00Z",
+      "timestamp": "2026-03-31T19:35:00Z",
       "mealType": "dinner",
       "foods": [
         {
-          "name": "Stir-fry",
+          "name": "Pad thai",
           "portion": "1 plate"
         },
+        {
+          "name": "Steak",
+          "portion": "6 oz"
+        }
+      ],
+      "portionSize": "normal",
+      "notes": "Leftovers from yesterday"
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-03-31T22:00:00Z",
+      "bristolType": 4
+    },
+    {
+      "type": "emotion",
+      "timestamp": "2026-04-01T08:00:00Z",
+      "mood": 5,
+      "stressLevel": 3,
+      "sleepQuality": 2
+    },
+    {
+      "type": "bowel",
+      "timestamp": "2026-04-01T10:04:00Z",
+      "bristolType": 3
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-04-01T12:00:00Z",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "name": "Burrito bowl",
+          "portion": "1 bowl"
+        },
+        {
+          "name": "Chicken salad",
+          "portion": "1 plate"
+        }
+      ],
+      "notes": "Ate too fast"
+    },
+    {
+      "type": "meal",
+      "timestamp": "2026-04-01T18:29:00Z",
+      "mealType": "dinner",
+      "foods": [
         {
           "name": "Lamb chops",
           "portion": "3 chops"
-        },
-        {
-          "name": "Milk",
-          "portion": "1 glass"
         }
       ],
+      "portionSize": "large",
       "notes": "Tried a new recipe"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-21T20:01:00Z",
-      "bristolType": 6,
-      "urgency": "severe"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-21T20:36:00Z",
-      "symptomType": "bloating",
-      "severity": 4,
-      "duration": 19,
-      "notes": "Took antacid"
-    },
-    {
-      "type": "impact",
-      "timestamp": "2026-03-21T22:25:00Z",
-      "impactSeverity": "moderate",
-      "affectedActivities": [
-        "errands"
-      ]
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-22T07:09:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Avocado toast",
-          "portion": "1 slice"
-        },
-        {
-          "name": "Toast",
-          "portion": "2 slices"
-        }
-      ]
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-03-22T09:00:00Z",
-      "mood": 3,
-      "stressLevel": 4,
-      "anxietyLevel": 4
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-22T09:24:00Z",
-      "bristolType": 7,
-      "urgency": "moderate"
-    },
-    {
-      "type": "note",
-      "timestamp": "2026-03-22T10:07:00Z",
-      "notes": "Long walk after dinner helped"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-22T12:13:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Falafel wrap",
-          "portion": "1 wrap"
-        },
-        {
-          "name": "Chicken salad",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Ice cream",
-          "portion": "2 scoops"
-        }
-      ],
-      "notes": "Tried a new recipe"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-22T15:23:00Z",
-      "symptomType": "bloating",
-      "severity": 5,
-      "duration": 49,
-      "notes": "Woke up with this"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-22T16:28:00Z",
-      "mealType": "snack",
-      "foods": [
-        {
-          "name": "Peanut butter toast",
-          "portion": "1 slice"
-        },
-        {
-          "name": "Apple",
-          "portion": "1 medium"
-        },
-        {
-          "name": "Popcorn",
-          "portion": "1 bag"
-        }
-      ],
-      "notes": "Tried a new recipe"
-    },
-    {
-      "type": "impact",
-      "timestamp": "2026-03-22T21:54:00Z",
-      "impactSeverity": "moderate",
-      "affectedActivities": [
-        "cooking",
-        "commute",
-        "sleep"
-      ],
-      "description": "Had to skip my workout"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-23T07:22:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Granola",
-          "portion": "1/2 cup"
-        },
-        {
-          "name": "Avocado toast",
-          "portion": "1 slice"
-        },
-        {
-          "name": "Banana",
-          "portion": "1 medium"
-        }
-      ],
-      "portionSize": "small",
-      "notes": "Ate too fast"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-03-23T08:00:00Z",
-      "mood": 1,
-      "stressLevel": 4,
-      "sleepQuality": 1,
-      "anxietyLevel": 1,
-      "notes": "Stress from work deadlines"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-23T10:28:00Z",
-      "bristolType": 6,
-      "urgency": "mild",
-      "mucus": false
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-23T11:15:00Z",
-      "mealType": "lunch",
-      "foods": [
-        {
-          "name": "Chicken salad",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Turkey sandwich",
-          "portion": "1 sandwich"
-        },
-        {
-          "name": "Caesar salad",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Garlic bread",
-          "portion": "3 pieces"
-        }
-      ],
-      "notes": "Ate out at a restaurant"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-23T14:49:00Z",
-      "symptomType": "cramps",
-      "severity": 5,
-      "location": "lower_right",
-      "duration": 173,
-      "notes": "Gets worse when sitting"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-23T19:00:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Curry with rice",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Roasted vegetables",
-          "portion": "1 cup"
-        }
-      ],
-      "notes": "Meal prep from Sunday"
-    },
-    {
-      "type": "impact",
-      "timestamp": "2026-03-23T20:35:00Z",
-      "impactSeverity": "severe",
-      "affectedActivities": [
-        "exercise",
-        "cooking",
-        "sleep"
-      ],
-      "description": "Spent most of the day resting"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-23T22:02:00Z",
-      "bristolType": 1,
-      "urgency": "mild"
-    },
-    {
-      "type": "emotion",
-      "timestamp": "2026-03-24T09:00:00Z",
-      "mood": 3,
-      "sleepQuality": 2,
-      "anxietyLevel": 5,
-      "notes": "Great energy today"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-24T09:31:00Z",
-      "mealType": "breakfast",
-      "foods": [
-        {
-          "name": "Granola",
-          "portion": "1/2 cup"
-        }
-      ],
-      "notes": "Ate too fast"
-    },
-    {
-      "type": "bowel",
-      "timestamp": "2026-03-24T10:07:00Z",
-      "bristolType": 3,
-      "urgency": "severe",
-      "mucus": false
-    },
-    {
-      "type": "note",
-      "timestamp": "2026-03-24T11:33:00Z",
-      "notes": "Stressful meeting, stomach reacted"
-    },
-    {
-      "type": "meal",
-      "timestamp": "2026-03-24T18:23:00Z",
-      "mealType": "dinner",
-      "foods": [
-        {
-          "name": "Curry with rice",
-          "portion": "1 plate"
-        },
-        {
-          "name": "Mashed potatoes",
-          "portion": "1 cup"
-        },
-        {
-          "name": "Tacos",
-          "portion": "3 tacos"
-        },
-        {
-          "name": "Fried onion rings",
-          "portion": "1 serving"
-        }
-      ],
-      "portionSize": "huge",
-      "notes": "Ate too fast"
-    },
-    {
-      "type": "symptom",
-      "timestamp": "2026-03-24T20:50:00Z",
-      "symptomType": "bloating",
-      "severity": 4,
-      "location": "upper_right",
-      "duration": 167,
-      "notes": "Drinking water helped a bit"
-    },
-    {
-      "type": "impact",
-      "timestamp": "2026-03-24T20:55:00Z",
-      "impactSeverity": "mild",
-      "affectedActivities": [
-        "work"
-      ],
-      "description": "Minor bloating slowed me down a little"
     }
   ]
 }

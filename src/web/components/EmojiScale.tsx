@@ -23,7 +23,7 @@ interface EmojiScaleProps {
 export function EmojiScale({ options, value, onChange, label }: EmojiScaleProps) {
   return (
     <div>
-      <span className="block text-xs font-semibold text-[#666] mb-2">
+      <span className="block text-xs font-semibold text-[var(--text-label)] mb-2">
         {label}
       </span>
       <div
@@ -41,12 +41,12 @@ export function EmojiScale({ options, value, onChange, label }: EmojiScaleProps)
             onClick={() => onChange(opt.value)}
             className={`flex flex-col items-center gap-0.5 p-2 min-w-[44px] min-h-[44px] rounded-lg border-2 transition-colors ${
               value === opt.value
-                ? 'border-[#4a7c59] bg-[#f0f7f0]'
-                : 'border-transparent hover:bg-[#fafaf9]'
+                ? 'border-[var(--green-primary)] bg-[var(--green-light)]'
+                : 'border-transparent hover:bg-[var(--bg-hover)]'
             }`}
           >
             <span className="text-xl">{opt.emoji}</span>
-            <span className="text-[10px] text-[#767676] leading-tight">
+            <span className="text-[10px] text-[var(--text-muted)] leading-tight">
               {opt.label}
             </span>
           </button>

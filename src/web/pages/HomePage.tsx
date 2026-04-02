@@ -14,13 +14,14 @@ import { CalendarPicker } from '../components/CalendarPicker'
 
 // ─── Entry type config ───────────────────────────────────────────────
 
+// Entry type colors use CSS variable names so they work in both light and dark mode
 const ENTRY_TYPES = [
-  { type: 'meal', emoji: '🍽', label: 'Meal', shortLabel: 'Meal', dotFill: '#a8d5a2', dotBorder: '#6db365', labelColor: '#6db365' },
-  { type: 'symptom', emoji: '⚡', label: 'Symptom', shortLabel: 'Symptom', dotFill: '#f5c6a0', dotBorder: '#e89b5e', labelColor: '#e89b5e' },
-  { type: 'bowel', emoji: '💩', label: 'Bowel Movement', shortLabel: 'BM', dotFill: '#c4b8e0', dotBorder: '#8b7bb8', labelColor: '#8b7bb8' },
-  { type: 'emotion', emoji: '💭', label: 'Mood Check', shortLabel: 'Mood', dotFill: '#a0c4f5', dotBorder: '#5e8be8', labelColor: '#5e8be8' },
-  { type: 'impact', emoji: '📋', label: 'Daily Impact', shortLabel: 'Impact', dotFill: '#f5a0a0', dotBorder: '#e85e5e', labelColor: '#e85e5e' },
-  { type: 'note', emoji: '📝', label: 'Note', shortLabel: 'Note', dotFill: '#e0e0e0', dotBorder: '#999999', labelColor: '#999999' },
+  { type: 'meal', emoji: '🍽', label: 'Meal', shortLabel: 'Meal', dotFillVar: '--dot-meal', dotBorderVar: '--dot-meal-accent', labelColorVar: '--dot-meal-accent' },
+  { type: 'symptom', emoji: '⚡', label: 'Symptom', shortLabel: 'Symptom', dotFillVar: '--dot-symptom', dotBorderVar: '--dot-symptom-accent', labelColorVar: '--dot-symptom-accent' },
+  { type: 'bowel', emoji: '💩', label: 'Bowel Movement', shortLabel: 'BM', dotFillVar: '--dot-bowel', dotBorderVar: '--dot-bowel-accent', labelColorVar: '--dot-bowel-accent' },
+  { type: 'emotion', emoji: '💭', label: 'Mood Check', shortLabel: 'Mood', dotFillVar: '--dot-emotion', dotBorderVar: '--dot-emotion-accent', labelColorVar: '--dot-emotion-accent' },
+  { type: 'impact', emoji: '📋', label: 'Daily Impact', shortLabel: 'Impact', dotFillVar: '--dot-impact', dotBorderVar: '--dot-impact-accent', labelColorVar: '--dot-impact-accent' },
+  { type: 'note', emoji: '📝', label: 'Note', shortLabel: 'Note', dotFillVar: '--dot-note', dotBorderVar: '--dot-note-accent', labelColorVar: '--dot-note-accent' },
 ] as const
 
 const SHEET_TITLES: Record<string, string> = {
@@ -158,7 +159,7 @@ export function HomePage() {
       setTimeout(() => setJustAddedId(null), 3000)
     } catch (err) {
       console.error('Save failed:', err)
-      alert(err instanceof Error ? err.message : 'Failed to save. Please try again.')
+      showToast(err instanceof Error ? err.message : 'Failed to save. Please try again.', 'error')
     }
     setSaving(false)
   }
@@ -176,7 +177,7 @@ export function HomePage() {
       loadStreak()
     } catch (err) {
       console.error('Delete failed:', err)
-      alert('Failed to delete. Please try again.')
+      showToast('Failed to delete. Please try again.', 'error')
     }
   }
 
@@ -239,7 +240,7 @@ export function HomePage() {
 
   const getEntrySummary = (entry: any): React.ReactNode => {
     const tag = (text: string) => (
-      <span className="inline-block text-[11px] px-1.5 py-0 rounded-[10px] bg-[#f0f0f0] text-[#555] ml-1">{text}</span>
+      <span className="inline-block text-[11px] px-1.5 py-0 rounded-[10px] bg-[var(--bg-muted)] text-[var(--text-secondary)] ml-1">{text}</span>
     )
 
     switch (entry.type) {
@@ -280,30 +281,30 @@ export function HomePage() {
       <div className="flex items-center justify-between mb-3">
         <button
           onClick={() => navigateDate(-1)}
-          className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-[#f5f5f5] text-lg text-[#767676]"
+          className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-[var(--bg-hover-strong)] text-lg text-[var(--text-muted)]"
           aria-label="Previous day"
         >
           ‹
         </button>
         <button
           onClick={() => setCalendarOpen((o) => !o)}
-          className="text-center cursor-pointer hover:bg-[#fafaf9] rounded-lg px-3 py-1.5 transition-colors"
+          className="text-center cursor-pointer hover:bg-[var(--bg-hover)] rounded-lg px-3 py-1.5 transition-colors"
           aria-label="Open calendar picker"
           aria-expanded={calendarOpen}
         >
-          <h1 className="text-lg font-semibold text-[#333]">
+          <h1 className="text-lg font-semibold text-[var(--text-primary)]">
             {formatDayLabel(selectedDate)}{' '}
-            <span className="text-xs font-semibold text-[#4a7c59]" title="Streak">🌿 {streak}</span>
+            <span className="text-xs font-semibold text-[var(--green-primary)]" title="Streak">🌿 {streak}</span>
           </h1>
-          <div className="text-xs text-[#767676]">
+          <div className="text-xs text-[var(--text-muted)]">
             {formatFullDate(selectedDate)}
-            <span className="ml-1 text-[#767676]">{calendarOpen ? '▲' : '▼'}</span>
+            <span className="ml-1 text-[var(--text-muted)]">{calendarOpen ? '▲' : '▼'}</span>
           </div>
         </button>
         <button
           onClick={() => navigateDate(1)}
           disabled={selectedDate === today}
-          className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-[#f5f5f5] disabled:opacity-30 text-lg text-[#767676]"
+          className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-[var(--bg-hover-strong)] disabled:opacity-30 text-lg text-[var(--text-muted)]"
           aria-label="Next day"
         >
           ›
@@ -327,16 +328,16 @@ export function HomePage() {
         {initialLoad ? (
           <TimelineSkeleton />
         ) : entries.length === 0 && !transitioning ? (
-          <div className="text-center py-12 text-[#999]">
+          <div className="text-center py-12 text-[var(--text-hint)]">
             <p className="text-4xl mb-3">🌿</p>
             {!hasEverLogged ? (
               <>
-                <p className="font-medium text-[#555]">Welcome to GutLog!</p>
+                <p className="font-medium text-[var(--text-secondary)]">Welcome to GutLog!</p>
                 <p className="text-sm mt-1">Log your first meal to start tracking</p>
               </>
             ) : (
               <>
-                <p className="font-medium">Nothing logged yet today</p>
+                <p className="font-medium text-[var(--text-secondary)]">Nothing logged yet today</p>
                 <p className="text-sm mt-1">Tap a button below to start tracking</p>
               </>
             )}
@@ -344,7 +345,7 @@ export function HomePage() {
         ) : (
           <div className="relative pl-7">
             {/* Vertical timeline line */}
-            <div className="absolute left-[9px] top-0 bottom-0 w-0.5 bg-[#e0e0e0]" />
+            <div className="absolute left-[9px] top-0 bottom-0 w-0.5 bg-[var(--border-timeline)]" />
 
             {entries.map((entry) => {
               const config = getEntryConfig(entry.type)
@@ -353,36 +354,36 @@ export function HomePage() {
                 <button
                   key={entry.id}
                   onClick={() => openEdit(entry.id)}
-                  className={`relative w-full mb-3.5 px-2.5 py-2.5 bg-[#fefefe] rounded-lg border transition-colors text-left ${
+                  className={`relative w-full mb-3.5 px-2.5 py-2.5 bg-[var(--bg-timeline-item)] rounded-lg border transition-colors text-left ${
                     isJustAdded
-                      ? 'border-[#4a7c59] shadow-just-added animate-entry-fade-in'
-                      : 'border-[#e8e8e8] hover:border-[#a3c4a9]'
+                      ? 'border-[var(--green-primary)] shadow-just-added animate-entry-fade-in'
+                      : 'border-[var(--border-card)] hover:border-[var(--green-primary)]/50'
                   }`}
                 >
                   {/* Timeline dot */}
                   <div
                     className="absolute -left-[22px] top-3.5 w-2.5 h-2.5 rounded-full"
-                    style={{ backgroundColor: config.dotFill, border: `2px solid ${config.dotBorder}` }}
+                    style={{ backgroundColor: `var(${config.dotFillVar})`, border: `2px solid var(${config.dotBorderVar})` }}
                   />
 
                   {/* Time */}
-                  <div className="text-[11px] text-[#767676] mb-0.5">
+                  <div className="text-[11px] text-[var(--text-muted)] mb-0.5">
                     {formatTime(entry.timestamp)}
                   </div>
 
                   {/* Entry type label */}
                   <div
                     className="text-[10px] uppercase tracking-wide font-semibold mb-0.5"
-                    style={{ color: config.labelColor }}
+                    style={{ color: `var(${config.labelColorVar})` }}
                   >
                     {config.emoji} {getEntryLabel(entry, config)}
                     {isJustAdded && (
-                      <span className="ml-1.5 text-[#4a7c59] normal-case tracking-normal">· ✨ just added</span>
+                      <span className="ml-1.5 text-[var(--green-primary)] normal-case tracking-normal">· ✨ just added</span>
                     )}
                   </div>
 
                   {/* Content */}
-                  <div className="text-[13px] text-[#333] truncate">
+                  <div className="text-[13px] text-[var(--text-primary)] truncate">
                     {getEntrySummary(entry)}
                   </div>
                 </button>
@@ -393,16 +394,16 @@ export function HomePage() {
       </div>
 
       {/* Quick Log Grid */}
-      <h3 className="text-[13px] font-semibold text-[#666] mt-4 mb-1.5">Quick Log</h3>
+      <h3 className="text-[13px] font-semibold text-[var(--text-label)] mt-4 mb-1.5">Quick Log</h3>
       <div className="grid grid-cols-3 gap-2">
         {ENTRY_TYPES.map((entry) => (
           <button
             key={entry.type}
             onClick={() => openSheet(entry.type)}
-            className="flex flex-col items-center gap-1 px-2 py-3 bg-white rounded-[10px] border border-[#ddd] hover:border-[#4a7c59] hover:bg-[#f0f7f0] transition-colors min-h-[56px] min-w-[56px]"
+            className="flex flex-col items-center gap-1 px-2 py-3 bg-[var(--bg-card)] rounded-[10px] border border-[var(--border-default)] hover:border-[var(--green-primary)] hover:bg-[var(--green-light)] transition-colors min-h-[56px] min-w-[56px]"
           >
             <span className="text-2xl">{entry.emoji}</span>
-            <span className="text-xs font-medium text-[#666]">
+            <span className="text-xs font-medium text-[var(--text-label)]">
               {entry.shortLabel}
             </span>
           </button>

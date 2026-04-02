@@ -52,7 +52,7 @@ export function SymptomForm({ onSave, onDelete, initialData, isEdit }: SymptomFo
 
       {/* Symptom Type — 2-column grid */}
       <div>
-        <span className="block text-xs font-semibold text-[#666] mb-2">
+        <span className="block text-xs font-semibold text-[var(--text-label)] mb-2">
           What are you feeling?
         </span>
         <div className="grid grid-cols-2 gap-2">
@@ -63,12 +63,12 @@ export function SymptomForm({ onSave, onDelete, initialData, isEdit }: SymptomFo
               onClick={() => setSymptomType(st.value)}
               className={`flex items-center gap-2 px-3 py-3 rounded-[10px] border text-left transition-colors min-h-[56px] ${
                 symptomType === st.value
-                  ? 'border-[#e89b5e] bg-orange-50'
-                  : 'border-[#ddd] bg-white hover:bg-[#fafaf9]'
+                  ? 'border-[var(--symptom-border)] bg-[var(--symptom-bg)]'
+                  : 'border-[var(--border-default)] bg-[var(--bg-card)] hover:bg-[var(--bg-hover)]'
               }`}
             >
               <span className="text-2xl">{st.emoji}</span>
-              <span className="text-xs font-semibold text-[#666]">{st.label}</span>
+              <span className="text-xs font-semibold text-[var(--text-label)]">{st.label}</span>
             </button>
           ))}
         </div>
@@ -76,7 +76,7 @@ export function SymptomForm({ onSave, onDelete, initialData, isEdit }: SymptomFo
 
       {/* Severity (1-5) */}
       <div>
-        <span className="block text-xs font-semibold text-[#666] mb-2">
+        <span className="block text-xs font-semibold text-[var(--text-label)] mb-2">
           Severity (1–5)
         </span>
         <div
@@ -94,23 +94,23 @@ export function SymptomForm({ onSave, onDelete, initialData, isEdit }: SymptomFo
               onClick={() => setSeverity(opt.value)}
               className={`flex flex-col items-center gap-0.5 p-2 min-w-[44px] min-h-[44px] rounded-lg border-2 transition-colors ${
                 severity === opt.value
-                  ? 'border-[#e89b5e] bg-orange-50'
-                  : 'border-transparent hover:bg-[#fafaf9]'
+                  ? 'border-[var(--symptom-border)] bg-[var(--symptom-bg)]'
+                  : 'border-transparent hover:bg-[var(--bg-hover)]'
               }`}
             >
               <span className="text-xl">{opt.emoji}</span>
-              <span className="text-[10px] text-[#767676] leading-tight">{opt.label}</span>
+              <span className="text-[10px] text-[var(--text-muted)] leading-tight">{opt.label}</span>
             </button>
           ))}
         </div>
-        <div className="text-[11px] text-[#767676] mt-1">
+        <div className="text-[11px] text-[var(--text-muted)] mt-1">
           {SEVERITY_OPTIONS.map((o) => `${o.value} ${o.label}`).join(' · ')}
         </div>
       </div>
 
       {/* Notes */}
       <div>
-        <label className="block text-xs font-semibold text-[#666] mb-1">
+        <label className="block text-xs font-semibold text-[var(--text-label)] mb-1">
           Notes (optional)
         </label>
         <textarea
@@ -119,7 +119,7 @@ export function SymptomForm({ onSave, onDelete, initialData, isEdit }: SymptomFo
           maxLength={1000}
           rows={2}
           placeholder="Any additional details..."
-          className="w-full px-2.5 py-2 rounded-md border border-[#ddd] focus:border-[#e89b5e] focus:ring-2 focus:ring-orange-100 outline-none text-sm resize-none"
+          className="w-full px-2.5 py-2 rounded-md border border-[var(--border-default)] focus:border-[var(--symptom-border)] focus:ring-2 focus:ring-[var(--symptom-border)]/20 outline-none text-sm resize-none bg-[var(--bg-input)] text-[var(--text-primary)]"
         />
       </div>
 
@@ -129,7 +129,7 @@ export function SymptomForm({ onSave, onDelete, initialData, isEdit }: SymptomFo
           type="button"
           onClick={handleSubmit}
           disabled={!symptomType || severity === null}
-          className="flex-1 py-2.5 bg-[#4a7c59] text-white text-sm font-semibold rounded-lg hover:bg-[#3d6a4a] disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[44px]"
+          className="flex-1 py-2.5 bg-[var(--green-primary)] text-white text-sm font-semibold rounded-lg hover:bg-[var(--green-hover)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[44px]"
         >
           {isEdit ? 'Update' : 'Save'}
         </button>
@@ -137,7 +137,7 @@ export function SymptomForm({ onSave, onDelete, initialData, isEdit }: SymptomFo
           <button
             type="button"
             onClick={onDelete}
-            className="py-2.5 px-3 text-red-600 text-sm font-medium rounded-lg hover:bg-red-50 transition-colors min-h-[44px]"
+            className="py-2.5 px-3 text-[var(--danger-text)] text-sm font-medium rounded-lg hover:bg-[var(--danger-bg-hover)] transition-colors min-h-[44px]"
           >
             🗑 Delete
           </button>

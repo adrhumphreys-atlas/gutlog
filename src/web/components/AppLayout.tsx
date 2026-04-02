@@ -27,10 +27,10 @@ const navItems = [
  */
 export function AppLayout() {
   return (
-    <div className="min-h-dvh flex flex-col md-plus:flex-row bg-[#fafafa]">
+    <div className="min-h-dvh flex flex-col md-plus:flex-row bg-[var(--bg-primary)]">
       {/* Desktop Sidebar — hidden below 769px */}
-      <aside className="hidden md-plus:flex flex-col w-52 border-r border-[#ddd] bg-white p-4 gap-1">
-        <div className="text-xl font-bold text-[#4a7c59] mb-6 px-3">
+      <aside className="hidden md-plus:flex flex-col w-52 border-r border-[var(--border-default)] bg-[var(--bg-nav)] p-4 gap-1">
+        <div className="text-xl font-bold text-[var(--green-primary)] mb-6 px-3">
           🌿 GutLog
         </div>
         {navItems.map((item) => (
@@ -41,8 +41,8 @@ export function AppLayout() {
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium transition-colors ${
                 isActive
-                  ? 'bg-[#f0f7f0] text-[#4a7c59] font-semibold'
-                  : 'text-[#767676] hover:bg-[#fafaf9] hover:text-[#333]'
+                  ? 'bg-[var(--green-light)] text-[var(--green-primary)] font-semibold'
+                  : 'text-[var(--text-muted)] hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)]'
               }`
             }
           >
@@ -58,7 +58,7 @@ export function AppLayout() {
       </main>
 
       {/* Mobile Bottom Nav — hidden at ≥769px */}
-      <nav className="md-plus:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-[#ddd] flex justify-around py-2 px-4 z-40">
+      <nav className="md-plus:hidden fixed bottom-0 left-0 right-0 bg-[var(--bg-nav)] border-t border-[var(--border-default)] flex justify-around py-2 px-4 z-40">
         {navItems.map((item) => (
           <NavLink
             key={item.to}
@@ -66,7 +66,7 @@ export function AppLayout() {
             end={item.to === '/'}
             className={({ isActive }) =>
               `flex flex-col items-center gap-0.5 py-1 px-3 min-w-[44px] min-h-[44px] justify-center ${
-                isActive ? 'text-[#4a7c59] font-semibold' : 'text-[#767676]'
+                isActive ? 'text-[var(--green-primary)] font-semibold' : 'text-[var(--text-muted)]'
               }`
             }
           >

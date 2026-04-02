@@ -69,6 +69,7 @@ export function ExperimentsPage() {
   const { showToast } = useToast()
   const [experiments, setExperiments] = useState<Experiment[]>([])
   const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState(false)
   const [showCreate, setShowCreate] = useState(false)
 
   // Pre-fill from insights suggestion
@@ -101,12 +102,14 @@ export function ExperimentsPage() {
 
   const loadExperiments = async () => {
     setLoading(true)
+    setLoadError(false)
     try {
       const data = await api.getExperiments()
       setExperiments(data)
     } catch (err) {
       if (err instanceof ApiRequestError && err.status === 401) return
       console.error('Failed to load experiments:', err)
+      setLoadError(true)
     }
     setLoading(false)
   }
@@ -132,7 +135,7 @@ export function ExperimentsPage() {
       resetForm()
       loadExperiments()
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Failed to create experiment')
+      showToast(err instanceof Error ? err.message : 'Failed to create experiment. Please try again.', 'error')
     }
   }
 
@@ -198,26 +201,38 @@ export function ExperimentsPage() {
   return (
     <div className="max-w-lg mx-auto px-4 py-4">
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-[15px] font-semibold text-[#555]">
+        <h2 className="text-[15px] font-semibold text-[var(--text-secondary)]">
           🔬 Experiments
         </h2>
         <button
           onClick={() => setShowCreate(true)}
-          className="px-3 py-1.5 text-[11px] font-medium text-[#4a7c59] bg-white border border-[#4a7c59] rounded-lg hover:bg-[#f0f7f0] transition-colors min-h-[44px]"
+          className="px-3 py-1.5 text-[11px] font-medium text-[var(--green-primary)] bg-[var(--bg-card)] border border-[var(--green-primary)] rounded-lg hover:bg-[var(--green-light)] transition-colors min-h-[44px]"
         >
           + New
         </button>
       </div>
 
       {loading ? (
-        <div className="text-center py-16 text-[#767676]">Loading...</div>
+        <div className="text-center py-16 text-[var(--text-muted)]">Loading...</div>
+      ) : loadError ? (
+        <div className="text-center py-16 px-4">
+          <p className="text-3xl mb-3">⚠️</p>
+          <p className="font-medium text-[var(--text-primary)]">Couldn't load experiments</p>
+          <p className="text-sm text-[var(--text-muted)] mt-1">Check your connection and try again.</p>
+          <button
+            onClick={loadExperiments}
+            className="mt-4 px-4 py-2 text-sm font-medium text-[var(--green-primary)] border border-[var(--green-primary)] rounded-lg hover:bg-[var(--green-light)] transition-colors min-h-[44px]"
+          >
+            ↻ Retry
+          </button>
+        </div>
       ) : experiments.length === 0 ? (
         /* Screen 12 — Empty State */
         <div>
           <div className="text-center py-8 px-4">
             <span className="text-5xl block mb-3">🧪</span>
-            <p className="text-sm text-[#666]">No experiments yet.</p>
-            <p className="text-[13px] text-[#767676] mt-1 leading-snug">
+            <p className="text-sm text-[var(--text-label)]">No experiments yet.</p>
+            <p className="text-[13px] text-[var(--text-muted)] mt-1 leading-snug">
               When you have enough data, we'll suggest your first elimination experiment to help identify your triggers.
             </p>
           </div>
@@ -228,18 +243,18 @@ export function ExperimentsPage() {
               <button
                 key={preset.name}
                 onClick={() => prefillExperiment(preset)}
-                className="w-full text-left border border-[#ddd] rounded-[10px] p-3 bg-white hover:bg-[#fafaf9] transition-colors"
+                className="w-full text-left border border-[var(--border-default)] rounded-[10px] p-3 bg-[var(--bg-card)] hover:bg-[var(--bg-hover)] transition-colors"
               >
-                <div className="text-[10px] uppercase tracking-[0.5px] text-[#767676] font-semibold">
+                <div className="text-[10px] uppercase tracking-[0.5px] text-[var(--text-muted)] font-semibold">
                   Suggested
                 </div>
-                <div className="text-[13px] mt-1">
+                <div className="text-[13px] mt-1 text-[var(--text-primary)]">
                   <strong>{preset.emoji} {preset.name}</strong>
                 </div>
-                <div className="text-xs text-[#666] mt-0.5">
+                <div className="text-xs text-[var(--text-label)] mt-0.5">
                   {preset.description}
                 </div>
-                <span className="inline-block mt-1.5 px-3 py-1 text-[11px] font-medium text-[#4a7c59] bg-white border border-[#4a7c59] rounded-lg">
+                <span className="inline-block mt-1.5 px-3 py-1 text-[11px] font-medium text-[var(--green-primary)] bg-[var(--bg-card)] border border-[var(--green-primary)] rounded-lg">
                   Start This Experiment
                 </span>
               </button>
@@ -256,27 +271,27 @@ export function ExperimentsPage() {
               <button
                 key={exp.id}
                 onClick={() => navigate(`/experiments/${exp.id}`)}
-                className="w-full text-left border-2 border-[#4a7c59] rounded-[10px] p-3 bg-[#f0f7f0] hover:bg-[#e8f2ea] transition-colors"
+                className="w-full text-left border-2 border-[var(--experiment-border)] rounded-[10px] p-3 bg-[var(--experiment-bg)] hover:bg-[var(--green-light)] transition-colors"
               >
-                <div className="text-[10px] uppercase tracking-[0.5px] text-[#4a7c59] font-semibold">
+                <div className="text-[10px] uppercase tracking-[0.5px] text-[var(--green-primary)] font-semibold">
                   Active — Day {progress.current} of {progress.total}
                 </div>
-                <div className="text-[13px] mt-1">
+                <div className="text-[13px] mt-1 text-[var(--text-primary)]">
                   <strong>{exp.name}</strong>
                 </div>
                 {exp.description && (
-                  <div className="text-xs text-[#555] mt-1">{exp.description}</div>
+                  <div className="text-xs text-[var(--text-secondary)] mt-1">{exp.description}</div>
                 )}
                 {/* Progress bar */}
-                <div className="h-1.5 bg-[#ddd] rounded-full mt-1.5 overflow-hidden">
+                <div className="h-1.5 bg-[var(--border-default)] rounded-full mt-1.5 overflow-hidden">
                   <div
-                    className="h-full bg-[#4a7c59] rounded-full transition-all"
+                    className="h-full bg-[var(--green-primary)] rounded-full transition-all"
                     style={{ width: `${(progress.current / progress.total) * 100}%` }}
                   />
                 </div>
                 {/* Symptom comparison */}
                 {exp.baselineSymptomRate != null && exp.currentSymptomRate != null && (
-                  <div className="text-[11px] text-[#767676] mt-1.5">
+                  <div className="text-[11px] text-[var(--text-muted)] mt-1.5">
                     So far: Avg symptoms <strong>{exp.currentSymptomRate.toFixed(1)}/day</strong> vs{' '}
                     <strong>{exp.baselineSymptomRate.toFixed(1)}/day</strong> before trial
                   </div>
@@ -290,16 +305,16 @@ export function ExperimentsPage() {
             <button
               key={exp.id}
               onClick={() => navigate(`/experiments/${exp.id}`)}
-              className="w-full text-left border border-[#ddd] rounded-[10px] p-3 bg-white hover:bg-[#fafaf9] transition-colors"
+              className="w-full text-left border border-[var(--border-default)] rounded-[10px] p-3 bg-[var(--bg-card)] hover:bg-[var(--bg-hover)] transition-colors"
             >
-              <div className="text-[10px] uppercase tracking-[0.5px] text-[#767676] font-semibold">
+              <div className="text-[10px] uppercase tracking-[0.5px] text-[var(--text-muted)] font-semibold">
                 Completed — {exp.endDate ? timeSince(exp.endDate) : ''}
               </div>
-              <div className="text-[13px] mt-1">
+              <div className="text-[13px] mt-1 text-[var(--text-primary)]">
                 <strong>{exp.name}</strong>
               </div>
               {exp.result && (
-                <div className="text-xs text-[#4a7c59] mt-0.5">
+                <div className="text-xs text-[var(--green-primary)] mt-0.5">
                   {resultLabel(exp.result)}
                 </div>
               )}
@@ -311,12 +326,12 @@ export function ExperimentsPage() {
             <button
               key={exp.id}
               onClick={() => navigate(`/experiments/${exp.id}`)}
-              className="w-full text-left border border-[#ddd] rounded-[10px] p-3 bg-white hover:bg-[#fafaf9] transition-colors opacity-60"
+              className="w-full text-left border border-[var(--border-default)] rounded-[10px] p-3 bg-[var(--bg-card)] hover:bg-[var(--bg-hover)] transition-colors opacity-60"
             >
-              <div className="text-[10px] uppercase tracking-[0.5px] text-[#767676] font-semibold">
+              <div className="text-[10px] uppercase tracking-[0.5px] text-[var(--text-muted)] font-semibold">
                 Abandoned
               </div>
-              <div className="text-[13px] mt-1">
+              <div className="text-[13px] mt-1 text-[var(--text-primary)]">
                 <strong>{exp.name}</strong>
               </div>
             </button>
@@ -330,16 +345,16 @@ export function ExperimentsPage() {
               <button
                 key={preset.name}
                 onClick={() => prefillExperiment(preset)}
-                className="w-full text-left border border-[#ddd] rounded-[10px] p-3 bg-white hover:bg-[#fafaf9] transition-colors"
+                className="w-full text-left border border-[var(--border-default)] rounded-[10px] p-3 bg-[var(--bg-card)] hover:bg-[var(--bg-hover)] transition-colors"
               >
-                <div className="text-[10px] uppercase tracking-[0.5px] text-[#767676] font-semibold">
+                <div className="text-[10px] uppercase tracking-[0.5px] text-[var(--text-muted)] font-semibold">
                   Suggested by Pattern Spotter
                 </div>
-                <div className="text-[13px] mt-1">
+                <div className="text-[13px] mt-1 text-[var(--text-primary)]">
                   <strong>{preset.emoji} {preset.name}</strong>
                 </div>
-                <div className="text-xs text-[#666] mt-0.5">{preset.description}</div>
-                <span className="inline-block mt-1.5 px-3 py-1 text-[11px] font-medium text-[#4a7c59] bg-white border border-[#4a7c59] rounded-lg">
+                <div className="text-xs text-[var(--text-label)] mt-0.5">{preset.description}</div>
+                <span className="inline-block mt-1.5 px-3 py-1 text-[11px] font-medium text-[var(--green-primary)] bg-[var(--bg-card)] border border-[var(--green-primary)] rounded-lg">
                   Start This Experiment
                 </span>
               </button>
@@ -356,7 +371,7 @@ export function ExperimentsPage() {
       >
         <div className="space-y-3">
           <div>
-            <label className="text-xs font-semibold text-[#666] block mb-1">
+            <label className="text-xs font-semibold text-[var(--text-label)] block mb-1">
               Experiment Name
             </label>
             <input
@@ -364,12 +379,12 @@ export function ExperimentsPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder='e.g. "Dairy-free trial"'
-              className="w-full px-2.5 py-2 rounded-md border border-[#ddd] focus:border-[#4a7c59] focus:ring-2 focus:ring-[#4a7c59/15] outline-none text-[13px]"
+              className="w-full px-2.5 py-2 rounded-md border border-[var(--border-default)] focus:border-[var(--green-primary)] focus:ring-2 focus:ring-[var(--green-primary)]/15 outline-none text-[13px] bg-[var(--bg-input)] text-[var(--text-primary)]"
             />
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-[#666] block mb-1">
+            <label className="text-xs font-semibold text-[var(--text-label)] block mb-1">
               What to eliminate
             </label>
             <input
@@ -377,12 +392,12 @@ export function ExperimentsPage() {
               value={eliminatedFoodsInput}
               onChange={(e) => setEliminatedFoodsInput(e.target.value)}
               placeholder="All dairy products (milk, cheese, yogurt, butter)"
-              className="w-full px-2.5 py-2 rounded-md border border-[#ddd] focus:border-[#4a7c59] focus:ring-2 focus:ring-[#4a7c59/15] outline-none text-[13px]"
+              className="w-full px-2.5 py-2 rounded-md border border-[var(--border-default)] focus:border-[var(--green-primary)] focus:ring-2 focus:ring-[var(--green-primary)]/15 outline-none text-[13px] bg-[var(--bg-input)] text-[var(--text-primary)]"
             />
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-[#666] block mb-1">
+            <label className="text-xs font-semibold text-[var(--text-label)] block mb-1">
               Duration
             </label>
             <div className="flex flex-wrap gap-1">
@@ -393,8 +408,8 @@ export function ExperimentsPage() {
                   onClick={() => setDurationDays(opt.value)}
                   className={`px-3.5 py-2 text-xs rounded-lg border-2 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors ${
                     durationDays === opt.value
-                      ? 'border-[#4a7c59] bg-[#f0f7f0]'
-                      : 'border-transparent hover:bg-[#fafaf9]'
+                      ? 'border-[var(--green-primary)] bg-[var(--green-light)] text-[var(--green-primary)]'
+                      : 'border-transparent text-[var(--text-label)] hover:bg-[var(--bg-hover)]'
                   }`}
                 >
                   {opt.label}
@@ -406,10 +421,10 @@ export function ExperimentsPage() {
           {/* Auto-filled reason (shown when pre-filled from insights) */}
           {suggestedFood && description && (
             <div>
-              <label className="text-xs font-semibold text-[#666] block mb-1">
+              <label className="text-xs font-semibold text-[var(--text-label)] block mb-1">
                 Why? (auto-filled from pattern)
               </label>
-              <div className="text-xs text-[#666] p-2 bg-[#faf7ff] rounded-md">
+              <div className="text-xs text-[var(--text-label)] p-2 bg-[var(--insight-bg)] rounded-md">
                 {description}
               </div>
             </div>
@@ -418,7 +433,7 @@ export function ExperimentsPage() {
           {/* Manual description (shown when NOT pre-filled) */}
           {!suggestedFood && (
             <div>
-              <label className="text-xs font-semibold text-[#666] block mb-1">
+              <label className="text-xs font-semibold text-[var(--text-label)] block mb-1">
                 Description (optional)
               </label>
               <textarea
@@ -427,7 +442,7 @@ export function ExperimentsPage() {
                 maxLength={1000}
                 rows={2}
                 placeholder="Why are you trying this..."
-                className="w-full px-2.5 py-2 rounded-md border border-[#ddd] focus:border-[#4a7c59] focus:ring-2 focus:ring-[#4a7c59/15] outline-none text-[13px] resize-none"
+                className="w-full px-2.5 py-2 rounded-md border border-[var(--border-default)] focus:border-[var(--green-primary)] focus:ring-2 focus:ring-[var(--green-primary)]/15 outline-none text-[13px] resize-none bg-[var(--bg-input)] text-[var(--text-primary)]"
               />
             </div>
           )}
@@ -436,7 +451,7 @@ export function ExperimentsPage() {
             type="button"
             onClick={handleCreate}
             disabled={!name.trim() || !eliminatedFoodsInput.trim()}
-            className="w-full py-2.5 bg-[#4a7c59] text-white font-semibold rounded-lg hover:bg-[#3d6a4a] disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[44px] text-sm mt-2"
+            className="w-full py-2.5 bg-[var(--green-primary)] text-white font-semibold rounded-lg hover:bg-[var(--green-hover)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[44px] text-sm mt-2"
           >
             🔬 Start Experiment
           </button>

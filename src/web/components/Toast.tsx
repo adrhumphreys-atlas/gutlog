@@ -3,10 +3,11 @@ import { useState, useEffect, useCallback, createContext, useContext } from 'rea
 interface ToastMessage {
   id: string
   text: string
+  variant?: 'success' | 'error'
 }
 
 interface ToastContextValue {
-  showToast: (text: string) => void
+  showToast: (text: string, variant?: 'success' | 'error') => void
 }
 
 const ToastContext = createContext<ToastContextValue>({ showToast: () => {} })
@@ -17,17 +18,18 @@ export function useToast() {
 
 /**
  * ToastProvider — Global toast notification system.
- * Shows "Saved ✓" style toasts that auto-dismiss after 1.5s.
+ * Shows "Saved ✓" style toasts that auto-dismiss after 1.5s (success) or 4s (error).
  */
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<ToastMessage[]>([])
 
-  const showToast = useCallback((text: string) => {
+  const showToast = useCallback((text: string, variant: 'success' | 'error' = 'success') => {
     const id = crypto.randomUUID()
-    setToasts((prev) => [...prev, { id, text }])
+    setToasts((prev) => [...prev, { id, text, variant }])
+    const duration = variant === 'error' ? 4000 : 1500
     setTimeout(() => {
       setToasts((prev) => prev.filter((t) => t.id !== id))
-    }, 1500)
+    }, duration)
   }, [])
 
   return (
@@ -39,9 +41,13 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            role="status"
-            aria-live="polite"
-            className="bg-[#4a7c59] text-white px-4 py-2.5 rounded-lg shadow-lg text-sm font-medium animate-fade-in"
+            role={toast.variant === 'error' ? 'alert' : 'status'}
+            aria-live={toast.variant === 'error' ? 'assertive' : 'polite'}
+            className={`px-4 py-2.5 rounded-lg shadow-lg text-sm font-medium animate-fade-in text-white ${
+              toast.variant === 'error'
+                ? 'bg-[var(--danger-text)]'
+                : 'bg-[var(--green-primary)]'
+            }`}
           >
             {toast.text}
           </div>

@@ -29,7 +29,7 @@ export function NoteForm({ onSave, onDelete, initialData, isEdit }: NoteFormProp
       )}
 
       <div>
-        <label className="block text-xs font-semibold text-[#666] mb-1">
+        <label className="block text-xs font-semibold text-[var(--text-label)] mb-1">
           What's on your mind?
         </label>
         <textarea
@@ -39,9 +39,9 @@ export function NoteForm({ onSave, onDelete, initialData, isEdit }: NoteFormProp
           rows={5}
           autoFocus
           placeholder="Jot down anything — observations, how you're feeling, what you ate somewhere else..."
-          className="w-full px-2.5 py-2 rounded-md border border-[#ddd] focus:border-[#4a7c59] focus:ring-2 focus:ring-[#4a7c59]/15 outline-none text-sm resize-none"
+          className="w-full px-2.5 py-2 rounded-md border border-[var(--border-default)] focus:border-[var(--green-primary)] focus:ring-2 focus:ring-[var(--green-primary)]/15 outline-none text-sm resize-none bg-[var(--bg-input)] text-[var(--text-primary)]"
         />
-        <p className="text-xs text-[#999] mt-1 text-right">
+        <p className="text-xs text-[var(--text-hint)] mt-1 text-right">
           {notes.length}/1000
         </p>
       </div>
@@ -52,7 +52,7 @@ export function NoteForm({ onSave, onDelete, initialData, isEdit }: NoteFormProp
           type="button"
           onClick={handleSubmit}
           disabled={!notes.trim()}
-          className="flex-1 py-2.5 bg-[#4a7c59] text-white text-sm font-semibold rounded-lg hover:bg-[#3d6a4a] disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[44px]"
+          className="flex-1 py-2.5 bg-[var(--green-primary)] text-white text-sm font-semibold rounded-lg hover:bg-[var(--green-hover)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors min-h-[44px]"
         >
           {isEdit ? 'Update' : 'Save'}
         </button>
@@ -60,7 +60,7 @@ export function NoteForm({ onSave, onDelete, initialData, isEdit }: NoteFormProp
           <button
             type="button"
             onClick={onDelete}
-            className="py-2.5 px-3 text-red-600 text-sm font-medium rounded-lg hover:bg-red-50 transition-colors min-h-[44px]"
+            className="py-2.5 px-3 text-[var(--danger-text)] text-sm font-medium rounded-lg hover:bg-[var(--danger-bg-hover)] transition-colors min-h-[44px]"
           >
             🗑 Delete
           </button>

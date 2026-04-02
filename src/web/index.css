@@ -2,22 +2,29 @@
 
 /* ─── GutLog Design Tokens (from DESIGN.md) ─────────────────────── */
 
-:root {
+:root,
+[data-theme="light"] {
   /* Backgrounds */
   --bg-primary: #fafafa;
   --bg-card: #ffffff;
   --bg-sheet: #ffffff;
   --bg-nav: #ffffff;
   --bg-timeline-item: #fefefe;
+  --bg-hover: #fafaf9;
+  --bg-hover-strong: #f5f5f5;
+  --bg-muted: #f0f0f0;
+  --bg-input: #ffffff;
 
   /* Text */
   --text-primary: #333333;
   --text-secondary: #555555;
   --text-label: #666666;
   --text-muted: #767676;     /* WCAG AA compliant */
+  --text-hint: #999999;
 
   /* Brand / Primary */
   --green-primary: #4a7c59;
+  --green-hover: #3d6a4a;
   --green-light: #f0f7f0;
 
   /* Borders */
@@ -47,12 +54,103 @@
   /* Experiment green family */
   --experiment-border: #4a7c59;
   --experiment-bg: #f0f7f0;
+
+  /* Overlay */
+  --overlay-bg: rgba(0, 0, 0, 0.3);
+
+  /* Symptom orange family (for symptom form) */
+  --symptom-border: #e89b5e;
+  --symptom-bg: rgba(255, 237, 213, 1);
+
+  /* Danger */
+  --danger-bg: #fef5f5;
+  --danger-border: #f5e0e0;
+  --danger-section-border: #fecaca;
+  --danger-text: #dc2626;
+  --danger-text-hover: #b91c1c;
+  --danger-bg-hover: #fef2f2;
+  --danger-confirm-bg: #fef2f2;
+  --danger-confirm-border: #fecaca;
+}
+
+[data-theme="dark"] {
+  /* Backgrounds */
+  --bg-primary: #141414;
+  --bg-card: #1e1e1e;
+  --bg-sheet: #242424;
+  --bg-nav: #1a1a1a;
+  --bg-timeline-item: #1e1e1e;
+  --bg-hover: #252525;
+  --bg-hover-strong: #2a2a2a;
+  --bg-muted: #2a2a2a;
+  --bg-input: #1e1e1e;
+
+  /* Text */
+  --text-primary: #e8e8e8;
+  --text-secondary: #b8b8b8;
+  --text-label: #a0a0a0;
+  --text-muted: #888888;
+  --text-hint: #666666;
+
+  /* Brand / Primary */
+  --green-primary: #6db365;
+  --green-hover: #5da356;
+  --green-light: #1a2e1f;
+
+  /* Borders */
+  --border-default: #333333;
+  --border-card: #2a2a2a;
+  --border-timeline: #2a2a2a;
+
+  /* Entry type dot colors — brighter for dark backgrounds */
+  --dot-meal: #7ec478;
+  --dot-meal-accent: #6db365;
+  --dot-symptom: #e8a878;
+  --dot-symptom-accent: #e89b5e;
+  --dot-bowel: #a898d0;
+  --dot-bowel-accent: #8b7bb8;
+  --dot-emotion: #88b4e8;
+  --dot-emotion-accent: #5e8be8;
+  --dot-impact: #e88888;
+  --dot-impact-accent: #e85e5e;
+  --dot-note: #888888;
+  --dot-note-accent: #aaaaaa;
+
+  /* Insight purple family */
+  --insight-bg: #1e1a28;
+  --insight-border: #3d3556;
+  --insight-text: #a898d0;
+
+  /* Experiment green family */
+  --experiment-border: #6db365;
+  --experiment-bg: #1a2e1f;
+
+  /* Overlay */
+  --overlay-bg: rgba(0, 0, 0, 0.6);
+
+  /* Symptom orange family */
+  --symptom-border: #e89b5e;
+  --symptom-bg: #2a2018;
+
+  /* Danger */
+  --danger-bg: #2a1a1a;
+  --danger-border: #4a2a2a;
+  --danger-section-border: #4a2a2a;
+  --danger-text: #f87171;
+  --danger-text-hover: #fca5a5;
+  --danger-bg-hover: #2a1a1a;
+  --danger-confirm-bg: #2a1a1a;
+  --danger-confirm-border: #4a2a2a;
+
+  color-scheme: dark;
 }
 
 /* Base body styles */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   min-height: 100dvh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 /* Prevent iOS Safari auto-zoom on input focus (triggers below 16px) */

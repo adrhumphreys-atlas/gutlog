@@ -216,22 +216,22 @@ export function CalendarPicker({ selectedDate, onSelectDate, onClose }: Calendar
   return (
     <div
       ref={containerRef}
-      className="border border-[#ddd] rounded-[10px] p-3 bg-white shadow-lg mb-3 animate-in fade-in slide-in-from-top-2 duration-200"
+      className="border border-[var(--border-default)] rounded-[10px] p-3 bg-[var(--bg-card)] shadow-lg mb-3 animate-in fade-in slide-in-from-top-2 duration-200"
     >
       {/* Month header with navigation */}
       <div className="flex items-center justify-between mb-2">
         <button
           onClick={goToPrevMonth}
-          className="p-1 min-w-[32px] min-h-[32px] flex items-center justify-center rounded-lg hover:bg-[#f5f5f5] text-sm text-[#767676]"
+          className="p-1 min-w-[32px] min-h-[32px] flex items-center justify-center rounded-lg hover:bg-[var(--bg-hover-strong)] text-sm text-[var(--text-muted)]"
           aria-label="Previous month"
         >
           ‹
         </button>
-        <span className="text-[13px] font-semibold text-[#333]">{monthLabel}</span>
+        <span className="text-[13px] font-semibold text-[var(--text-primary)]">{monthLabel}</span>
         <button
           onClick={goToNextMonth}
           disabled={isNextDisabled}
-          className="p-1 min-w-[32px] min-h-[32px] flex items-center justify-center rounded-lg hover:bg-[#f5f5f5] disabled:opacity-30 text-sm text-[#767676]"
+          className="p-1 min-w-[32px] min-h-[32px] flex items-center justify-center rounded-lg hover:bg-[var(--bg-hover-strong)] disabled:opacity-30 text-sm text-[var(--text-muted)]"
           aria-label="Next month"
         >
           ›
@@ -241,7 +241,7 @@ export function CalendarPicker({ selectedDate, onSelectDate, onClose }: Calendar
       {/* Day-of-week labels */}
       <div className="grid grid-cols-7 gap-0.5 text-center mb-0.5">
         {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((label, i) => (
-          <div key={i} className="text-[10px] font-semibold text-[#999] py-1">
+          <div key={i} className="text-[10px] font-semibold text-[var(--text-hint)] py-1">
             {label}
           </div>
         ))}
@@ -251,11 +251,11 @@ export function CalendarPicker({ selectedDate, onSelectDate, onClose }: Calendar
       <div className="grid grid-cols-7 gap-0.5 text-center">
         {cells.map((cell, i) => {
           const base = 'relative flex flex-col items-center justify-center rounded-md text-xs min-h-[36px] cursor-pointer transition-colors'
-          const muted = !cell.isCurrentMonth ? 'text-[#ccc]' : ''
-          const future = cell.isFuture ? 'text-[#ccc] cursor-default' : ''
-          const todayCls = cell.isToday ? 'bg-[#f0f7f0] font-bold text-[#4a7c59]' : ''
-          const selectedCls = cell.isSelected && !cell.isToday ? 'bg-[#f0f7f0] font-semibold' : ''
-          const hoverCls = !cell.isFuture && cell.isCurrentMonth ? 'hover:bg-[#fafaf9]' : ''
+          const muted = !cell.isCurrentMonth ? 'text-[var(--text-hint)]' : 'text-[var(--text-primary)]'
+          const future = cell.isFuture ? 'text-[var(--text-hint)] cursor-default' : ''
+          const todayCls = cell.isToday ? 'bg-[var(--green-light)] font-bold text-[var(--green-primary)]' : ''
+          const selectedCls = cell.isSelected && !cell.isToday ? 'bg-[var(--green-light)] font-semibold' : ''
+          const hoverCls = !cell.isFuture && cell.isCurrentMonth ? 'hover:bg-[var(--bg-hover)]' : ''
 
           return (
             <button
@@ -267,7 +267,7 @@ export function CalendarPicker({ selectedDate, onSelectDate, onClose }: Calendar
             >
               <span>{cell.day || ''}</span>
               {cell.hasEntries && (
-                <span className="text-[#4a7c59] text-[5px] leading-none mt-px">●</span>
+                <span className="text-[var(--green-primary)] text-[5px] leading-none mt-px">●</span>
               )}
             </button>
           )
@@ -275,7 +275,7 @@ export function CalendarPicker({ selectedDate, onSelectDate, onClose }: Calendar
       </div>
 
       {/* Legend */}
-      <div className="text-[11px] text-[#999] mt-2 text-center">
+      <div className="text-[11px] text-[var(--text-hint)] mt-2 text-center">
         ● = days with entries · Tap a date to jump
       </div>
     </div>
