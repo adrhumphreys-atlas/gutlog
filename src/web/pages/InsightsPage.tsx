@@ -13,26 +13,117 @@ interface Correlation {
   consistencyRatio: number
   occurrences: number
   totalOpportunities: number
+  windowHours: number
+}
+
+/** Emoji + label for each symptom type */
+const SYMPTOM_DISPLAY: Record<string, { emoji: string; label: string }> = {
+  bloating: { emoji: '🎈', label: 'Bloating' },
+  gas: { emoji: '💨', label: 'Gas' },
+  nausea: { emoji: '🤢', label: 'Nausea' },
+  cramps: { emoji: '🔄', label: 'Cramps' },
+  pain: { emoji: '😣', label: 'Pain' },
+  fatigue: { emoji: '😴', label: 'Fatigue' },
+  other: { emoji: '⚠️', label: 'Symptom' },
+  any: { emoji: '🩺', label: 'Symptoms' },
+  abnormal_bowel: { emoji: '💩', label: 'Irregular bowel' },
+}
+
+/** Emoji + label for trigger types */
+const TRIGGER_DISPLAY: Record<string, { emoji: string; label: string }> = {
+  food: { emoji: '🍽️', label: 'Food trigger' },
+  emotion: { emoji: '🧠', label: 'Gut-brain link' },
+}
+
+/** Human-readable trigger value (handle special emotion values) */
+const formatTriggerValue = (triggerType: string, triggerValue: string): string => {
+  if (triggerType === 'emotion') {
+    if (triggerValue === 'high_stress') return 'High Stress / Anxiety'
+    if (triggerValue === 'low_mood') return 'Low Mood'
+  }
+  return triggerValue
 }
 
 /**
  * Insights Page (/insights)
  *
- * Matches wireframe screens 9 (empty state) and 10 (with data).
- * Shows progress ring when <14 days of data with blurred preview.
- * Shows insight cards, trigger bar chart, and symptom trend when enough data exists.
+ * Shows research-driven, per-symptom-type correlations with variable
+ * time windows, bowel movement analysis, and stress/mood patterns.
  */
+/** Represents one week of symptom data */
+interface WeekBucket {
+  label: string           // e.g. "Mar 9"
+  total: number           // total symptom entries
+  avgSeverity: number     // average severity (1-5)
+  byType: Record<string, number> // count per symptom type
+}
+
+/** Build 4 weekly buckets ending at today, populate from symptom entries */
+function buildWeekBuckets(symptomEntries: any[]): WeekBucket[] {
+  const now = new Date()
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+  const buckets: WeekBucket[] = []
+  for (let i = 3; i >= 0; i--) {
+    const start = new Date(now)
+    start.setDate(now.getDate() - (i + 1) * 7)
+    start.setHours(0, 0, 0, 0)
+    const end = new Date(start)
+    end.setDate(start.getDate() + 7)
+
+    const weekEntries = symptomEntries.filter((e: any) => {
+      const t = new Date(e.timestamp).getTime()
+      return t >= start.getTime() && t < end.getTime()
+    })
+
+    const severities = weekEntries
+      .map((e: any) => e.severity)
+      .filter((s: any) => typeof s === 'number')
+    const avgSev = severities.length > 0
+      ? severities.reduce((a: number, b: number) => a + b, 0) / severities.length
+      : 0
+
+    const byType: Record<string, number> = {}
+    for (const e of weekEntries) {
+      const st = e.symptomType || 'other'
+      byType[st] = (byType[st] || 0) + 1
+    }
+
+    buckets.push({
+      label: `${monthNames[start.getMonth()]} ${start.getDate()}`,
+      total: weekEntries.length,
+      avgSeverity: Math.round(avgSev * 10) / 10,
+      byType,
+    })
+  }
+  return buckets
+}
+
+/** Color palette for stacked symptom type bars — uses the app's entry dot colors */
+const SYMPTOM_COLORS: Record<string, string> = {
+  bloating: '#8b7bb8',  // bowel-accent purple — fermentation related
+  gas: '#c4b8e0',       // bowel purple (lighter)
+  nausea: '#5e8be8',    // emotion-accent blue — vagal/systemic
+  cramps: '#e89b5e',    // symptom-accent orange
+  pain: '#e85e5e',      // impact-accent red
+  fatigue: '#a0c4f5',   // emotion blue (lighter)
+  other: '#999999',     // note-accent gray
+}
+
 export function InsightsPage() {
   const navigate = useNavigate()
   const [correlations, setCorrelations] = useState<Correlation[]>([])
   const [loading, setLoading] = useState(true)
+  const [refreshing, setRefreshing] = useState(false)
   const [refreshed, setRefreshed] = useState(false)
   const [daysLogged, setDaysLogged] = useState(0)
   const [totalEntries, setTotalEntries] = useState(0)
+  const [weekBuckets, setWeekBuckets] = useState<WeekBucket[]>([])
 
   useEffect(() => {
     loadInsights()
     loadDaysLogged()
+    loadSymptomTrend()
   }, [])
 
   const loadInsights = async () => {
@@ -67,6 +158,28 @@ export function InsightsPage() {
       // Get total entry count for subtitle
       const allEntries = await api.getEntries()
       setTotalEntries(allEntries.length)
+    } catch {
+      // Non-critical
+    }
+  }
+
+  const handleRefresh = async () => {
+    setRefreshing(true)
+    try {
+      const data = await api.refreshInsights()
+      setCorrelations(data.correlations)
+      setRefreshed(true)
+    } catch (err) {
+      if (err instanceof ApiRequestError && err.status === 401) return
+      console.error('Failed to refresh insights:', err)
+    }
+    setRefreshing(false)
+  }
+
+  const loadSymptomTrend = async () => {
+    try {
+      const allEntries = await api.getEntries(undefined, 'symptom')
+      setWeekBuckets(buildWeekBuckets(allEntries))
     } catch {
       // Non-critical
     }
@@ -110,11 +223,20 @@ export function InsightsPage() {
         <h2 className="text-[15px] font-semibold text-[#555]">
           📊 Your Insights
         </h2>
-        {refreshed && (
-          <span className="text-xs text-[#4a7c59] bg-[#f0f7f0] px-2 py-1 rounded-full">
-            ✓ Updated
-          </span>
-        )}
+        <div className="flex items-center gap-2">
+          {refreshed && !refreshing && (
+            <span className="text-xs text-[#4a7c59] bg-[#f0f7f0] px-2 py-1 rounded-full">
+              ✓ Updated
+            </span>
+          )}
+          <button
+            onClick={handleRefresh}
+            disabled={refreshing}
+            className="text-xs text-[#4a7c59] border border-[#4a7c59] px-2.5 py-1 rounded-full hover:bg-[#f0f7f0] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {refreshing ? '⏳ Recalculating…' : '↻ Refresh'}
+          </button>
+        </div>
       </div>
 
       {/* Not enough data — progress ring + blurred preview (Screen 9) */}
@@ -179,8 +301,8 @@ export function InsightsPage() {
           <p className="text-4xl mb-3">🎉</p>
           <p className="font-medium text-[#333]">No strong patterns found</p>
           <p className="text-sm text-[#767676] mt-1">
-            Your data doesn't show any clear food-symptom correlations yet.
-            Keep logging — patterns may emerge with more data.
+            Your data doesn't show clear correlations between foods, stress, or mood
+            and your symptoms yet. Keep logging — patterns may emerge with more data.
           </p>
         </div>
       ) : (
@@ -190,41 +312,76 @@ export function InsightsPage() {
             Last 30 days · {totalEntries} entries logged
           </p>
 
-          {/* Insight cards (Screen 10) */}
+          {/* Insight cards — per-symptom with research-based windows */}
           <div className="space-y-2.5">
-            {correlations.slice(0, 3).map((corr, i) => (
-              <div
-                key={corr.id}
-                className="border border-[#e0d4f5] rounded-[10px] p-3 bg-[#faf7ff]"
-              >
-                <div className="text-[10px] uppercase tracking-[0.5px] text-[#8b7bb8] font-semibold">
-                  {i === 0 ? '🔍 Pattern Spotter' : '📈 Pattern'}
+            {correlations.slice(0, 5).map((corr, i) => {
+              const symptom = SYMPTOM_DISPLAY[corr.symptomType] ?? SYMPTOM_DISPLAY.other
+              const trigger = TRIGGER_DISPLAY[corr.triggerType] ?? TRIGGER_DISPLAY.food
+              const triggerLabel = formatTriggerValue(corr.triggerType, corr.triggerValue)
+              const isFoodTrigger = corr.triggerType === 'food'
+              const isEmotionTrigger = corr.triggerType === 'emotion'
+
+              return (
+                <div
+                  key={corr.id}
+                  className="border border-[#e0d4f5] rounded-[10px] p-3 bg-[#faf7ff]"
+                >
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[10px] uppercase tracking-[0.5px] text-[#8b7bb8] font-semibold">
+                      {i === 0 ? '🔍 Top Pattern' : `${trigger.emoji} ${trigger.label}`}
+                    </span>
+                    <span className={`ml-auto font-medium ${confidenceColor(corr.confidence)} px-1.5 py-0.5 rounded-full border text-[10px]`}>
+                      {confidenceLabel(corr.confidence)}
+                    </span>
+                  </div>
+                  <div className="text-[13px] mt-1.5 leading-snug">
+                    {isFoodTrigger && (
+                      <>
+                        {symptom.emoji} You report <strong>{symptom.label.toLowerCase()}</strong>{' '}
+                        <strong>{corr.occurrences} out of {corr.totalOpportunities} times</strong>{' '}
+                        within {corr.windowHours}hrs of eating{' '}
+                        <strong className="capitalize">{triggerLabel}</strong>.
+                        {corr.confidence >= 0.7
+                          ? ` ${triggerLabel.charAt(0).toUpperCase() + triggerLabel.slice(1)} looks like a strong trigger.`
+                          : ''}
+                      </>
+                    )}
+                    {isEmotionTrigger && (
+                      <>
+                        🧠 When you log <strong>{triggerLabel.toLowerCase()}</strong>,{' '}
+                        symptoms follow within {corr.windowHours}hrs{' '}
+                        <strong>{corr.occurrences} out of {corr.totalOpportunities} times</strong>.
+                        {corr.confidence >= 0.7
+                          ? ' Your gut-brain connection appears significant.'
+                          : ' The gut-brain axis may play a role.'}
+                      </>
+                    )}
+                  </div>
+                  <div className="text-[11px] text-[#767676] mt-1.5 flex items-center gap-1 flex-wrap">
+                    <span>Confidence: {Math.round(corr.confidence * 100)}%</span>
+                    <span>·</span>
+                    <span>Risk: {corr.relativeRisk.toFixed(1)}x</span>
+                    <span>·</span>
+                    <span>Window: {corr.windowHours}hrs</span>
+                    <span>·</span>
+                    <span>{corr.totalOpportunities} occasions</span>
+                  </div>
+                  {corr.totalOpportunities < 8 && (
+                    <p className="text-[11px] text-[#999] mt-1">
+                      ⚠️ Low data — based on {corr.totalOpportunities} occasions. Log more to improve reliability.
+                    </p>
+                  )}
+                  {isFoodTrigger && corr.confidence >= 0.5 && (
+                    <button
+                      onClick={() => startExperiment(corr.triggerValue)}
+                      className="mt-2 px-3 py-1.5 text-[11px] font-medium text-[#4a7c59] bg-white border border-[#4a7c59] rounded-lg hover:bg-[#f0f7f0] transition-colors min-h-[44px]"
+                    >
+                      🔬 Start Elimination Experiment
+                    </button>
+                  )}
                 </div>
-                <div className="text-[13px] mt-1 leading-snug">
-                  You report <strong>{corr.symptomType}</strong>{' '}
-                  <strong>{corr.occurrences} out of {corr.totalOpportunities} times</strong>{' '}
-                  within hours of eating <strong className="capitalize">{corr.triggerValue}</strong>.
-                  {corr.confidence >= 0.7
-                    ? ` ${corr.triggerValue.charAt(0).toUpperCase() + corr.triggerValue.slice(1)} might be a trigger.`
-                    : ''}
-                </div>
-                <div className="text-[11px] text-[#767676] mt-1">
-                  Confidence: {Math.round(corr.confidence * 100)}% ·
-                  Risk: {corr.relativeRisk.toFixed(1)}x ·{' '}
-                  <span className={`font-medium ${confidenceColor(corr.confidence)} px-1.5 py-0.5 rounded-full border text-[10px]`}>
-                    {confidenceLabel(corr.confidence)}
-                  </span>
-                </div>
-                {corr.confidence >= 0.5 && (
-                  <button
-                    onClick={() => startExperiment(corr.triggerValue)}
-                    className="mt-2 px-3 py-1.5 text-[11px] font-medium text-[#4a7c59] bg-white border border-[#4a7c59] rounded-lg hover:bg-[#f0f7f0] transition-colors min-h-[44px]"
-                  >
-                    🔬 Start Elimination Experiment
-                  </button>
-                )}
-              </div>
-            ))}
+              )
+            })}
           </div>
 
           {/* Top Suspected Triggers — bar chart */}
@@ -236,10 +393,14 @@ export function InsightsPage() {
               <div className="space-y-1.5">
                 {topTriggers.map((corr) => {
                   const pct = Math.round(corr.confidence * 100)
+                  const symptom = SYMPTOM_DISPLAY[corr.symptomType] ?? SYMPTOM_DISPLAY.other
+                  const label = corr.triggerType === 'emotion'
+                    ? formatTriggerValue(corr.triggerType, corr.triggerValue)
+                    : corr.triggerValue
                   return (
                     <div key={corr.id} className="flex items-center text-xs">
-                      <span className="w-20 text-right pr-2 text-[#666] capitalize truncate">
-                        {corr.triggerValue}
+                      <span className="w-24 text-right pr-2 text-[#666] capitalize truncate" title={`${label} → ${symptom.label}`}>
+                        {corr.totalOpportunities < 8 ? '⚠️' : symptom.emoji} {label}
                       </span>
                       <div className="flex-1 h-4 bg-[#eee] rounded overflow-hidden">
                         <div
@@ -255,25 +416,174 @@ export function InsightsPage() {
                 })}
               </div>
               <p className="text-[11px] text-[#767676] mt-1">
-                % of times a symptom followed within 6 hours
+                Confidence score — our weighted measure of frequency, consistency, and relative risk. ⚠️ = fewer than 8 occasions.
               </p>
             </div>
           )}
 
-          {/* Symptom Trend placeholder */}
-          <div className="mt-4">
-            <h3 className="text-[13px] font-semibold text-[#666] mb-2">
-              Symptom Trend (4 weeks)
-            </h3>
-            <div className="border border-dashed border-[#ccc] rounded-lg p-4 text-center text-xs text-[#767676] bg-[#fcfcfc]">
-              📉 Symptom frequency trend coming soon
+          {/* Symptom Trend — stacked bar chart */}
+          <div className="mt-4 border border-[#e0d4f5] rounded-[10px] bg-[#faf7ff] p-3">
+            <div className="text-[10px] uppercase tracking-[0.5px] text-[#8b7bb8] font-semibold mb-2">
+              📉 Symptom Trend — 4 weeks
             </div>
+            {weekBuckets.length > 0 && weekBuckets.some(b => b.total > 0) ? (() => {
+              const maxTotal = Math.max(...weekBuckets.map(b => b.total), 1)
+              // Collect all symptom types across all weeks for legend
+              const allTypes = Array.from(
+                new Set(weekBuckets.flatMap(b => Object.keys(b.byType)))
+              ).sort()
+
+              return (
+                <>
+                  {/* Bar chart */}
+                  <div className="flex items-end gap-3 h-[100px] px-1">
+                    {weekBuckets.map((bucket, idx) => {
+                      const barHeight = maxTotal > 0 ? (bucket.total / maxTotal) * 100 : 0
+                      // Build stacked segments
+                      const types = Object.entries(bucket.byType).sort(([a], [b]) => a.localeCompare(b))
+                      return (
+                        <div key={idx} className="flex-1 flex flex-col items-center justify-end h-full">
+                          {bucket.total > 0 && (
+                            <div className="text-[10px] text-[#555] mb-1 font-semibold">
+                              {bucket.total}
+                            </div>
+                          )}
+                          <div
+                            className="w-full rounded-t-md overflow-hidden flex flex-col-reverse"
+                            style={{ height: `${Math.max(barHeight, bucket.total > 0 ? 8 : 2)}%` }}
+                          >
+                            {types.map(([type, count]) => {
+                              const segmentPct = bucket.total > 0 ? (count / bucket.total) * 100 : 0
+                              const color = SYMPTOM_COLORS[type] ?? SYMPTOM_COLORS.other
+                              return (
+                                <div
+                                  key={type}
+                                  style={{ height: `${segmentPct}%`, backgroundColor: color }}
+                                  className="w-full min-h-[3px]"
+                                  title={`${(SYMPTOM_DISPLAY[type] ?? SYMPTOM_DISPLAY.other).label}: ${count}`}
+                                />
+                              )
+                            })}
+                          </div>
+                          {bucket.total === 0 && (
+                            <div className="w-full h-[3px] rounded bg-[#e0d4f5]" />
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+
+                  {/* Week labels + severity */}
+                  <div className="flex gap-3 mt-1.5 px-1">
+                    {weekBuckets.map((bucket, idx) => (
+                      <div key={idx} className="flex-1 text-center">
+                        <div className="text-[10px] text-[#666] font-medium">{bucket.label}</div>
+                        {bucket.avgSeverity > 0 && (
+                          <div className="text-[9px] text-[#8b7bb8]">
+                            sev {bucket.avgSeverity}/5
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Legend */}
+                  {allTypes.length > 0 && (
+                    <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2.5 pt-2 border-t border-[#e0d4f5]">
+                      {allTypes.map(type => {
+                        const display = SYMPTOM_DISPLAY[type] ?? SYMPTOM_DISPLAY.other
+                        const color = SYMPTOM_COLORS[type] ?? SYMPTOM_COLORS.other
+                        return (
+                          <div key={type} className="flex items-center gap-1 text-[10px] text-[#666]">
+                            <span
+                              className="inline-block w-2.5 h-2.5 rounded-sm"
+                              style={{ backgroundColor: color }}
+                            />
+                            {display.emoji} {display.label}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
+                </>
+              )
+            })() : (
+              <div className="text-center py-4 text-xs text-[#8b7bb8]">
+                No symptom entries in the last 4 weeks — log symptoms to see trends here
+              </div>
+            )}
           </div>
 
           <p className="text-xs text-[#767676] text-center pt-4">
             These are statistical patterns, not medical advice.
             Consult a healthcare provider for diagnosis.
           </p>
+
+          {/* Methodology section */}
+          <details className="mt-6 border border-[#e0e0e0] rounded-[10px] bg-[#fafafa]">
+            <summary className="px-3 py-2.5 text-[12px] font-semibold text-[#666] cursor-pointer select-none">
+              📐 How we calculate insights
+            </summary>
+            <div className="px-3 pb-3 text-[12px] text-[#555] leading-relaxed space-y-3">
+              <div>
+                <h4 className="font-semibold text-[#444] mb-0.5">Research-based time windows</h4>
+                <p>
+                  Different symptoms have different onset times after eating. We use time windows informed
+                  by gastroenterology research rather than a single fixed period:
+                </p>
+                <ul className="mt-1 ml-4 list-disc space-y-0.5 text-[11px] text-[#666]">
+                  <li><strong>Nausea</strong> — 3 hrs (fast gastric/vagal response)</li>
+                  <li><strong>Bloating &amp; Gas</strong> — 4 hrs (colonic fermentation onset)</li>
+                  <li><strong>Cramps &amp; Pain</strong> — 6 hrs (small intestine transit)</li>
+                  <li><strong>Fatigue</strong> — 8 hrs (systemic inflammatory response)</li>
+                  <li><strong>Bowel changes</strong> — 24 hrs (full GI transit time)</li>
+                  <li><strong>Stress/Mood</strong> — 24 hrs (gut-brain axis interaction)</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-[#444] mb-0.5">Per-symptom analysis</h4>
+                <p>
+                  We analyze each symptom type separately — for example, "dairy → bloating" is tracked
+                  independently from "dairy → cramps." This avoids diluting strong signals by lumping
+                  unrelated symptoms together.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-[#444] mb-0.5">Relative risk</h4>
+                <p>
+                  For each food, we compare how often a symptom follows eating that food vs. how often it
+                  follows meals <em>without</em> that food. A relative risk of 2.0× means the symptom is
+                  twice as likely after eating that food.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-[#444] mb-0.5">Confidence score</h4>
+                <p>
+                  The confidence percentage is our own weighted score combining three factors — the weights below are design choices, not research-validated values:
+                </p>
+                <ul className="mt-1 ml-4 list-disc space-y-0.5 text-[11px] text-[#666]">
+                  <li><strong>Relative risk</strong> (40%) — how much more likely the symptom is after this food</li>
+                  <li><strong>Sample size</strong> (30%) — how many times you've eaten the food (saturates at 15)</li>
+                  <li><strong>Consistency</strong> (30%) — how reliably the symptom follows</li>
+                </ul>
+                <p className="mt-1">
+                  A food needs at least 4 logged occasions before it's analyzed, and only correlations above 30% confidence are shown. Patterns with fewer than 8 occasions are flagged with ⚠️ — the score is dampened and reliability improves significantly with more data.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-[#444] mb-0.5">What we analyze</h4>
+                <ul className="mt-1 ml-4 list-disc space-y-0.5 text-[11px] text-[#666]">
+                  <li><strong>Food → specific symptoms</strong> — each symptom type with its own time window</li>
+                  <li><strong>Food → irregular bowel</strong> — Bristol stool types 1-2 (hard) or 6-7 (loose) within 24 hrs</li>
+                  <li><strong>Stress &amp; mood → symptoms</strong> — whether high stress/anxiety or low mood precede symptom flares</li>
+                </ul>
+              </div>
+            </div>
+          </details>
         </>
       )}
     </div>

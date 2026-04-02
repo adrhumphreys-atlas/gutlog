@@ -121,6 +121,9 @@ export const api = {
   getInsights: () =>
     request<{ correlations: any[]; refreshed: boolean }>('/insights'),
 
+  refreshInsights: () =>
+    request<{ correlations: any[]; refreshed: boolean }>('/insights/refresh', { method: 'POST' }),
+
   // Experiments
   getExperiments: () => request<any[]>('/experiments'),
 
