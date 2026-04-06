@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { BottomSheet } from '../components/BottomSheet'
 import { useToast } from '../components/Toast'
 import { MealForm } from '../components/forms/MealForm'
@@ -67,6 +67,9 @@ export function HomePage() {
   const [hasEverLogged, setHasEverLogged] = useState(true)
   const [calendarOpen, setCalendarOpen] = useState(false)
   const [justAddedId, setJustAddedId] = useState<string | null>(null)
+  const [streakHeatmapOpen, setStreakHeatmapOpen] = useState(false)
+  const [loggedDates, setLoggedDates] = useState<Set<string>>(new Set())
+  const [activeExperiment, setActiveExperiment] = useState<{ id: string; name: string; eliminatedFoods: string[]; startDate: string; durationDays: number } | null>(null)
 
   const activeSheet = searchParams.get('sheet')
   const editId = searchParams.get('edit')
@@ -107,10 +110,48 @@ export function HomePage() {
     }
   }, [])
 
+  const loadLoggedDates = useCallback(async () => {
+    try {
+      const now = new Date()
+      const thisMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
+      const lastMonth = now.getMonth() === 0
+        ? `${now.getFullYear() - 1}-12`
+        : `${now.getFullYear()}-${String(now.getMonth()).padStart(2, '0')}`
+      const [thisData, lastData] = await Promise.all([
+        api.getEntryDates(thisMonth),
+        api.getEntryDates(lastMonth),
+      ])
+      setLoggedDates(new Set([...thisData.dates, ...lastData.dates]))
+    } catch {
+      // Non-critical
+    }
+  }, [])
+
+  const toggleStreakHeatmap = () => {
+    if (!streakHeatmapOpen && loggedDates.size === 0) {
+      loadLoggedDates()
+    }
+    setStreakHeatmapOpen((o) => !o)
+  }
+
+  const loadActiveExperiment = useCallback(async () => {
+    try {
+      const experiments = await api.getExperiments()
+      const now = Date.now()
+      const active = experiments
+        .filter((e: any) => e.status === 'active' && (!e.endDate || new Date(e.endDate).getTime() >= now))
+        .sort((a: any, b: any) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime())
+      setActiveExperiment(active[0] ?? null)
+    } catch {
+      // Non-critical — banner is informational
+    }
+  }, [])
+
   useEffect(() => {
     loadEntries()
     loadStreak()
-  }, [loadEntries, loadStreak])
+    loadActiveExperiment()
+  }, [loadEntries, loadStreak, loadActiveExperiment])
 
   // Load edit entry when editId changes
   useEffect(() => {
@@ -294,7 +335,15 @@ export function HomePage() {
         >
           <h1 className="text-lg font-semibold text-[var(--text-primary)]">
             {formatDayLabel(selectedDate)}{' '}
-            <span className="text-xs font-semibold text-[var(--green-primary)]" title="Streak">🌿 {streak}</span>
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); toggleStreakHeatmap() }}
+              className="text-xs font-semibold text-[var(--green-primary)] hover:underline"
+              aria-label={`Streak: ${streak} days. Tap to see your logging history.`}
+              aria-expanded={streakHeatmapOpen}
+            >
+              🌿 {streak}
+            </button>
           </h1>
           <div className="text-xs text-[var(--text-muted)]">
             {formatFullDate(selectedDate)}
@@ -323,6 +372,20 @@ export function HomePage() {
         />
       )}
 
+      {/* Active Experiment Banner */}
+      {activeExperiment && (
+        <ActiveExperimentBanner experiment={activeExperiment} />
+      )}
+
+      {/* Streak Heatmap Popover */}
+      {streakHeatmapOpen && (
+        <StreakHeatmap
+          streak={streak}
+          loggedDates={loggedDates}
+          onClose={() => setStreakHeatmapOpen(false)}
+        />
+      )}
+
       {/* Timeline */}
       <div className={`mb-3 min-h-[200px] transition-opacity duration-150 ${transitioning && !initialLoad ? 'opacity-60' : 'opacity-100'}`}>
         {initialLoad ? (
@@ -334,6 +397,7 @@ export function HomePage() {
               <>
                 <p className="font-medium text-[var(--text-secondary)]">Welcome to GutLog!</p>
                 <p className="text-sm mt-1">Log your first meal to start tracking</p>
+                <OnboardingTip />
               </>
             ) : (
               <>
@@ -419,6 +483,197 @@ export function HomePage() {
       >
         {renderForm()}
       </BottomSheet>
+    </div>
+  )
+}
+
+// ─── Active Experiment Banner ────────────────────────────────────────────────
+
+interface ActiveExperimentBannerProps {
+  experiment: {
+    id: string
+    name: string
+    eliminatedFoods: string[]
+    startDate: string
+    durationDays: number
+  }
+}
+
+function ActiveExperimentBanner({ experiment }: ActiveExperimentBannerProps) {
+  const navigate = useNavigate()
+  const start = new Date(experiment.startDate)
+  const today = new Date()
+  const dayNumber = Math.floor((today.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)) + 1
+  const dayStr = `Day ${Math.min(dayNumber, experiment.durationDays)} of ${experiment.durationDays}`
+
+  // Show up to 4 eliminated foods then "& N more"
+  const foods = experiment.eliminatedFoods
+  const shown = foods.slice(0, 4)
+  const rest = foods.length - shown.length
+  const foodStr = rest > 0 ? `${shown.join(', ')} & ${rest} more` : shown.join(', ')
+
+  return (
+    <button
+      onClick={() => navigate(`/experiments/${experiment.id}`)}
+      className="w-full mb-3 text-left border-2 border-[var(--experiment-border)] bg-[var(--experiment-bg)] rounded-[10px] px-3 py-2.5 hover:bg-[var(--green-light)] transition-colors"
+      aria-label={`Active experiment: ${experiment.name}. ${dayStr}. Tap to view details.`}
+    >
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1.5 min-w-0">
+          <span className="text-base shrink-0">🔬</span>
+          <div className="min-w-0">
+            <div className="text-[12px] font-semibold text-[var(--green-primary)] truncate">
+              {experiment.name}
+              <span className="ml-1.5 text-[10px] font-normal text-[var(--text-muted)]">{dayStr}</span>
+            </div>
+            {foodStr && (
+              <div className="text-[11px] text-[var(--text-secondary)] truncate">
+                Avoid: {foodStr}
+              </div>
+            )}
+          </div>
+        </div>
+        <span className="text-[var(--text-muted)] text-sm shrink-0 ml-2">›</span>
+      </div>
+    </button>
+  )
+}
+
+// ─── Onboarding Tip ─────────────────────────────────────────────────────────
+
+function OnboardingTip() {
+  const STORAGE_KEY = 'gutlog_onboarding_dismissed'
+  const [visible, setVisible] = useState(() => {
+    try {
+      return localStorage.getItem(STORAGE_KEY) !== 'true'
+    } catch {
+      return true
+    }
+  })
+
+  const dismiss = () => {
+    try {
+      localStorage.setItem(STORAGE_KEY, 'true')
+    } catch {}
+    setVisible(false)
+  }
+
+  if (!visible) return null
+
+  return (
+    <div className="mt-5 mx-auto max-w-xs text-left bg-[var(--green-light)] border border-[var(--green-primary)]/30 rounded-[10px] p-3">
+      <div className="flex items-start justify-between gap-2">
+        <div>
+          <p className="text-[13px] font-semibold text-[var(--green-primary)] mb-1">
+            How GutLog works
+          </p>
+          <ol className="text-[12px] text-[var(--text-secondary)] space-y-1 list-none">
+            <li>1️⃣ <span className="font-medium">Log daily</span> — meals, symptoms, mood, bowel movements</li>
+            <li>2️⃣ <span className="font-medium">Wait 7+ days</span> — the more you log, the clearer the picture</li>
+            <li>3️⃣ <span className="font-medium">Check Insights</span> — discover what's affecting your gut</li>
+          </ol>
+        </div>
+        <button
+          onClick={dismiss}
+          className="text-[var(--text-muted)] hover:text-[var(--text-primary)] text-lg leading-none shrink-0 w-5 h-5 flex items-center justify-center mt-0.5"
+          aria-label="Dismiss onboarding tip"
+        >
+          ×
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// ─── Streak Heatmap ──────────────────────────────────────────────────────────
+
+interface StreakHeatmapProps {
+  streak: number
+  loggedDates: Set<string>
+  onClose: () => void
+}
+
+function StreakHeatmap({ streak, loggedDates, onClose }: StreakHeatmapProps) {
+  // Build last 35 days (5 rows × 7 cols) ending today
+  const today = localDateStr()
+  const days: string[] = []
+  for (let i = 34; i >= 0; i--) {
+    const d = new Date(today + 'T12:00:00')
+    d.setDate(d.getDate() - i)
+    days.push(localDateStr(d))
+  }
+
+  // Day-of-week labels
+  const DOW = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+
+  return (
+    <div
+      className="mb-3 p-3 bg-[var(--bg-card)] border border-[var(--border-card)] rounded-[10px] shadow-sm"
+      role="region"
+      aria-label="Logging history heatmap"
+    >
+      <div className="flex items-center justify-between mb-2">
+        <div>
+          <span className="text-[13px] font-semibold text-[var(--text-primary)]">
+            🌿 {streak}-day streak
+          </span>
+          <span className="ml-2 text-[11px] text-[var(--text-muted)]">
+            {loggedDates.size} days logged (last 2 months)
+          </span>
+        </div>
+        <button
+          onClick={onClose}
+          className="text-[var(--text-muted)] hover:text-[var(--text-primary)] text-lg leading-none w-6 h-6 flex items-center justify-center"
+          aria-label="Close streak heatmap"
+        >
+          ×
+        </button>
+      </div>
+
+      {/* Day-of-week header */}
+      <div className="grid grid-cols-7 gap-1 mb-1">
+        {DOW.map((d) => (
+          <div key={d} className="text-center text-[9px] text-[var(--text-muted)] font-medium">
+            {d}
+          </div>
+        ))}
+      </div>
+
+      {/* 5-week grid */}
+      <div className="grid grid-cols-7 gap-1">
+        {days.map((date) => {
+          const isLogged = loggedDates.has(date)
+          const isToday = date === today
+          return (
+            <div
+              key={date}
+              title={date}
+              className={`aspect-square rounded-sm ${
+                isToday
+                  ? isLogged
+                    ? 'bg-[var(--green-primary)] ring-2 ring-[var(--green-primary)] ring-offset-1 ring-offset-[var(--bg-card)]'
+                    : 'ring-2 ring-[var(--green-primary)] ring-offset-1 ring-offset-[var(--bg-card)] bg-[var(--bg-muted)]'
+                  : isLogged
+                    ? 'bg-[var(--green-primary)] opacity-80'
+                    : 'bg-[var(--bg-muted)]'
+              }`}
+              aria-label={`${date}: ${isLogged ? 'logged' : 'not logged'}`}
+            />
+          )
+        })}
+      </div>
+
+      <div className="flex items-center gap-2 mt-2 text-[10px] text-[var(--text-muted)]">
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-2.5 h-2.5 rounded-sm bg-[var(--bg-muted)]" /> No log
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-2.5 h-2.5 rounded-sm bg-[var(--green-primary)] opacity-80" /> Logged
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-2.5 h-2.5 rounded-sm bg-[var(--green-primary)] ring-2 ring-[var(--green-primary)] ring-offset-1 ring-offset-[var(--bg-card)]" /> Today
+        </span>
+      </div>
     </div>
   )
 }

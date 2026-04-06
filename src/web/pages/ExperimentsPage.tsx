@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { BottomSheet } from '../components/BottomSheet'
 import { useToast } from '../components/Toast'
+import { ExperimentsSkeleton } from '../components/Skeleton'
 import { api, ApiRequestError } from '../lib/api'
 
 interface Experiment {
@@ -177,7 +178,9 @@ export function ExperimentsPage() {
     return { current: Math.min(elapsed, exp.durationDays), total: exp.durationDays }
   }
 
+  const now = Date.now()
   const active = experiments.filter((e) => e.status === 'active')
+  const overdue = active.filter((e) => e.endDate && new Date(e.endDate).getTime() < now)
   const completed = experiments.filter((e) => e.status === 'completed')
   const abandoned = experiments.filter((e) => e.status === 'abandoned')
 
@@ -213,7 +216,7 @@ export function ExperimentsPage() {
       </div>
 
       {loading ? (
-        <div className="text-center py-16 text-[var(--text-muted)]">Loading...</div>
+        <ExperimentsSkeleton />
       ) : loadError ? (
         <div className="text-center py-16 px-4">
           <p className="text-3xl mb-3">⚠️</p>
@@ -264,6 +267,30 @@ export function ExperimentsPage() {
       ) : (
         /* Screen 11 — With Data */
         <div className="space-y-2.5">
+          {/* Completion nudge — experiments past their end date */}
+          {overdue.map((exp) => (
+            <div
+              key={`nudge-${exp.id}`}
+              className="border-2 border-[var(--dot-symptom-accent)] rounded-[10px] p-3 bg-[var(--symptom-bg)]"
+            >
+              <div className="text-[10px] uppercase tracking-[0.5px] text-[var(--dot-symptom-accent)] font-semibold mb-1">
+                ⏰ Trial ended — record your result
+              </div>
+              <div className="text-[13px] font-semibold text-[var(--text-primary)]">
+                {exp.name}
+              </div>
+              <p className="text-xs text-[var(--text-secondary)] mt-1">
+                Your elimination trial is complete. How did it go? Recording a result helps Pattern Spotter learn what works for your gut.
+              </p>
+              <button
+                onClick={() => navigate(`/experiments/${exp.id}`)}
+                className="mt-2 px-3 py-1.5 text-[11px] font-medium text-white bg-[var(--dot-symptom-accent)] rounded-lg hover:opacity-90 transition-opacity min-h-[44px]"
+              >
+                Record result →
+              </button>
+            </div>
+          ))}
+
           {/* Active experiments */}
           {active.map((exp) => {
             const progress = daysProgress(exp)

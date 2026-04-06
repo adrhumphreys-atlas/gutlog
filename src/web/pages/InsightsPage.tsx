@@ -207,9 +207,12 @@ export function InsightsPage() {
   }
 
   const confidenceColor = (c: number): string => {
-    if (c >= 0.7) return 'text-[var(--danger-text)] bg-[var(--danger-bg)] border-[var(--danger-border)]'
+    // Strong (≥70%) → green: clear actionable signal
+    // Moderate (50–70%) → orange: possible signal, keep logging
+    // Weak (<50%) → purple: early pattern, more data needed
+    if (c >= 0.7) return 'text-[var(--green-primary)] bg-[var(--green-light)] border-[var(--green-primary)]'
     if (c >= 0.5) return 'text-[var(--dot-symptom-accent)] bg-[var(--symptom-bg)] border-[var(--symptom-border)]'
-    return 'text-[var(--dot-bowel-accent)] bg-[var(--insight-bg)] border-[var(--insight-border)]'
+    return 'text-[var(--insight-text)] bg-[var(--insight-bg)] border-[var(--insight-border)]'
   }
 
   // Sort correlations by confidence descending for the trigger bar chart

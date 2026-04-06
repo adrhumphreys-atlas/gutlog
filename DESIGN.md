@@ -112,7 +112,7 @@ Use a 4px base grid: 4, 8, 12, 16, 20, 24, 32px.
 
 ### Desktop Side Nav
 - Vertical left sidebar, ~200px wide
-- Same 4 items as bottom nav: 📅 Today, 📊 Insights, 🔬 Experiments, ⚙️ Settings
+- Same 4 items as bottom nav: 📋 Today, 🔍 Insights, 🧪 Experiments, ⚙️ Settings
 - Icon + text label, active item highlighted with `primary` color
 - Collapsible to icon-only (~56px) for more content space
 
@@ -311,7 +311,7 @@ Same 5-point emoji scale pattern, specific emoji TBD during implementation.
 ## Streak System
 
 - 🌿 streak counter displayed next to date header on timeline: "🌿 5-day streak"
-- Tap → mini calendar heatmap showing logged vs. missed days
+- Tap → 35-day calendar heatmap (5 weeks × 7 days) showing logged (green) vs. missed (empty) days, with legend and total days logged count
 - Resets without shame if a day is missed — no guilt messaging, just quietly restarts
 - A "day" counts as logged if at least 1 entry exists for that date
 
@@ -321,8 +321,8 @@ Same 5-point emoji scale pattern, specific emoji TBD during implementation.
 
 ```
 TAB BAR (bottom nav on mobile, left sidebar on desktop)
-├── 📅 Today (/)
-│   ├── 🌿 Streak counter (next to date)
+├── 📋 Today (/)
+│   ├── 🌿 Streak counter (next to date) — tappable → 35-day logging heatmap
 │   ├── [Date header] → tap for calendar date picker
 │   ├── [Active experiment banner] (if active)
 │   ├── [Timeline entries] → tap to edit (bottom sheet)
@@ -334,9 +334,9 @@ TAB BAR (bottom nav on mobile, left sidebar on desktop)
 │   │   ├── 📋 Impact
 │   │   └── 📝 Note
 │   └── [Date nav ‹ ›] → same screen, different date
-├── 📊 Insights (/insights)
+├── 🔍 Insights (/insights)
 │   └── [Start Experiment] → experiment creation sheet
-├── 🔬 Experiments (/experiments)
+├── 🧪 Experiments (/experiments)
 │   ├── [Active experiment] → /experiments/[id]
 │   ├── [Completed experiment] → /experiments/[id]
 │   └── [Start Suggested] → experiment creation sheet
@@ -373,7 +373,7 @@ STANDALONE (no tab bar)
 | `BottomNav` | 4-tab navigation (mobile: bottom, desktop: left sidebar) |
 | `DateHeader` | Date display with ‹ › nav arrows + streak counter |
 | `BottomSheet` | Modal sheet with backdrop, dismiss (swipe/X/backdrop), focus trap |
-| `Toast` | Auto-dismissing success message ("Saved ✓", 1.5s) |
+| `Toast` | Auto-dismissing message: success (green, 1.5s, `role="status"`) and error (red, 4s, `role="alert"`) variants |
 | `CalendarPicker` | Month-grid dropdown with entry-indicator dots |
 | `SymptomChip` | Selectable chip for symptom type / body location |
 | `SeverityBadge` | Inline badge showing "3/5" or "Type 4" on timeline items |
